@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Sign Up</h2>
+
+<form action="/signup" method="post">
+    {{ form.hidden_tag() }}
+
+    {{ form.username.label }}<br>
+    {{ form.username }}
+    {% for error in form.username.errors %}
+        <span>{{ error }}</span>
+    {% endfor %}
+    <br>
+
+    {{ form.email.label }}<br>
+    {{ form.email }}
+    {% for error in form.email.errors %}
+        <span>{{ error }}</span>
+    {% endfor %}
+    <br>
+
+    {{ form.password.label }}<br>
+    {{ form.password }}
+    {% for error in form.password.errors %}
+        <span>{{ error }}</span>
+    {% endfor %}
+    <br>
+
+    <label for="confirm_password">Confirm Password:</span><br>
+    {{ form.confirm_password }}
+    {% for error in form.confirm_password.errors %}
+        <span>{{ error }}</span>
+    {% endfor %}
+    <br>
+
+    <br>
+
+    {{ form.submit }}
+</form>
+
+{% endblock %}

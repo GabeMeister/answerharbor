@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if current_user.is_authenticated and current_user.is_admin %}
+        <br>
+        <br>
+        <a href="{{ url_for('new_homework', course_id=course_id) }}">New Homework</a>
+    {% endif %}
+
+    {% if homeworks|length > 0 %}
+        <h2>Select your Homework:</h2>
+        <ul>
+            {% for homework in homeworks %}
+                <li><a href="{{ url_for('homework', homework_id=homework.id) }}">{{ homework.title }}</a> (Due {{ homework.due_date }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>Hmm, we couldn't find any homeworks for this course.</h2>
+    {% endif %}
+
+{% endblock %}

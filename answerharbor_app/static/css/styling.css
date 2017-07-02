@@ -1,0 +1,19 @@
+.mathjax-textarea-input {
+    width: 100%;
+}
+
+.post {
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.post:not(:first-child) {
+    margin-top: 20px;
+}
+
+.body-content {
+    width: 900px;
+    margin: auto;
+}

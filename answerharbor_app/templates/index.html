@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block head_scripts %}
+{% endblock %}
+
+{% block content %}
+
+    {% if not current_user.is_authenticated %}
+        <h1>Welcome!</h1>
+    {% else %}
+        <h1>Welcome {{ current_user.username }}!</h1>
+    {% endif %}
+
+
+    <h2>Select your School:</h2>
+    <ul>
+        {% for school in schools %}
+            <li><a href="/school/{{ school.id }}">{{ school.full_name }}</a></li>
+        {% endfor %}
+    </ul>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block body_scripts %}
+{% endblock %}

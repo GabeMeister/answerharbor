@@ -1,0 +1,49 @@
+upstream answerharbor_wsgiapp {
+    server localhost:8000 fail_timeout=0;
+}
+
+upstream shallowsandbox_app {
+    server localhost:8001 fail_timeout=0;
+}
+
+server {
+    listen 80;
+    server_name answerharbor.com www.answerharbor.com;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://answerharbor_wsgiapp;
+        break;
+    }
+}
+
+server {
+    listen 80;
+    server_name shallowsandbox.com www.shallowsandbox.com;
+    return 301 https://$host$request_uri;
+}
+
+server {
+#    listen 80;
+
+    listen 443 ssl;
+
+    server_name shallowsandbox.com www.shallowsandbox.com;
+
+    ssl_certificate /etc/letsencrypt/live/shallowsandbox.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/shallowsandbox.com/privkey.pem;
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+
+    location / {
+        include proxy_params;
+        proxy_pass http://shallowsandbox_app;
+        break;
+    }
+
+    location ~ /.well-known {
+        allow all;
+    }
+}

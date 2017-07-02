@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="{{ url_for('new_homework', course_id=course_id) }}" method="post">
+        {{ form.hidden_tag() }}
+
+        <h1>Create a New Homework:</h1>
+
+        {{ form.title.label }}<br>
+        {% for error in form.title.errors %}
+            <span>{{ error }}</span>
+            <br>
+        {% endfor %}
+        {{ form.title() }}
+        <br>
+        <br>
+
+        {{ form.due_date.label }}<br>
+        {% for error in form.due_date.errors %}
+            <span>{{ error }}</span>
+            <br>
+        {% endfor %}
+        {{ form.due_date(class="datetimepicker") }}
+
+        <br>
+        <br>
+        <input type='submit' value='Submit!'/>
+    </form>
+
+{% endblock %}
+
+{% block body_scripts %}
+    <!--Purposely load datetime picker css right before javascript-->
+    <link rel="stylesheet" href="/static/css/jquery.datetimepicker.min.css">
+    <script src="/static/js/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        $('.datetimepicker').datetimepicker();
+    </script>
+{% endblock %}

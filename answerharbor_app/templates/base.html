@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>Shallow Sandbox</title>
+    <link rel="stylesheet" href="/static/css/styling.css"/>
+    <link rel="shortcut icon" href="/static/img/favicon.ico"/>
+
+    {% block head_scripts %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="body-content">
+        <span>Menu:</span>
+        <a href="/index">Home</a>
+        {% if current_user.is_authenticated %}
+            <a href="/logout">Log Out</a>
+        {% else %}
+            <a href="/login">Log In</a>
+            <a href="/signup">Sign Up</a>
+        {% endif %}
+        <br>
+        <br>
+        <div>
+            {% for breadcrumb in breadcrumbs %}
+                <a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a>
+                {{ '>' if not loop.last }}
+            {% endfor %}
+        </div>
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    {% block body_scripts %}
+    {% endblock %}
+</body>
+
+</html>

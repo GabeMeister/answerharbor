@@ -100,3 +100,7 @@ ENV/
 
 # vscode
 .vscode/
+
+# answerharbor specific files
+answerharbor_app/config.py
+answerharbor_app/answerharbor.db

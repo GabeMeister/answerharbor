@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head_scripts %}
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script src="/static/js/mathjax.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if current_user.is_authenticated and current_user.is_admin %}
+        <br>
+        <br>
+        <a href="{{ url_for('new_post', homework_id=homework.id) }}">New Post</a>
+    {% endif %}
+
+    {% for post in posts %}
+        <div class="post">
+            <span><a href="/post/{{ post.id }}">{{ post.question }}</a></span><br>
+        </div>
+    {% endfor %}
+
+{% endblock %}

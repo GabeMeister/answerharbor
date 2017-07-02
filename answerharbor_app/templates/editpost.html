@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block head_scripts %}
+
+    {% if current_user.is_authenticated %}
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="/static/js/mathjax.js"></script>
+    {% endif %}
+
+{% endblock %}
+
+
+{% block content %}
+
+    <form action="{{ url_for('edit_post', post_id=post.id, homework_id=homework_id) }}" method="post">
+        {{ form.hidden_tag() }}
+
+        <h1>Edit Post:</h1>
+
+        {{ form.question.label }}<br>
+        {% for error in form.question.errors %}
+            <span>{{ error }}</span>
+            <br>
+        {% endfor %}
+        <!--<span>{{ form.question }}</span>-->
+        {{ form.question(rows="3", class="mathjax-textarea-input") }}
+        <br>
+        <br>
+
+        {{ form.answer.label }}<br>
+        {% for error in form.answer.errors %}
+            <span>{{ error }}</span>
+            <br>
+        {% endfor %}
+        {{ form.answer(rows="10", class="mathjax-textarea-input") }}
+
+        <p>Preview:</p>
+
+        <div id="mathjax-question-preview" style="border:1px solid; padding: 3px; margin-top:5px"></div>
+        <div id="mathjax-question-buffer" style="border:1px solid; padding: 3px; margin-top:5px; visibility:hidden; position:absolute; top:0; left: 0"></div>
+
+        <div id="mathjax-answer-preview" style="border:1px solid; padding: 3px; margin-top:5px"></div>
+        <div id="mathjax-answer-buffer" style="border:1px solid; padding: 3px; margin-top:5px; visibility:hidden; position:absolute; top:0; left: 0"></div>
+
+
+        <br>
+        <input type='submit' value='Submit!'/>
+    </form>
+
+
+
+
+{% endblock %}
+
+{% block body_scripts %}
+    <script>
+        Preview.Init();
+
+        $('#question').keyup(function() {
+            Preview.Update();
+        });
+
+        $('#answer').keyup(function() {
+            Preview.Update();
+        });
+    </script>
+{% endblock %}
