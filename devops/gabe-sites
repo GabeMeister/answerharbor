@@ -1,4 +1,6 @@
-upstream answerharbor_wsgiapp {
+################## WSGI APPS ##################
+
+upstream answerharbor_app {
     server localhost:8000 fail_timeout=0;
 }
 
@@ -6,17 +8,52 @@ upstream shallowsandbox_app {
     server localhost:8001 fail_timeout=0;
 }
 
+
+################## ANSWER HARBOR ##################
 server {
     listen 80;
     server_name answerharbor.com www.answerharbor.com;
+    return 301 https://$host$request_uri;
+
+    #location / {
+    #    include proxy_params;
+    #    proxy_pass http://answerharbor_app;
+    #    break;
+    #}
+
+    #location ~ /.well-known {
+    #        allow all;
+    #}
+}
+
+server {
+    listen 443 ssl;
+
+    server_name answerharbor.com www.answerharbor.com;
+
+    ssl_certificate /etc/letsencrypt/live/answerharbor.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/answerharbor.com/privkey.pem;
+
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+
+    #root /usr/share/nginx/html;
+    #index index.html index.htm;
 
     location / {
         include proxy_params;
-        proxy_pass http://answerharbor_wsgiapp;
+        proxy_pass http://answerharbor_app;
         break;
+    }
+
+    location ~ /.well-known {
+        allow all;
     }
 }
 
+
+################## SHALLOW SANDBOX ##################
 server {
     listen 80;
     server_name shallowsandbox.com www.shallowsandbox.com;
@@ -24,14 +61,12 @@ server {
 }
 
 server {
-#    listen 80;
-
     listen 443 ssl;
 
     server_name shallowsandbox.com www.shallowsandbox.com;
 
-    ssl_certificate /etc/letsencrypt/live/shallowsandbox.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/shallowsandbox.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/shallowsandbox.com-0002/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/shallowsandbox.com-0002/privkey.pem;
 
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
     ssl_prefer_server_ciphers on;
