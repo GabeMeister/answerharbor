@@ -37,20 +37,20 @@ var Preview = {
         var tempQuestionPreview = this.questionBuffer;
         this.questionBuffer = tempQuestionBuffer;
         this.questionPreview = tempQuestionPreview;
-        tempQuestionBuffer.style.visibility = "hidden";
+        // tempQuestionBuffer.style.visibility = "hidden";
         tempQuestionBuffer.style.position = "absolute";
         tempQuestionPreview.style.position = "";
-        tempQuestionPreview.style.visibility = "";
+        // tempQuestionPreview.style.visibility = "";
 
         // The answer buffer
         var tempAnswerBuffer = this.answerPreview;
         var tempAnswerPreview = this.answerBuffer;
         this.answerBuffer = tempAnswerBuffer;
         this.answerPreview = tempAnswerPreview;
-        tempAnswerBuffer.style.visibility = "hidden";
+        // tempAnswerBuffer.style.visibility = "hidden";
         tempAnswerBuffer.style.position = "absolute";
         tempAnswerPreview.style.position = "";
-        tempAnswerPreview.style.visibility = "";
+        // tempAnswerPreview.style.visibility = "";
     },
     //
     //  This gets called when a key is pressed in the textarea.

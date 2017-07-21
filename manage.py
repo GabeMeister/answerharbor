@@ -18,16 +18,11 @@ manager = Manager(app)
 
 @manager.command
 def sandbox():
-    db_datetime = os.path.getmtime('answerharbor_app/answerharbor.db')
-    trash_datetime = os.path.getmtime('trash.txt')
-    if db_datetime > trash_datetime:
-        print 'database is more recent'
-    else:
-        print 'trash.txt is more recent'
-
-    # school = School.query.filter_by(full_name='Test School').first()
-    # db.session.delete(school)
-    # db.session.commit()
+    count = 0
+    while count < 4:
+        count += 1
+        print count
+    print 'done?!'
 
 
 

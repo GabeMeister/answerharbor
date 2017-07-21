@@ -12,16 +12,19 @@
 
 {% block content %}
 
-    <br>
-    <br>
+    <br/>
+    <br/>
     {% if current_user.is_authenticated and current_user.is_admin %}
         <a href="{{ url_for('edit_post', post_id=post.id, homework_id=post.homework.id) }}">Edit</a>
         <a href="{{ url_for('delete_post', post_id=post.id, homework_id=post.homework.id) }}" class="confirm-link-click">Delete</a>
     {% endif %}
 
     <div class="post">
-        <span>Q: {{ post.question }}</span><br>
-        <span>A: {{ post.answer }}</span><br>
+        <span>Q: {{ post.question }}</span><br/>
+        <span>A:</span><br/>
+        {% for step in post.steps %}
+            <span>{{ step.text }}</span><br/>
+        {% endfor %}
     </div>
 
 {% endblock %}

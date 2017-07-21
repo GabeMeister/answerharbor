@@ -11,11 +11,12 @@ app.config.from_pyfile('config.py')
 # The database
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
-from answerharbor_app.models.post import Post
-from answerharbor_app.models.user import User
-from answerharbor_app.models.homework import Homework
-from answerharbor_app.models.course import Course
 from answerharbor_app.models.school import School
+from answerharbor_app.models.course import Course
+from answerharbor_app.models.homework import Homework
+from answerharbor_app.models.user import User
+from answerharbor_app.models.post import Post
+from answerharbor_app.models.step import Step
 
 
 # The login manager

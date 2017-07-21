@@ -12,6 +12,7 @@ from answerharbor_app.models.forms import LoginForm, RegisterForm, NewPostForm,\
     EditPostForm, NewHomeworkForm
 from answerharbor_app.models.user import User
 from answerharbor_app.models.post import Post
+from answerharbor_app.models.step import Step
 from answerharbor_app.models.homework import Homework
 from answerharbor_app.models.course import Course
 from answerharbor_app.models.school import School
@@ -85,26 +86,43 @@ def new_homework():
 @login_required
 def new_post():
     homework_id = request.args['homework_id']
+    print 'homework id: ' + homework_id
+    if homework_id is None:
+        return redirect('/')
+    hw = Homework.query.filter_by(id=homework_id).first()
 
-    form = NewPostForm()
-    if form.validate_on_submit():
-        hw = Homework.query.filter_by(id=homework_id).first()
-        if homework is None:
-            return redirect('/')
+    if request.method == 'POST':
+        # Get question text
+        question_text = request.form['questionInput']
+
+        # Steps may have missing name ids (if the user deleted a step)
+        # Get only keys that are for step inputs
+        steps = []
+        for key, value in request.form.iteritems():
+            if 'stepInput' in key:
+                steps.append(Step(number=int(key.replace('stepInput', '')), text=value))
+
+        steps.sort(key=lambda x: x.number)
+
+        number = 1
+        for step in steps:
+            step.number = number
+            number += 1
 
         now = datetime.now()
-        the_post = Post(question=form.question.data,\
-                    answer=form.answer.data,\
-                    creation_date=now,\
-                    last_edit_date=now,\
-                    user=current_user,\
-                    homework=hw)
+        the_post = Post(question=question_text,\
+                        creation_date=now,\
+                        last_edit_date=now,\
+                        user=current_user,\
+                        homework=hw,
+                        steps=steps)
         db.session.add(the_post)
         db.session.commit()
 
         return redirect(url_for('post', post_id=the_post.id))
+        # return render_template('newpost.html', homework_id=homework_id)
 
-    return render_template('newpost.html', form=form, homework_id=homework_id)
+    return render_template('newpost.html', homework_id=homework_id)
 
 
 @app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])

@@ -1,3 +1,4 @@
+
 .mathjax-textarea-input {
     width: 100%;
 }
@@ -17,3 +18,53 @@
     width: 900px;
     margin: auto;
 }
+
+/**** NEW POST CSS ****/
+$x-btn-width: 128px;
+
+.hidden-buffer {
+    position: absolute;
+    bottom: 0px;
+    right: 300px;
+    visibility: hidden;
+}
+
+.row {
+    border: 1px solid black;
+    height: $x-btn-width;
+    display: flex;
+    flex-direction: row;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.x-btn {
+    height: $x-btn-width;
+    width: $x-btn-width;
+}
+
+.delete-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: $x-btn-width;
+}
+
+.input {
+    width: 100%;
+    height: 100%;
+}
+
+.x-btn:hover {
+    cursor: pointer;
+}
+/**** END NEW POST CSS ****/
