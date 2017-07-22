@@ -1,28 +1,10 @@
 Vue.use(VeeValidate);
 
-function MathjaxInput(bufferID, previewID, inputNameID, text, html) {
-    this.bufferID = bufferID;
-    this.previewID = previewID;
-    this.inputNameID = inputNameID;
-    this.text = text;
-    this.html = html;
-    this.oldText = '';
-
-    this.recordOldText = function() {
-        this.oldText = this.text;
-    }
-}
-
-function incrementID(prevID, prefix) {
-    var num = prevID.replace(prefix, '');
-    return prefix + _.toString(_.toInteger(num) + 1);
-}
-
 var app = new Vue({
     el: '#app',
     data: {
-        question: new MathjaxInput('questionBuffer', 'questionPreview', 'questionInput', '', ''),
-        steps: [],
+        question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
+        stepGroup: new StepGroup('step'),
         running: false,
         pending: false,
         timeoutID: 0,
@@ -30,7 +12,7 @@ var app = new Vue({
     },
     methods: {
         init: function() {
-            this.steps.push(new MathjaxInput('stepBuffer1', 'stepPreview1', 'stepInput1', '', ''));
+            this.stepGroup.addNewStep();
         },
         update: function(step) {
             if(this.timeoutID) {
@@ -75,17 +57,12 @@ var app = new Vue({
             input.html = $('#'+input.bufferID).html();
         },
         addNewStep: function() {
-            var lastStep = this.steps[this.steps.length - 1];
-            var newBufferID = incrementID(lastStep.bufferID, 'stepBuffer');
-            var newPreviewID = incrementID(lastStep.previewID, 'stepPreview');
-            var newInputNameID = incrementID(lastStep.inputNameID, 'stepInput');
-            var newStep = new MathjaxInput(newBufferID, newPreviewID, newInputNameID, lastStep.text, lastStep.html);
-            this.steps.push(newStep);
+            this.stepGroup.addNewStep();
         },
         deleteStep: function(step) {
-            if(this.steps.length > 1){
-                var index = _.indexOf(this.steps, step);
-                this.steps.splice(index, 1);
+            if(this.stepGroup.steps.length > 1){
+                var index = _.indexOf(this.stepGroup.steps, step);
+                this.stepGroup.steps.splice(index, 1);
             }
         },
         validateBeforeSubmit: function(event) {

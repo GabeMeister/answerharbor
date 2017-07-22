@@ -26,7 +26,7 @@
 
             <h3>Solution:</h3>
             <div class="steps-wrapper">
-                <div class="row" v-for="step in steps">
+                <div class="row" v-for="step in stepGroup.steps">
                     <div class="input-wrapper">
                         <textarea v-validate="'required'" :name="step.inputNameID" class="input" v-model="step.text" @keyup="update(step)"></textarea>
                         <span v-show="errors.has(step.inputNameID)" v-text="errors.first(step.inputNameID)"></span>
@@ -56,5 +56,7 @@
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-    <script type="text/javascript" src="/static/js/vue/app.js"></script>
+    <script type="text/javascript" src="/static/js/vue/util.js"></script>
+    <script type="text/javascript" src="/static/js/vue/mathjax.js"></script>
+    <script type="text/javascript" src="/static/js/vue/new_post_app.js"></script>
 {% endblock %}

@@ -86,28 +86,30 @@ def new_homework():
 @login_required
 def new_post():
     homework_id = request.args['homework_id']
-    print 'homework id: ' + homework_id
     if homework_id is None:
         return redirect('/')
     hw = Homework.query.filter_by(id=homework_id).first()
 
     if request.method == 'POST':
         # Get question text
-        question_text = request.form['questionInput']
+        question_text = request.form['question_input']
+        if question_text is None:
+            return redirect('/')
 
         # Steps may have missing name ids (if the user deleted a step)
         # Get only keys that are for step inputs
         steps = []
         for key, value in request.form.iteritems():
-            if 'stepInput' in key:
-                steps.append(Step(number=int(key.replace('stepInput', '')), text=value))
+            if 'step_input_' in key:
+                steps.append(Step(number=int(key.replace('step_input_', '')), text=value))
 
+        # Steps may be out of order from dictionary.
+        # Sort by the step number
         steps.sort(key=lambda x: x.number)
 
-        number = 1
-        for step in steps:
-            step.number = number
-            number += 1
+        # Re-index the step numbers so that they are contiguous
+        for idx, step in enumerate(steps):
+            step.number = idx+1
 
         now = datetime.now()
         the_post = Post(question=question_text,\
@@ -120,7 +122,6 @@ def new_post():
         db.session.commit()
 
         return redirect(url_for('post', post_id=the_post.id))
-        # return render_template('newpost.html', homework_id=homework_id)
 
     return render_template('newpost.html', homework_id=homework_id)
 
