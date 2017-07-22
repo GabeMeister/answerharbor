@@ -144,7 +144,6 @@ def post_data(post_id):
     question_text = requested_post.question
     steps = []
     for step in requested_post.steps:
-        print step
         steps.append({
             'number': step.number,
             'text': step.text
