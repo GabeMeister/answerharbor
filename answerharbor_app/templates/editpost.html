@@ -1,69 +1,62 @@
 {% extends 'base.html' %}
 
 {% block head_scripts %}
-
-    {% if current_user.is_authenticated %}
-        <script type="text/x-mathjax-config">
-            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
-        </script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-        <script src="/static/js/mathjax.js"></script>
-    {% endif %}
-
 {% endblock %}
 
 
 {% block content %}
+    <div id="app">
+        <form method="post" action="{{ url_for('edit_post', post_id=post.id, homework_id=homework_id) }}">
+            <span id="post-id" style="visibility:hidden;">{{post.id}}</span>
+            <h1>Edit Post:</h1>
 
-    <form action="{{ url_for('edit_post', post_id=post.id, homework_id=homework_id) }}" method="post">
-        {{ form.hidden_tag() }}
+            <h3>Question:</h3>
+            <div class="question-wrapper">
+                <div class="row">
+                    <div class="input-wrapper">
+                        <textarea v-validate="'required'" :name="question.inputNameID" class="input" v-model="question.text" @keyup="update(question)"></textarea>
+                        <span v-show="errors.has(question.inputNameID)" v-text="errors.first(question.inputNameID)"></span>
+                    </div>
+                     <div class="preview-wrapper">
+                        <p :id="question.bufferID" v-text="question.text" class="hidden-buffer"></p>
+                        <p class="preview" :id="question.previewID" v-html="question.html"></p>
+                    </div>
+                </div>
+            </div>
 
-        <h1>Edit Post:</h1>
+            <h3>Solution:</h3>
+            <div class="steps-wrapper">
+                <div class="row" v-for="step in stepGroup.steps">
+                    <div class="input-wrapper">
+                        <textarea v-validate="'required'" :name="step.inputNameID" class="input" v-model="step.text" @keyup="update(step)"></textarea>
+                        <span v-show="errors.has(step.inputNameID)" v-text="errors.first(step.inputNameID)"></span>
+                    </div>
+                    <div class="preview-wrapper">
+                        <p :id="step.bufferID" v-text="step.text" class="hidden-buffer"></p>
+                        <p class="preview" :id="step.previewID" v-html="step.html"></p>
+                    </div>
+                    <div class="delete-btn-wrapper">
+                        <img @click="deleteStep(step)" class="x-btn" src="/static/img/x-btn.png"/>
+                    </div>
+                </div><br/>
 
-        {{ form.question.label }}<br>
-        {% for error in form.question.errors %}
-            <span>{{ error }}</span>
-            <br>
-        {% endfor %}
-        {{ form.question(rows="3", class="mathjax-textarea-input") }}
-        <br>
-        <br>
-
-        {{ form.answer.label }}<br>
-        {% for error in form.answer.errors %}
-            <span>{{ error }}</span>
-            <br>
-        {% endfor %}
-        {{ form.answer(rows="10", class="mathjax-textarea-input") }}
-
-        <p>Preview:</p>
-
-        <div id="mathjax-question-preview" style="border:1px solid; padding: 3px; margin-top:5px"></div>
-        <div id="mathjax-question-buffer" style="border:1px solid; padding: 3px; margin-top:5px; visibility:hidden; position:absolute; top:0; left: 0"></div>
-
-        <div id="mathjax-answer-preview" style="border:1px solid; padding: 3px; margin-top:5px"></div>
-        <div id="mathjax-answer-buffer" style="border:1px solid; padding: 3px; margin-top:5px; visibility:hidden; position:absolute; top:0; left: 0"></div>
-
-
-        <br>
-        <input type='submit' value='Submit!'/>
-    </form>
-
+                <button type="button" @click="addNewStep">New Step</button>
+            </div>
+            <br/>
+            <input @click="validateBeforeSubmit($event)" type='submit' value='Submit Post'/>
+        </form>
+    </div>
 
 
 
 {% endblock %}
 
 {% block body_scripts %}
-    <script>
-        Preview.Init();
-
-        $('#question').keyup(function() {
-            Preview.Update();
-        });
-
-        $('#answer').keyup(function() {
-            Preview.Update();
-        });
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="text/javascript" src="/static/js/vue/util.js"></script>
+    <script type="text/javascript" src="/static/js/vue/mathjax.js"></script>
+    <script type="text/javascript" src="/static/js/vue/edit_post_app.js"></script>
 {% endblock %}

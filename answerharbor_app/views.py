@@ -4,10 +4,11 @@
 
 import answerharbor_app.breadcrumbs as breadcrumbs
 from datetime import datetime
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, jsonify
 from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy import or_
 from answerharbor_app import app, db
+import answerharbor_app.helpers.view_helpers as view_helpers
 from answerharbor_app.models.forms import LoginForm, RegisterForm, NewPostForm,\
     EditPostForm, NewHomeworkForm
 from answerharbor_app.models.user import User
@@ -79,7 +80,9 @@ def new_homework():
 
         return redirect(url_for('course', course_id=course_id))
 
-    return render_template('newhomework.html', form=form, course_id=course_id)
+    new_homework_breadcrumbs = breadcrumbs.new_homework_breadcrumb_path()
+
+    return render_template('newhomework.html', form=form, course_id=course_id, breadcrumbs=new_homework_breadcrumbs)
 
 
 @app.route('/newpost', methods=['GET', 'POST'])
@@ -88,42 +91,21 @@ def new_post():
     homework_id = request.args['homework_id']
     if homework_id is None:
         return redirect('/')
-    hw = Homework.query.filter_by(id=homework_id).first()
 
     if request.method == 'POST':
-        # Get question text
-        question_text = request.form['question_input']
-        if question_text is None:
+        try:
+            the_post = view_helpers.get_post_from_request(request)
+            db.session.add(the_post)
+            db.session.commit()
+        except RuntimeError:
+            # If error occurred just redirect back to home page for now
             return redirect('/')
-
-        # Steps may have missing name ids (if the user deleted a step)
-        # Get only keys that are for step inputs
-        steps = []
-        for key, value in request.form.iteritems():
-            if 'step_input_' in key:
-                steps.append(Step(number=int(key.replace('step_input_', '')), text=value))
-
-        # Steps may be out of order from dictionary.
-        # Sort by the step number
-        steps.sort(key=lambda x: x.number)
-
-        # Re-index the step numbers so that they are contiguous
-        for idx, step in enumerate(steps):
-            step.number = idx+1
-
-        now = datetime.now()
-        the_post = Post(question=question_text,\
-                        creation_date=now,\
-                        last_edit_date=now,\
-                        user=current_user,\
-                        homework=hw,
-                        steps=steps)
-        db.session.add(the_post)
-        db.session.commit()
 
         return redirect(url_for('post', post_id=the_post.id))
 
-    return render_template('newpost.html', homework_id=homework_id)
+    new_post_breadcrumbs = breadcrumbs.new_post_breadcrumb_path()
+
+    return render_template('newpost.html', homework_id=homework_id, breadcrumbs=new_post_breadcrumbs)
 
 
 @app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])
@@ -134,26 +116,44 @@ def edit_post(post_id):
         return redirect('/')
 
     homework_id = request.args['homework_id']
-    the_post = Post.query.filter_by(id=post_id).first()
-    if the_post is None:
+    if homework_id is None:
+        return redirect('/')
+
+    post_to_edit = Post.query.filter_by(id=post_id).first()
+    if post_to_edit is None:
         # Redirect to home page if we didn't find the correct post
         return redirect('/')
 
-    form = EditPostForm()
-
-    # Check if user is initially loading the form
-    if request.method == 'GET':
-        form.question.data = the_post.question
-        form.answer.data = the_post.answer
-
-    if form.validate_on_submit():
-        form.populate_obj(the_post)
-
-        # Don't need db.session.add() here because post was already added
+    if request.method == 'POST':
+        # Update post from form
+        post_to_edit.question = view_helpers.get_question_from_request(request)
+        post_to_edit.steps = view_helpers.get_steps_from_request(request)
         db.session.commit()
+
         return redirect(url_for('post', post_id=post_id))
 
-    return render_template('editpost.html', form=form, post=the_post, homework_id=homework_id)
+    edit_post_breadcrumbs = breadcrumbs.edit_post_breadcrumb_path()
+
+    return render_template('editpost.html', post=post_to_edit, homework_id=homework_id, breadcrumbs=edit_post_breadcrumbs)
+
+
+@app.route('/post_data/<int:post_id>')
+@login_required
+def post_data(post_id):
+    requested_post = Post.query.filter_by(id=post_id).first()
+    question_text = requested_post.question
+    steps = []
+    for step in requested_post.steps:
+        print step
+        steps.append({
+            'number': step.number,
+            'text': step.text
+        })
+
+    return jsonify({
+        'question': question_text,
+        'steps': steps
+    })
 
 
 @app.route('/deletepost/<int:post_id>')

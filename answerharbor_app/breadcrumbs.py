@@ -48,6 +48,18 @@ def homework_breadcrumb_path():
     ]
 
 
+def new_homework_breadcrumb_path():
+    course_id = request.args['course_id']
+    selected_course = Course.query.filter_by(id=course_id).first()
+
+    return [
+        home_breadcrumb(),
+        school_breadcrumb(selected_course.school),
+        course_breadcrumb(selected_course),
+        new_homework_breadcrumb()
+    ]
+
+
 def post_breadcrumb_path():
     post_id = request.view_args['post_id']
     selected_post = Post.query.filter_by(id=post_id).first()
@@ -58,6 +70,30 @@ def post_breadcrumb_path():
         course_breadcrumb(selected_post.homework.course),
         homework_breadcrumb(selected_post.homework),
         post_breadcrumb(selected_post)
+    ]
+
+def new_post_breadcrumb_path():
+    homework_id = request.args['homework_id']
+    selected_homework = Homework.query.filter_by(id=homework_id).first()
+
+    return [
+        home_breadcrumb(),
+        school_breadcrumb(selected_homework.course.school),
+        course_breadcrumb(selected_homework.course),
+        homework_breadcrumb(selected_homework),
+        new_post_breadcrumb()
+    ]
+
+def edit_post_breadcrumb_path():
+    homework_id = request.args['homework_id']
+    selected_homework = Homework.query.filter_by(id=homework_id).first()
+
+    return [
+        home_breadcrumb(),
+        school_breadcrumb(selected_homework.course.school),
+        course_breadcrumb(selected_homework.course),
+        homework_breadcrumb(selected_homework),
+        edit_post_breadcrumb()
     ]
 
 
@@ -88,6 +124,13 @@ def homework_breadcrumb(selected_homework):
     }
 
 
+def new_homework_breadcrumb():
+    return {
+        'text': 'New Homework',
+        'url': '#'
+    }
+
+
 def post_breadcrumb(selected_post):
     max_length = 40
     question_text = selected_post.question
@@ -97,4 +140,18 @@ def post_breadcrumb(selected_post):
     return {
         'text': question_text,
         'url': url_for('post', post_id=selected_post.id)
+    }
+
+
+def new_post_breadcrumb():
+    return {
+        'text': 'New Post',
+        'url': '#'
+    }
+
+
+def edit_post_breadcrumb():
+    return {
+        'text': 'Edit Post',
+        'url': '#'
     }

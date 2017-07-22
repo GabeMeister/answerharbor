@@ -27,3 +27,6 @@ import answerharbor_app.models.login
 
 # The views
 from answerharbor_app import views
+
+# The helpers
+from answerharbor_app.helpers import view_helpers

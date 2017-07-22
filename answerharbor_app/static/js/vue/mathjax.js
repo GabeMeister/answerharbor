@@ -16,6 +16,8 @@ function StepGroup(name) {
     const bufferPrefix = 'buffer';
     const previewPrefix = 'preview';
 
+    var self = this;
+
     this.currentID = 0;
     this.name = name;
     this.steps = [];
@@ -24,12 +26,23 @@ function StepGroup(name) {
         return this.steps[this.steps.length - 1];
     };
 
+    this.generateID = function(prefix) {
+        return prefix + "_" + this.currentID.toString();
+    }
+
+    this.createNewStep = function(text = '', html = '') {
+        var newInputNameID = this.generateID(this.name + "_" + inputPrefix);
+        var newBufferID = this.generateID(this.name + "_" + bufferPrefix);
+        var newPreviewID = this.generateID(this.name + "_" + previewPrefix);
+        var newText = text;
+        var newHtml = html;
+
+        return new MathjaxInput(newInputNameID, newBufferID, newPreviewID, newText, newHtml);
+    }
+
     this.addNewStep = function() {
         this.currentID += 1;
 
-        var newInputNameID = name + "_" + inputPrefix + "_" + this.currentID.toString();
-        var newBufferID = name + "_" + bufferPrefix + "_" + this.currentID.toString();
-        var newPreviewID = name + "_" + previewPrefix + "_" + this.currentID.toString();
         var newText = '';
         var newHtml = '';
 
@@ -39,6 +52,17 @@ function StepGroup(name) {
             newHtml = lastStep.html;
         }
 
-        this.steps.push(new MathjaxInput(newInputNameID, newBufferID, newPreviewID, newText, newHtml));
+        this.steps.push(this.createNewStep(newText, newHtml));
+    };
+
+    this.initStepsFromList = function(stepsList) {
+        this.currentID = 0;
+        this.steps = [];
+
+        stepsList.forEach(function(step) {
+            self.currentID += 1;
+            var newStep = self.createNewStep(step.text);
+            self.steps.push(newStep);
+        });
     };
 }

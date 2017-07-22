@@ -19,14 +19,14 @@ class Step(db.Model):
     post = relationship('Post', back_populates='steps')
 
 
-#     def __str__(self):
-#         return """Number: {0}
-# Text: {1}""".format(self.number, self.text)
+    def __str__(self):
+        return """Number: {0}
+Text: {1}""".format(self.number, self.text)
 
 
-#     def info(self):
-#         return """Number: {0}
-# Text: {1}
-# Post: {2}""".format(self.number,
-#                     self.text,
-#                     self.post)
+    def info(self):
+        return """Number: {0}
+Text: {1}
+Post: {2}""".format(self.number,
+                    self.text,
+                    self.post)

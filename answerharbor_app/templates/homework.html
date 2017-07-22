@@ -6,7 +6,6 @@
         MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-    <script src="/static/js/mathjax.js"></script>
 
 {% endblock %}
 
@@ -18,10 +17,14 @@
         <a href="{{ url_for('new_post', homework_id=homework.id) }}">New Post</a>
     {% endif %}
 
-    {% for post in posts %}
-        <div class="post">
-            <span><a href="/post/{{ post.id }}">{{ post.question }}</a></span><br>
-        </div>
-    {% endfor %}
+    {% if posts|length > 0 %}
+        {% for post in posts %}
+            <div class="post">
+                <span><a href="/post/{{ post.id }}">{{ post.question }}</a></span><br>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h2>Hmm, looks like this homework doesn't have any answers yet. Check back soon.</h2>
+    {% endif %}
 
 {% endblock %}
