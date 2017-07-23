@@ -140,6 +140,7 @@ def edit_post(post_id):
 @app.route('/post_data/<int:post_id>')
 @login_required
 def post_data(post_id):
+    logger.info(post_id)
     requested_post = Post.query.filter_by(id=post_id).first()
     if requested_post is None:
         return jsonify({})
@@ -220,11 +221,10 @@ def homework(homework_id):
 @app.route('/post/<int:post_id>')
 def post(post_id):
     selected_post = Post.query.filter_by(id=post_id).first()
-    logger.error(selected_post)
     if selected_post is None:
         # Redirect to home page if we couldn't find the correct post
         return redirect('/')
-    logger.error('here')
-    post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
-    return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
 
+    post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
+
+    return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
