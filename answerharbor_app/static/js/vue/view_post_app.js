@@ -28,28 +28,26 @@ var app = new Vue({
 
             // Database call to get the post
             var postID = $('#post-id').text();
-            console.log('post id: ', postID);
 
             axios.get('/post_data/'+postID)
-                .then(function(response) {
-                    console.log(response);
-                    vm.question.text = response.data.question;
-                    vm.update(vm.question);
-                    vm.stepGroup.initStepsFromList(response.data.steps);
+            .then(function(response) {
+                vm.question.text = response.data.question;
+                vm.update(vm.question);
+                vm.stepGroup.initStepsFromList(response.data.steps);
 
-                    // Steps need to be hidden initially from the user.
-                    // Hide all but the first step.
-                    vm.stepGroup.steps[0].visible = true;
+                // Steps need to be hidden initially from the user.
+                // Hide all but the first step.
+                vm.stepGroup.steps[0].visible = true;
 
-                    for(var i = 1; i < vm.stepGroup.steps.length; i++) {
-                        vm.stepGroup.steps[i].visible = false;
-                    }
+                for(var i = 1; i < vm.stepGroup.steps.length; i++) {
+                    vm.stepGroup.steps[i].visible = false;
+                }
 
-                    vm.updateAll();
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
+                vm.updateAll();
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
 
         },
         update: function(input) {

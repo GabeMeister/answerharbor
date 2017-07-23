@@ -138,9 +138,7 @@ def edit_post(post_id):
 
 
 @app.route('/post_data/<int:post_id>')
-@login_required
 def post_data(post_id):
-    logger.info(post_id)
     requested_post = Post.query.filter_by(id=post_id).first()
     if requested_post is None:
         return jsonify({})
