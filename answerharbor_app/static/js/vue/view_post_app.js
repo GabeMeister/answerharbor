@@ -32,6 +32,7 @@ var app = new Vue({
 
             axios.get('/post_data/'+postID)
                 .then(function(response) {
+                    console.log(response);
                     vm.question.text = response.data.question;
                     vm.update(vm.question);
                     vm.stepGroup.initStepsFromList(response.data.steps);
