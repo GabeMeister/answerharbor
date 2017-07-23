@@ -127,7 +127,7 @@ var app = new Vue({
                     // Disable the button for 5 seconds to let the user write the answer down
                     _.delay(function() {
                         vm.nextAvailable = true;
-                    }, 2000);
+                    }, 5000);
 
                     break;
                 }

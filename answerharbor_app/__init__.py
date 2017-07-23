@@ -1,11 +1,18 @@
 """ Initialize the package """
 
-# pylint: disable=C0103,C0111,C0413,C0412
+# pylint: disable=C0103,C0111,C0413,C0412,C0411
 
 # The application
 from answerharbor_app.application import create_app
 app = create_app()
 app.config.from_pyfile('config.py')
+
+
+# The logging
+import logging
+logger = logging.getLogger()
+log_handler = logging.FileHandler('/var/tmp/answerharbor.log')
+logger.addHandler(log_handler)
 
 
 # The database
@@ -28,5 +35,8 @@ import answerharbor_app.models.login
 # The views
 from answerharbor_app import views
 
+
 # The helpers
 from answerharbor_app.helpers import view_helpers
+
+

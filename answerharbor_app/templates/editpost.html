@@ -7,7 +7,7 @@
 {% block content %}
     <div id="app">
         <form method="post" action="{{ url_for('edit_post', post_id=post.id, homework_id=homework_id) }}">
-            <span id="post-id" style="visibility:hidden;">{{post.id}}</span>
+            <span id="post-id" style="display: none;">{{post.id}}</span>
             <h1>Edit Post:</h1>
 
             <h3>Question:</h3>

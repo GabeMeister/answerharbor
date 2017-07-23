@@ -5,7 +5,7 @@
 
 {% block content %}
     <div id='app'>
-        <span id='post-id' style="visibility: hidden">{{ post.id }}</span>
+        <span id='post-id' style="display: none;">{{ post.id }}</span>
         <br/>
         <br/>
         {% if current_user.is_authenticated and current_user.is_admin %}

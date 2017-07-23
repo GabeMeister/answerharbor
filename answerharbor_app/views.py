@@ -2,12 +2,12 @@
 
 # pylint: disable=C0103,C0111,E1101,C0301
 
-import answerharbor_app.breadcrumbs as breadcrumbs
 from datetime import datetime
 from flask import render_template, redirect, request, url_for, jsonify
 from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy import or_
-from answerharbor_app import app, db
+import answerharbor_app.breadcrumbs as breadcrumbs
+from answerharbor_app import app, db, logger
 import answerharbor_app.helpers.view_helpers as view_helpers
 from answerharbor_app.models.forms import LoginForm, RegisterForm, NewPostForm,\
     EditPostForm, NewHomeworkForm
@@ -220,11 +220,11 @@ def homework(homework_id):
 @app.route('/post/<int:post_id>')
 def post(post_id):
     selected_post = Post.query.filter_by(id=post_id).first()
+    logger.error(selected_post)
     if selected_post is None:
         # Redirect to home page if we couldn't find the correct post
         return redirect('/')
-
+    logger.error('here')
     post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
-
     return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
 
