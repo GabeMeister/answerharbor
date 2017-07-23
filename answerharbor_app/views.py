@@ -141,6 +141,11 @@ def edit_post(post_id):
 @login_required
 def post_data(post_id):
     requested_post = Post.query.filter_by(id=post_id).first()
+    if requested_post is None:
+        return jsonify({})
+
+    # Because sqlalchemy objects cannot be jsonified, we build up a temporary
+    # data structures to jsonify and send it back to the client
     question_text = requested_post.question
     steps = []
     for step in requested_post.steps:
@@ -222,3 +227,4 @@ def post(post_id):
     post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
 
     return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
+

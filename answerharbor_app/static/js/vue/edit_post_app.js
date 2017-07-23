@@ -23,11 +23,15 @@ var app = new Vue({
                     vm.question.text = response.data.question;
                     vm.update(vm.question);
                     vm.stepGroup.initStepsFromList(response.data.steps);
+
+                    vm.$validator.updateDictionary(Validator.customErrorMessages());
+
                     vm.updateAll();
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
+
 
         },
         update: function(input) {
@@ -94,8 +98,8 @@ var app = new Vue({
         },
         deleteStep: function(step) {
             if(this.stepGroup.steps.length > 1){
-                var index = _.indexOf(this.stepGroup.steps, step);
-                this.stepGroup.steps.splice(index, 1);
+                var stepInputNameID = step.inputNameID;
+                this.stepGroup.deleteStep(step);
             }
         },
         validateBeforeSubmit: function(event) {

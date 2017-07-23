@@ -25,7 +25,7 @@ $x-btn-width: 128px;
 .hidden-buffer {
     position: absolute;
     bottom: 0px;
-    right: 300px;
+    right: 0px;
     visibility: hidden;
 }
 
@@ -68,3 +68,14 @@ $x-btn-width: 128px;
     cursor: pointer;
 }
 /**** END NEW POST CSS ****/
+
+/**** VIEW POST CSS ****/
+.hidden-step {
+    display: none;
+}
+
+.step-chunk {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 3px;
+}

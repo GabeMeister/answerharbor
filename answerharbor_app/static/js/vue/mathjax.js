@@ -55,6 +55,11 @@ function StepGroup(name) {
         this.steps.push(this.createNewStep(newText, newHtml));
     };
 
+    this.deleteStep = function(step) {
+        var index = _.indexOf(this.steps, step);
+        this.steps.splice(index, 1);
+    }
+
     this.initStepsFromList = function(stepsList) {
         this.currentID = 0;
         this.steps = [];

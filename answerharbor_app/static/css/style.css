@@ -18,7 +18,7 @@
 .hidden-buffer {
   position: absolute;
   bottom: 0px;
-  right: 300px;
+  right: 0px;
   visibility: hidden; }
 
 .row {
@@ -54,3 +54,11 @@
   cursor: pointer; }
 
 /**** END NEW POST CSS ****/
+/**** VIEW POST CSS ****/
+.hidden-step {
+  display: none; }
+
+.step-chunk {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 3px; }

@@ -37,7 +37,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
     <script src="https://unpkg.com/vue@2.4.1/dist/vue.js"></script>
     <script src="https://unpkg.com/vee-validate@2.0.0-rc.7/dist/vee-validate.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+    <script type="text/javascript" src="/static/js/vue/util.js"></script>
+    <script type="text/javascript" src="/static/js/vue/validation.js"></script>
+    <script type="text/javascript" src="/static/js/vue/mathjax.js"></script>
     <script src="/static/js/build.js"></script>
+
     {% block body_scripts %}
     {% endblock %}
 </body>
