@@ -28,6 +28,7 @@ var app = new Vue({
 
             // Database call to get the post
             var postID = $('#post-id').text();
+            console.log('post id: ', postID);
 
             axios.get('/post_data/'+postID)
                 .then(function(response) {
