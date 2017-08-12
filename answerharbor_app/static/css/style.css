@@ -1,3 +1,7 @@
+.body-content {
+  width: 1024px;
+  margin: auto; }
+
 .mathjax-textarea-input {
   width: 100%; }
 
@@ -8,10 +12,6 @@
   margin-top: 10px;
   border-radius: 4px;
   box-sizing: border-box; }
-
-.body-content {
-  width: 900px;
-  margin: auto; }
 
 /**** NEW POST CSS ****/
 .hidden-buffer {
@@ -52,7 +52,6 @@
 .x-btn:hover {
   cursor: pointer; }
 
-/**** END NEW POST CSS ****/
 /**** VIEW POST CSS ****/
 .hidden-step {
   display: none; }

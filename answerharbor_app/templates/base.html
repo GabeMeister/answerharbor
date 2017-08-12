@@ -49,10 +49,16 @@
         </nav>
 
         <div>
-            {% for breadcrumb in breadcrumbs %}
-                <a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a>
-                {{ '>' if not loop.last }}
-            {% endfor %}
+            {% if breadcrumbs|length > 0 %}
+                <ul class="breadcrumb">
+                    {% for breadcrumb in breadcrumbs %}
+                        <li>
+                            <a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a>
+                        </li>
+                        <!-- {{ '>' if not loop.last }} -->
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
 
         {% block content %}

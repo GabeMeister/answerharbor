@@ -2,8 +2,6 @@
 
 {% block content %}
     {% if current_user.is_authenticated and current_user.is_admin %}
-        <br>
-        <br>
         <a href="{{ url_for('new_homework', course_id=course_id) }}">New Homework</a>
     {% endif %}
 

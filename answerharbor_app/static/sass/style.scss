@@ -4,6 +4,11 @@ $pale-gray: #f2f2f2;
 $gray: #9e9e9e;
 $pale-mint-green: #f4fff2;
 
+.body-content {
+    width: 1024px;
+    margin: auto;
+}
+
 .mathjax-textarea-input {
     width: 100%;
 }
@@ -15,11 +20,6 @@ $pale-mint-green: #f4fff2;
     margin-top: 10px;
     border-radius: 4px;
     box-sizing: border-box;
-}
-
-.body-content {
-    width: 900px;
-    margin: auto;
 }
 
 /**** NEW POST CSS ****/
@@ -70,7 +70,6 @@ $x-btn-width: 128px;
 .x-btn:hover {
     cursor: pointer;
 }
-/**** END NEW POST CSS ****/
 
 /**** VIEW POST CSS ****/
 .hidden-step {
