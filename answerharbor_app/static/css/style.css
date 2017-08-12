@@ -2,13 +2,12 @@
   width: 100%; }
 
 .post {
-  border: 1px solid gray;
+  border: 1px solid #e8e8e8;
+  background-color: #f2f2f2;
   padding: 10px;
-  border-radius: 5px;
+  margin-top: 10px;
+  border-radius: 4px;
   box-sizing: border-box; }
-
-.post:not(:first-child) {
-  margin-top: 20px; }
 
 .body-content {
   width: 900px;
@@ -58,7 +57,12 @@
 .hidden-step {
   display: none; }
 
+.answer-separator {
+  border-top: 2px solid #9e9e9e; }
+
 .step-chunk {
-  border: 1px solid black;
-  border-radius: 5px;
-  margin-bottom: 3px; }
+  margin-bottom: 10px; }
+
+.step-chunk:not(:first-child) {
+  padding-top: 10px;
+  border-top: 1px solid #9e9e9e; }
