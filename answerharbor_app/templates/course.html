@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if current_user.is_authenticated and current_user.is_admin %}
-        <a href="{{ url_for('new_homework', course_id=course_id) }}">New Homework</a>
-    {% endif %}
-
     {% if homeworks|length > 0 %}
         <h2>Select your Homework:</h2>
         <ul>
@@ -16,4 +12,8 @@
         <h2>Hmm, we couldn't find any homeworks for this course.</h2>
     {% endif %}
 
+    {% if current_user.is_authenticated and current_user.is_admin %}
+        <br/>
+        <a class="btn btn-primary" role="button" href="{{ url_for('new_homework', course_id=course_id) }}">New Homework</a>
+    {% endif %}
 {% endblock %}

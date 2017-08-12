@@ -10,11 +10,6 @@
 {% endblock %}
 
 {% block content %}
-
-    {% if current_user.is_authenticated and current_user.is_admin %}
-        <a href="{{ url_for('new_post', homework_id=homework.id) }}">New Post</a>
-    {% endif %}
-
     {% if posts|length > 0 %}
         {% for post in posts %}
             <div class="post">
@@ -25,4 +20,8 @@
         <h2>Hmm, looks like this homework doesn't have any answers yet. Check back soon.</h2>
     {% endif %}
 
+    {% if current_user.is_authenticated and current_user.is_admin %}
+        <br/>
+        <a class="btn btn-primary" role="button" href="{{ url_for('new_post', homework_id=homework.id) }}">New Post</a>
+    {% endif %}
 {% endblock %}

@@ -7,8 +7,8 @@
     <div id='app'>
         <span id='post-id' style="display: none;">{{ post.id }}</span>
         {% if current_user.is_authenticated and current_user.is_admin %}
-            <a href="{{ url_for('edit_post', post_id=post.id, homework_id=post.homework.id) }}">Edit</a><span> |</span>
-            <a href="{{ url_for('delete_post', post_id=post.id, homework_id=post.homework.id) }}" class="confirm-link-click">Delete</a>
+            <a class="btn btn-default" role="button" href="{{ url_for('edit_post', post_id=post.id, homework_id=post.homework.id) }}">Edit</a>
+            <a class="btn btn-default confirm-link-click" role="button" href="{{ url_for('delete_post', post_id=post.id, homework_id=post.homework.id) }}">Delete</a>
         {% endif %}
 
         <div>
