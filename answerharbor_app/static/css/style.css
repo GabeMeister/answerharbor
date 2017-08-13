@@ -1,10 +1,13 @@
+/**** GENERAL CSS ****/
 .body-content {
   width: 1024px;
   margin: auto; }
 
+/**** MATHJAX CSS ****/
 .mathjax-textarea-input {
   width: 100%; }
 
+/**** HOMEWORK CSS ****/
 .post {
   border: 1px solid #e8e8e8;
   background-color: #f2f2f2;

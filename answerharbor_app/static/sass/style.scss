@@ -4,15 +4,18 @@ $pale-gray: #f2f2f2;
 $gray: #9e9e9e;
 $pale-mint-green: #f4fff2;
 
+/**** GENERAL CSS ****/
 .body-content {
     width: 1024px;
     margin: auto;
 }
 
+/**** MATHJAX CSS ****/
 .mathjax-textarea-input {
     width: 100%;
 }
 
+/**** HOMEWORK CSS ****/
 .post {
     border: 1px solid $grey-border-color;
     background-color: $pale-gray;
@@ -23,8 +26,6 @@ $pale-mint-green: #f4fff2;
 }
 
 /**** NEW POST CSS ****/
-$x-btn-width: 128px;
-
 .hidden-buffer {
     position: absolute;
     bottom: 0px;
@@ -32,6 +33,7 @@ $x-btn-width: 128px;
     visibility: hidden;
 }
 
+$x-btn-width: 128px;
 .row {
     border: 1px solid black;
     height: $x-btn-width;
