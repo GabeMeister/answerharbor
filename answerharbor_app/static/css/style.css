@@ -51,6 +51,10 @@ a:hover {
 .card-link-text {
   margin-top: 0px; }
 
+/**** COURSE LIST CSS ****/
+.card.course-card {
+  flex-direction: column; }
+
 /**** HOMEWORK CSS ****/
 .post {
   border: 1px solid #e8e8e8;
