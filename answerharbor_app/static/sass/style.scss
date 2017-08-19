@@ -1,6 +1,9 @@
 $grey-border-color: #e8e8e8;
 $pale-yellow: #fffce0;
 $pale-gray: #f2f2f2;
+$dark-gray: #546e7a;
+$darker-gray: #4A616C;
+$pale-blue: #d1e2ff;
 $gray: #9e9e9e;
 $pale-mint-green: #f4fff2;
 
@@ -13,6 +16,49 @@ $pale-mint-green: #f4fff2;
 /**** MATHJAX CSS ****/
 .mathjax-textarea-input {
     width: 100%;
+}
+
+/**** SCHOOL LIST CSS ****/
+.school-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-wrapper {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 30%;
+    height: 200px;
+}
+
+.card {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    background: linear-gradient($dark-gray, $darker-gray);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2)
+}
+
+.card:hover {
+    background: none;
+    background-color: $darker-gray;
+}
+
+.card-link:hover {
+    text-decoration: none;
+    margin-top: 0px;
+}
+
+.card-link-text {
+    margin-top: 0px;
 }
 
 /**** HOMEWORK CSS ****/

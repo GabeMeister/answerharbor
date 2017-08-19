@@ -6,11 +6,19 @@
 {% block content %}
 
     <h2>Select your School:</h2>
-    <ul>
-        {% for school in schools %}
-            <li><a href="/school/{{ school.id }}">{{ school.full_name }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="school-list-wrapper">
+        <div class="school-list">
+            {% for school in schools %}
+                <div class="card-wrapper">
+                    <a class="card-link" href="/school/{{ school.id }}">
+                        <div class="card">
+                            <h2 class="card-link-text">{{ school.full_name }}</h2>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 
 {% endblock %}

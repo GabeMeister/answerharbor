@@ -24,8 +24,6 @@ from werkzeug.security import generate_password_hash
 @app.route('/index')
 def index():
     schools = School.query\
-        .filter(or_(School.full_name == 'Test School',\
-                    School.full_name == 'Washington State University'))\
         .order_by(School.full_name)\
         .all()
     return render_template('index.html', schools=schools)

@@ -64,12 +64,20 @@ def insert_schools():
     #     db.session.add(new_school)
 
     # db.session.commit()
+    schools = [
+        'University of Idaho',
+        'Eastern Washington University',
+        'Western Washington University',
+        'Gonzaga'
+    ]
 
-    new_school = School(full_name='Test School')
-    db.session.add(new_school)
+    for school in schools:
+        new_school = School(full_name=school)
+        db.session.add(new_school)
+
     db.session.commit()
 
-    print 'Done!'
+    print 'Done!!'
 
 
 @manager.command
