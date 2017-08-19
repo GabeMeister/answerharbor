@@ -13,6 +13,16 @@ $pale-mint-green: #f4fff2;
     margin: auto;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
+.page-title-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
 /**** MATHJAX CSS ****/
 .mathjax-textarea-input {
     width: 100%;
