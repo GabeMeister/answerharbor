@@ -8,26 +8,24 @@
             </div>
         </div>
 
-        <div class="school-list-wrapper">
-            <div class="school-list">
-                {% for course in courses %}
-                    <div class="card-wrapper">
-                        <a class="card-link" href="{{ url_for('course', course_id=course.id) }}">
-                            <div class="card course-card">
-                                <div>
-                                    <h2 class="card-link-text">{{ course.subject }} {{ course.number }}</h2>
-                                </div>
-                                <div>
-                                    <h4>Prof: {{ course.professor_name }}</h4>
-                                </div>
-                                <div>
-                                    <h4>{{ course.course_times }}</h4>
-                                </div>
+        <div class="card-list">
+            {% for course in courses %}
+                <div class="card-wrapper">
+                    <a class="card-link" href="{{ url_for('course', course_id=course.id) }}">
+                        <div class="card course-card">
+                            <div>
+                                <h2 class="card-link-text">{{ course.subject }} {{ course.number }}</h2>
                             </div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
+                            <div>
+                                <h4>Prof: {{ course.professor_name }}</h4>
+                            </div>
+                            <div>
+                                <h4>{{ course.course_times }}</h4>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
     {% else %}
         <h2>Hmm, we couldn't find any classes for this school.</h2>

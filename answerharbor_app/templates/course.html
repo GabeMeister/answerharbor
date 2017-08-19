@@ -2,12 +2,29 @@
 
 {% block content %}
     {% if homeworks|length > 0 %}
-        <h2>Select your Homework:</h2>
-        <ul>
+        <div class="page-title-wrapper">
+            <div class="page-title">
+                <h1>Select your Homework:</h1>
+            </div>
+        </div>
+
+        <div class="card-list">
             {% for homework in homeworks %}
-                <li><a href="{{ url_for('homework', homework_id=homework.id) }}">{{ homework.title }}</a> (Due {{ homework.due_date }})</li>
+                <div class="card-wrapper">
+                    <a class="card-link" href="{{ url_for('homework', homework_id=homework.id) }}">
+                        <div class="card course-card">
+                            <div>
+                                <h2 class="card-link-text">{{ homework.title }}</h2>
+                            </div>
+                            <!-- TODO: Make the date pretty -->
+                            <!-- <div>
+                                <h4>Due: {{ homework.due_date }}</h4>
+                            </div> -->
+                        </div>
+                    </a>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <h2>Hmm, we couldn't find any homeworks for this course.</h2>
     {% endif %}

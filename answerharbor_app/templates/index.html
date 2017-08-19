@@ -10,18 +10,16 @@
             <h1>Select your School:</h1>
         </div>
     </div>
-    <div class="school-list-wrapper">
-        <div class="school-list">
-            {% for school in schools %}
-                <div class="card-wrapper">
-                    <a class="card-link" href="/school/{{ school.id }}">
-                        <div class="card">
-                            <h2 class="card-link-text">{{ school.full_name }}</h2>
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+    <div class="card-list">
+        {% for school in schools %}
+            <div class="card-wrapper">
+                <a class="card-link" href="/school/{{ school.id }}">
+                    <div class="card">
+                        <h2 class="card-link-text">{{ school.full_name }}</h2>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
     </div>
 
 

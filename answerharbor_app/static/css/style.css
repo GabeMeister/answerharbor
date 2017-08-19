@@ -16,7 +16,7 @@ a:hover {
   width: 100%; }
 
 /**** SCHOOL LIST CSS ****/
-.school-list {
+.card-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center; }
