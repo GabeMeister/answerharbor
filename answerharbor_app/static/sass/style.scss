@@ -38,7 +38,7 @@ $pale-mint-green: #f4fff2;
     padding: 20px;
     color: white;
     text-decoration: none;
-    background: linear-gradient($dark-gray, $darker-gray);
+    background-color: $dark-gray;
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -48,7 +48,6 @@ $pale-mint-green: #f4fff2;
 }
 
 .card:hover {
-    background: none;
     background-color: $darker-gray;
 }
 
