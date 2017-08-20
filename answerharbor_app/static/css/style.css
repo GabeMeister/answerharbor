@@ -12,6 +12,10 @@ a:hover {
   justify-content: center;
   margin-bottom: 20px; }
 
+/**** TEXT ****/
+.light-gray {
+  color: #B0B0B0; }
+
 /**** SIGN UP FORM CSS ****/
 .signup-form-wrapper {
   display: flex;

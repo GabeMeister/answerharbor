@@ -1,6 +1,7 @@
 $grey-border-color: #e8e8e8;
 $pale-yellow: #fffce0;
 $pale-gray: #f2f2f2;
+$light-gray: #B0B0B0;
 $dark-gray: #546e7a;
 $darker-gray: #4A616C;
 $pale-blue: #d1e2ff;
@@ -22,6 +23,11 @@ a:hover {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+}
+
+/**** TEXT ****/
+.light-gray {
+    color: $light-gray;
 }
 
 /**** SIGN UP FORM CSS ****/

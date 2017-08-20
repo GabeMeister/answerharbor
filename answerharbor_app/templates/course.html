@@ -16,10 +16,9 @@
                             <div>
                                 <h2 class="card-link-text">{{ homework.title }}</h2>
                             </div>
-                            <!-- TODO: Make the date pretty -->
-                            <!-- <div>
-                                <h4>Due: {{ homework.due_date }}</h4>
-                            </div> -->
+                            <div>
+                                <h4 class="light-gray">Due: {{ homework.pretty_date() }}</h4>
+                            </div>
                         </div>
                     </a>
                 </div>

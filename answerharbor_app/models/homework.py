@@ -30,3 +30,6 @@ class Homework(db.Model):
             buf += str(post) + '\n'
 
         return buf
+
+    def pretty_date(self):
+        return self.due_date.strftime('%a, %b %d, %Y at %I:%M %p')
