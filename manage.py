@@ -79,6 +79,21 @@ def insert_schools():
 
     print 'Done!!'
 
+@manager.command
+def insert_course():
+    the_school = School.query.filter_by(full_name='Washington State University').first()
+
+    new_course = Course(subject='Physics',
+                        number=201,
+                        professor_name='Nicholas Cerruti',
+                        course_times='{0} {1}'.format('MWF', '12:10pm-1pm'),
+                        school=the_school)
+
+    db.session.add(new_course)
+    db.session.commit()
+    print 'Done!'
+
+
 
 @manager.command
 def insert_courses():
