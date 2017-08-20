@@ -1,3 +1,5 @@
+const SECONDS_DELAY = 5;
+
 var app = new Vue({
     el: '#app',
     data: {
@@ -8,7 +10,9 @@ var app = new Vue({
         pending: false,
         timeoutID: 0,
         delay: 150,
-        nextAvailable: true
+        nextAvailable: true,
+        secondsLeft: SECONDS_DELAY,
+        timerID: 0
     },
     computed: {
         allStepsShowing: function() {
@@ -110,8 +114,6 @@ var app = new Vue({
             input.html = $('#'+input.bufferID).html();
         },
         showNextStep: function() {
-            var vm = this;
-
             this.nextAvailable = false;
 
             // Find the first step that isn't hidden
@@ -124,10 +126,15 @@ var app = new Vue({
                     // have to call Vue.set()
                     Vue.set(this.stepGroup.steps, i, step);
 
-                    // Disable the button for 5 seconds to let the user write the answer down
-                    _.delay(function() {
-                        vm.nextAvailable = true;
-                    }, 5000);
+                    // Disable the button for a certain time to let the user write the step down
+                    this.timerID = setInterval(() => {
+                        this.secondsLeft = this.secondsLeft - 1;
+                        if(this.secondsLeft === 0) {
+                            this.nextAvailable = true;
+                            this.secondsLeft = SECONDS_DELAY;
+                            clearInterval(this.timerID);
+                        }
+                    }, 1000);
 
                     break;
                 }
