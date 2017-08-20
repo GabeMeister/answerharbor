@@ -1,42 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Sign Up</h2>
 
-<form action="/signup" method="post">
-    {{ form.hidden_tag() }}
+<div class="page-title-wrapper">
+    <div class="page-title">
+        <h1>Sign Up</h1>
+    </div>
+</div>
 
-    {{ form.username.label }}<br>
-    {{ form.username }}
-    {% for error in form.username.errors %}
-        <span>{{ error }}</span>
-    {% endfor %}
-    <br>
+<div class="signup-form-wrapper">
+    <div class="signup-form">
+        <form action="/signup" method="post">
+            {{ form.hidden_tag() }}
 
-    {{ form.email.label }}<br>
-    {{ form.email }}
-    {% for error in form.email.errors %}
-        <span>{{ error }}</span>
-    {% endfor %}
-    <br>
+            {{ form.username.label }}<br>
+            {{ form.username(class="form-control", placeholder='Username') }}
+            {% for error in form.username.errors %}
+                <div>
+                    <span class="text-muted">{{ error }}</span>
+                </div>
+            {% endfor %}
+            <br>
 
-    {{ form.password.label }}<br>
-    {{ form.password }}
-    {% for error in form.password.errors %}
-        <span>{{ error }}</span>
-    {% endfor %}
-    <br>
+            {{ form.email.label }}<br>
+            {{ form.email(class="form-control", placeholder="Email") }}
+            {% for error in form.email.errors %}
+                <div>
+                    <span class="text-muted">{{ error }}</span>
+                </div>
+            {% endfor %}
+            <br>
 
-    <label for="confirm_password">Confirm Password:</span><br>
-    {{ form.confirm_password }}
-    {% for error in form.confirm_password.errors %}
-        <span>{{ error }}</span>
-    {% endfor %}
-    <br>
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control", placeholder="Password") }}
+            {% for error in form.password.errors %}
+                <div>
+                    <span class="text-muted">{{ error }}</span>
+                </div>
+            {% endfor %}
+            <br>
 
-    <br>
+            <label for="confirm_password">Confirm Password:</label><br>
+            {{ form.confirm_password(class="form-control", placeholder="Confirm Password") }}
+            {% for error in form.confirm_password.errors %}
+                <div>
+                    <span class="text-muted">{{ error }}</span>
+                </div>
+            {% endfor %}
 
-    {{ form.submit }}
-</form>
+            <div class="submit-btn-wrapper">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

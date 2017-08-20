@@ -24,6 +24,22 @@ a:hover {
     margin-bottom: 20px;
 }
 
+/**** SIGN UP FORM CSS ****/
+.signup-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.signup-form {
+    width: 300px;
+}
+
+.submit-btn-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 /**** MATHJAX CSS ****/
 .mathjax-textarea-input {
     width: 100%;
