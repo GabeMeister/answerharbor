@@ -212,6 +212,32 @@ def homework(homework_id):
     return render_template('homework.html', posts=selected_homework.posts, homework=selected_homework, breadcrumbs=homework_breadcrumbs)
 
 
+@app.route('/edithomework/<int:homework_id>', methods=['GET', 'POST'])
+@login_required
+def edit_homework(homework_id):
+    # Make sure user is admin
+    if not current_user.is_admin:
+        return redirect('/')
+
+    homework_to_edit = Homework.query.filter_by(id=homework_id).first()
+    if homework_to_edit is None:
+        # Redirect to home page if we didn't find the correct homework
+        return redirect('/')
+
+    # Update the form with the original homework data
+    form = NewHomeworkForm(obj=homework_to_edit)
+    if form.validate_on_submit():
+        # Update homework from form
+        form.populate_obj(homework_to_edit)
+        db.session.commit()
+
+        return redirect(url_for('homework', homework_id=homework_id))
+
+    edit_homework_breadcrumbs = breadcrumbs.edit_homework_breadcrumb_path()
+
+    return render_template('edithomework.html', form=form, homework=homework_to_edit, breadcrumbs=edit_homework_breadcrumbs)
+
+
 @app.route('/post/<int:post_id>')
 def post(post_id):
     selected_post = Post.query.filter_by(id=post_id).first()

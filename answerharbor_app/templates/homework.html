@@ -10,6 +10,10 @@
 {% endblock %}
 
 {% block content %}
+    {% if current_user.is_authenticated and current_user.is_admin %}
+        <a class="btn btn-default" role="button" href="{{ url_for('edit_homework', homework_id=homework.id) }}">Edit Homework</a>
+    {% endif %}
+
     {% if posts|length > 0 %}
         <h2>Select your Question:</h2>
         {% for post in posts %}

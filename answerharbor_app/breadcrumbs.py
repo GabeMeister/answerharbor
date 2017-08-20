@@ -59,6 +59,17 @@ def new_homework_breadcrumb_path():
         new_homework_breadcrumb()
     ]
 
+def edit_homework_breadcrumb_path():
+    homework_id = request.view_args['homework_id']
+    selected_homework = Homework.query.filter_by(id=homework_id).first()
+
+    return [
+        home_breadcrumb(),
+        school_breadcrumb(selected_homework.course.school),
+        course_breadcrumb(selected_homework.course),
+        edit_homework_breadcrumb()
+    ]
+
 
 def post_breadcrumb_path():
     post_id = request.view_args['post_id']
@@ -127,6 +138,12 @@ def homework_breadcrumb(selected_homework):
 def new_homework_breadcrumb():
     return {
         'text': 'New Homework',
+        'url': '#'
+    }
+
+def edit_homework_breadcrumb():
+    return {
+        'text': 'Edit Homework',
         'url': '#'
     }
 
