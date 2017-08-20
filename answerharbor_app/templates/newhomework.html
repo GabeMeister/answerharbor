@@ -1,32 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="page-title-wrapper">
+        <div class="page-title">
+            <h1>Create a New Homework:</h1>
+        </div>
+    </div>
 
-    <form action="{{ url_for('new_homework', course_id=course_id) }}" method="post">
-        {{ form.hidden_tag() }}
+    <div class="new-homework-form-wrapper">
+        <div class="new-homework-form">
+            <form action="{{ url_for('new_homework', course_id=course_id) }}" method="post">
+                {{ form.hidden_tag() }}
 
-        <h1>Create a New Homework:</h1>
+                {{ form.title.label }}<br>
+                {{ form.title(class="form-control") }}
+                {% for error in form.title.errors %}
+                    <div>
+                        <span class="text-muted">{{ error }}</span>
+                    </div>
+                {% endfor %}
 
-        {{ form.title.label }}<br>
-        {% for error in form.title.errors %}
-            <span>{{ error }}</span>
-            <br>
-        {% endfor %}
-        {{ form.title() }}
-        <br>
-        <br>
+                <br/>
 
-        {{ form.due_date.label }}<br>
-        {% for error in form.due_date.errors %}
-            <span>{{ error }}</span>
-            <br>
-        {% endfor %}
-        {{ form.due_date(class="datetimepicker") }}
+                {{ form.due_date.label }}<br>
+                {{ form.due_date(class="datetimepicker form-control") }}
+                {% for error in form.due_date.errors %}
+                    <div>
+                        <span class="text-muted">{{ error }}</span>
+                    </div>
+                {% endfor %}
 
-        <br>
-        <br>
-        <input type='submit' value='Submit!'/>
-    </form>
+                <div class="submit-btn-wrapper">
+                    <input class="btn btn-primary" type='submit' value='Submit!'/>
+                </div>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
 

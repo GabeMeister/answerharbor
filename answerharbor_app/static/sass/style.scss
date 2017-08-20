@@ -119,6 +119,16 @@ a:hover {
     justify-content: center;
 }
 
+/**** NEW/EDIT HOMEWORK CSS ****/
+.new-homework-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.new-homework-form {
+    width: 300px;
+}
+
 /**** NEW POST CSS ****/
 .hidden-buffer {
     position: absolute;
