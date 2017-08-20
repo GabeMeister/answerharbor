@@ -20,7 +20,7 @@ class LoginForm(FlaskForm):
         Length(min=8, max=50, message='Password must be between 8 and 50 characters long')
     ])
     remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Submit')
+    submit = SubmitField('Log In')
 
 
     def validate(self):
@@ -62,7 +62,7 @@ class RegisterForm(FlaskForm):
             'characters long'),
         EqualTo(fieldname='password', message='Passwords must match')
     ])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Sign Up')
 
 
     def validate(self):

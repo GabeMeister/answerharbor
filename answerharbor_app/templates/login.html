@@ -1,32 +1,43 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Login</h1>
 
-<form action="/login" method="POST">
-    {{ form.hidden_tag() }}
+<div class="page-title-wrapper">
+    <div class="page-title">
+        <h1>Log In</h1>
+    </div>
+</div>
 
-    {{ form.username.label }}<br>
-    {{ form.username }}
-    {% for error in form.username.errors %}
-        <span>{{ error }}</span>
-    {% endfor %}
-    <br>
+<div class="login-form-wrapper">
+    <div class="login-form">
+        <form action="/login" method="POST">
+            {{ form.hidden_tag() }}
 
-    {{ form.password.label }}<br>
-    {{ form.password }}
-    {% for error in form.password.errors %}
-        <span>{{ error }}</span>
-    {% endfor %}
-    <br>
+            {{ form.username.label }}<br>
+            {{ form.username(class="form-control", placeholder='Username') }}
+            {% for error in form.username.errors %}
+                <div>
+                    <span class="text-muted">{{ error }}</span>
+                </div>
+            {% endfor %}
+            <br>
 
-    {{ form.remember_me }} {{ form.remember_me.label }}<br>
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control", placeholder='Password') }}
+            {% for error in form.password.errors %}
+                <div>
+                    <span class="text-muted">{{ error }}</span>
+                </div>
+            {% endfor %}
+            <br>
 
-    <br>
+            {{ form.remember_me }} {{ form.remember_me.label }}<br>
 
-    {{ form.submit }}
-</form>
-
-<br>
+            <div class="submit-btn-wrapper">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+</div>
 
 {% endblock %}

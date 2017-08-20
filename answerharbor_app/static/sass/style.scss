@@ -40,6 +40,16 @@ a:hover {
     margin-top: 20px;
 }
 
+/**** LOGIN FORM CSS ****/
+.login-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.login-form {
+    width: 300px;
+}
+
 /**** MATHJAX CSS ****/
 .mathjax-textarea-input {
     width: 100%;
