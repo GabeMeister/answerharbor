@@ -23,9 +23,7 @@ from werkzeug.security import generate_password_hash
 @app.route('/')
 @app.route('/index')
 def index():
-    schools = School.query\
-        .order_by(School.full_name)\
-        .all()
+    schools = School.query.all()
     return render_template('index.html', schools=schools)
 
 

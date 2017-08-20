@@ -11,6 +11,7 @@ $pale-mint-green: #f4fff2;
 .body-content {
     width: 1024px;
     margin: auto;
+    padding-bottom: 100px;
 }
 
 a:hover {
@@ -87,6 +88,7 @@ a:hover {
 }
 
 .next-btn-wrapper {
+    margin-top: 30px;
     display: flex;
     justify-content: center;
 }
