@@ -86,6 +86,11 @@ a:hover {
     box-sizing: border-box;
 }
 
+.next-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 /**** NEW POST CSS ****/
 .hidden-buffer {
     position: absolute;

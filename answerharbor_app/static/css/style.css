@@ -64,6 +64,10 @@ a:hover {
   border-radius: 4px;
   box-sizing: border-box; }
 
+.next-btn-wrapper {
+  display: flex;
+  justify-content: center; }
+
 /**** NEW POST CSS ****/
 .hidden-buffer {
   position: absolute;

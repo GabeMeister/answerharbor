@@ -37,7 +37,9 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary" @click="showNextStep" :disabled="!nextAvailable" v-if="!allStepsShowing">Next</button>
+                <div class="next-btn-wrapper">
+                    <button class="btn btn-primary" @click="showNextStep" :disabled="!nextAvailable" v-if="!allStepsShowing">Next</button>
+                </div>
             </div>
         </div>
     </div>
