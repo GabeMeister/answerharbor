@@ -2,12 +2,16 @@
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 require('./post');
 
-}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_e96178f2.js","/")
+}).call(this,require("+7ZJp0"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_3b1d8a2c.js","/")
 },{"+7ZJp0":6,"./post":2,"buffer":3}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 $(document).ready(function() {
     $('.confirm-link-click').click(function() {
         return confirm('Are you sure you want to delete this post?'); // cancel the event
+    });
+
+    $('.confirm-homework-delete').click(function() {
+        return confirm('Are you sure you want to delete this homework?'); // cancel the event
     });
 });
 

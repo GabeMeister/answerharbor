@@ -238,6 +238,28 @@ def edit_homework(homework_id):
     return render_template('edithomework.html', form=form, homework=homework_to_edit, breadcrumbs=edit_homework_breadcrumbs)
 
 
+@app.route('/deletehomework/<int:homework_id>')
+@login_required
+def delete_homework(homework_id):
+    # Make sure user is admin
+    if not current_user.is_admin:
+        return redirect('/')
+
+    course_id = request.args['course_id']
+    if course_id is None:
+        return redirect('/')
+
+    homework_to_delete = Homework.query.filter_by(id=homework_id).first()
+    if homework_to_delete is None:
+        # Redirect to home page if we didn't find the correct post
+        return redirect('/')
+
+    db.session.delete(homework_to_delete)
+    db.session.commit()
+
+    return redirect(url_for('course', course_id=course_id))
+
+
 @app.route('/post/<int:post_id>')
 def post(post_id):
     selected_post = Post.query.filter_by(id=post_id).first()

@@ -14,7 +14,7 @@ from sqlalchemy.orm import relationship
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.BLOB, nullable=False)
-    steps = relationship('Step', back_populates='post')
+    steps = relationship('Step', back_populates='post', cascade='all, delete-orphan')
     creation_date = db.Column(db.DateTime, nullable=False)
     last_edit_date = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, ForeignKey('user.id'))

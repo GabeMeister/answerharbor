@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 class Homework(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
-    posts = relationship('Post', back_populates='homework')
+    posts = relationship('Post', back_populates='homework', cascade='all, delete-orphan')
     due_date = db.Column('due_date', db.DateTime)
     course_id = db.Column(db.Integer, ForeignKey('course.id'))
     course = relationship('Course', back_populates='homeworks')
