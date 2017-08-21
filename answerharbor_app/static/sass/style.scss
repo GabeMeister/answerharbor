@@ -143,34 +143,40 @@ a:hover {
     visibility: hidden;
 }
 
-$x-btn-width: 128px;
 .row {
-    border: 1px solid black;
-    height: $x-btn-width;
+    min-height: 150px;
+    max-height: 500px;
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
 }
 
 .input-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 400px;
+    flex: 1;
+}
+
+.input-area {
+    flex: 1;
+}
+
+.input-text-area {
+    width: 100%;
+    min-width: 500px;
 }
 
 .preview-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    flex: 1;
+    margin-left: 15px;
 }
 
+$x-btn-width: 40px;
 .x-btn {
-    height: $x-btn-width;
     width: $x-btn-width;
 }
 
 .delete-btn-wrapper {
+    align-self: stretch;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     width: $x-btn-width;
 }
 
@@ -183,6 +189,10 @@ $x-btn-width: 128px;
     cursor: pointer;
 }
 
+.edit-post-space {
+    margin-top: 20px;
+}
+
 /**** VIEW POST CSS ****/
 .hidden-step {
     display: none;
@@ -193,7 +203,6 @@ $x-btn-width: 128px;
 }
 
 .step-chunk {
-    // border-bottom: 1px solid black;
     margin-bottom: 10px;
 }
 
