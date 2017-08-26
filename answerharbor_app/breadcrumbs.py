@@ -163,13 +163,13 @@ def post_breadcrumb(selected_post):
 
 def new_post_breadcrumb():
     return {
-        'text': 'New Post',
+        'text': 'New Question + Answer',
         'url': '#'
     }
 
 
 def edit_post_breadcrumb():
     return {
-        'text': 'Edit Post',
+        'text': 'Edit Question + Answer',
         'url': '#'
     }

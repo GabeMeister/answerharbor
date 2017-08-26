@@ -28,6 +28,6 @@
 
     {% if current_user.is_authenticated and current_user.is_admin %}
         <br/>
-        <a class="btn btn-primary" role="button" href="{{ url_for('new_post', homework_id=homework.id) }}">New Post</a>
+        <a class="btn btn-primary" role="button" href="{{ url_for('new_post', homework_id=homework.id) }}">New Question + Answer</a>
     {% endif %}
 {% endblock %}

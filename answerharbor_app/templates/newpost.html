@@ -8,7 +8,7 @@
     <div id="app">
         <form method="post" action="{{ url_for('new_post', homework_id=homework_id) }}">
 
-            <h1>Create New Post:</h1>
+            <h1>Create a New Question + Answer:</h1>
 
             <h3>Question:</h3>
             <div class="question-wrapper">
@@ -28,7 +28,7 @@
 
             <div class="answer-separator edit-post-space"></div>
 
-            <h3>Solution:</h3>
+            <h3>Answer:</h3>
             <div class="steps-wrapper">
                 <div class="row step-chunk" v-for="step in stepGroup.steps">
                     <div class="delete-btn-wrapper">
@@ -48,7 +48,7 @@
             </div>
             <br/>
             <br/>
-            <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Submit Post'/>
+            <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Create Question + Answer'/>
         </form>
     </div>
 
