@@ -1,4 +1,6 @@
-const SECONDS_DELAY = 5;
+const NORMAL_USER_SEC_DELAY = 15;
+const ADMIN_USER_SEC_DELAY = 0;
+const ONE_SECOND = 1000;
 
 var app = new Vue({
     el: '#app',
@@ -11,8 +13,10 @@ var app = new Vue({
         timeoutID: 0,
         delay: 150,
         nextAvailable: true,
-        secondsLeft: SECONDS_DELAY,
-        timerID: 0
+        userWaitTime: NORMAL_USER_SEC_DELAY,
+        secondsLeft: NORMAL_USER_SEC_DELAY,
+        timerID: 0,
+        isAdmin: false
     },
     computed: {
         allStepsShowing: function() {
@@ -52,6 +56,8 @@ var app = new Vue({
             .catch(function(error) {
                 console.log(error);
             });
+
+            this.setUserWaitTime();
 
         },
         update: function(input) {
@@ -126,20 +132,37 @@ var app = new Vue({
                     // have to call Vue.set()
                     Vue.set(this.stepGroup.steps, i, step);
 
-                    // Disable the button for a certain time to let the user write the step down
-                    this.timerID = setInterval(() => {
-                        this.secondsLeft = this.secondsLeft - 1;
-                        if(this.secondsLeft === 0) {
-                            this.nextAvailable = true;
-                            this.secondsLeft = SECONDS_DELAY;
-                            clearInterval(this.timerID);
-                        }
-                    }, 1000);
+                    if(this.userWaitTime > 0){
+                        // Disable the button for a certain time to let the user write the step down.
+                        // Only for non-admin users.
+                        this.secondsLeft = this.userWaitTime;
+                        this.timerID = setInterval(() => {
+                            this.secondsLeft = this.secondsLeft - 1;
+                            if(this.secondsLeft <= 0) {
+                                this.nextAvailable = true;
+                                clearInterval(this.timerID);
+                            }
+                        }, ONE_SECOND);
+                    }
+                    else {
+                        this.nextAvailable = true;
+                    }
 
                     break;
                 }
             }
 
+        },
+        setUserWaitTime: function() {
+            // Check if user is logged in and is an admin user.
+            // If so, there's no delay. Otherwise, there will be a delay between steps.
+            axios.get('/is_admin')
+            .then(response => {
+                this.userWaitTime = response.data.is_admin ? ADMIN_USER_SEC_DELAY : NORMAL_USER_SEC_DELAY;
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
         }
     }
 });

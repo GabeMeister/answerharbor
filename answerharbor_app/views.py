@@ -270,3 +270,8 @@ def post(post_id):
     post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
 
     return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
+
+@app.route('/is_admin')
+def is_admin():
+    is_admin_user = current_user.is_authenticated and current_user.is_admin
+    return jsonify({'is_admin': is_admin_user})
