@@ -31,12 +31,16 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if current_user.is_authenticated %}
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{current_user.username}} <span class="caret"></span></a>
+                            <li><p class="navbar-text">Welcome, {{current_user.username}}</p></li>
+                            <li><a href="/logout">Log Out</a></li>
+
+                            <!-- Reserved for when there's more than one option when user is logged in -->
+                            <!-- <li class="dropdown"> -->
+                                <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{current_user.username}} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="/logout">Log Out</a></li>
-                                </ul>
-                            </li>
+                                </ul> -->
+                            <!-- </li> -->
                         {% else %}
                             <li><a href="/signup">Sign Up</a></li>
                             <li><a href="/login">Log In</a></li>
@@ -55,7 +59,6 @@
                         <li>
                             <a href="{{ breadcrumb.url }}">{{ breadcrumb.text }}</a>
                         </li>
-                        <!-- {{ '>' if not loop.last }} -->
                     {% endfor %}
                 </ul>
             {% endif %}
