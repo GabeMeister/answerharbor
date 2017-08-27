@@ -22,7 +22,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/index">Answer Harbor</a>
+                    {% if current_user.is_authenticated and current_user.is_admin %}
+                        <a class="navbar-brand" href="/index">Answer Harbor (Admin)</a>
+                    {% else %}
+                        <a class="navbar-brand" href="/index">Answer Harbor</a>
+                    {% endif %}
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
