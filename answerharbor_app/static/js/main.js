@@ -1,1 +1,1 @@
-require('./post');
+require('./confirm');
