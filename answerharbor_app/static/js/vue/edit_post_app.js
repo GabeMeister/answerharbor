@@ -97,7 +97,7 @@ var app = new Vue({
             this.stepGroup.addNewStep();
         },
         deleteStep: function(step) {
-            if(this.stepGroup.steps.length > 1){
+            if(this.stepGroup.steps.length > 1 && confirm('Are you sure you want to delete this step?')){
                 var stepInputNameID = step.inputNameID;
                 this.stepGroup.deleteStep(step);
             }
