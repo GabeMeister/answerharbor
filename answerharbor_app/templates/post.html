@@ -31,6 +31,11 @@
 
                 <div>
                     <div v-for="step in stepGroup.steps" :key="step.number" class="step-chunk" :class="{'hidden-step': !step.visible}">
+                        <div class="step-count">
+                            <span v-if="isLastVisibleStep(step)" class="text-muted">
+                                Step <span v-text="visibleStepCount"></span> / <span v-text="totalStepCount"></span>
+                            </span>
+                        </div>
                         <div>
                             <p :id="step.previewID" class="preview" v-html="step.text"></p>
                         </div>

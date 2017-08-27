@@ -1,9 +1,10 @@
-function MathjaxInput(inputNameID, bufferID, previewID, text, html) {
+function MathjaxInput(inputNameID, bufferID, previewID, text, html, number) {
     this.inputNameID = inputNameID;
     this.bufferID = bufferID;
     this.previewID = previewID;
     this.text = text;
     this.html = html;
+    this.number = number;
     this.oldText = '';
 
     this.recordOldText = function() {
@@ -30,14 +31,15 @@ function StepGroup(name) {
         return prefix + "_" + this.currentID.toString();
     }
 
-    this.createNewStep = function(text = '', html = '') {
+    this.createNewStep = function(text = '', html = '', number = 0) {
         var newInputNameID = this.generateID(this.name + "_" + inputPrefix);
         var newBufferID = this.generateID(this.name + "_" + bufferPrefix);
         var newPreviewID = this.generateID(this.name + "_" + previewPrefix);
         var newText = text;
         var newHtml = html;
+        var newNumber = number;
 
-        return new MathjaxInput(newInputNameID, newBufferID, newPreviewID, newText, newHtml);
+        return new MathjaxInput(newInputNameID, newBufferID, newPreviewID, newText, newHtml, newNumber);
     }
 
     this.addNewStep = function() {
@@ -66,7 +68,7 @@ function StepGroup(name) {
 
         stepsList.forEach(function(step) {
             self.currentID += 1;
-            var newStep = self.createNewStep(step.text);
+            var newStep = self.createNewStep(step.text, '', step.number);
             self.steps.push(newStep);
         });
     };

@@ -28,6 +28,46 @@ var app = new Vue({
             }
 
             return true;
+        },
+        lastVisibleStep: function() {
+            var lastVisibleStep = null;
+
+            for(var i = 0; i < this.stepGroup.steps.length; i++) {
+                var step = this.stepGroup.steps[i];
+                var nextStep = (i+1 < this.stepGroup.steps.length) ? this.stepGroup.steps[i+1] : null;
+
+                // The last visible step is defined as one of the following:
+                // (1) the next step after it doesn't exist
+                // (2) the next step is non-visible
+                if(nextStep === null || !nextStep.visible) {
+                    lastVisibleStep = step;
+                    break;
+                }
+            }
+
+            return lastVisibleStep;
+        },
+        visibleStepCount: function() {
+            var count = 0;
+            for(var i = 0; i < this.stepGroup.steps.length; i++) {
+                var step = this.stepGroup.steps[i];
+                if(step.visible) {
+                    count++;
+                }
+                else {
+                    break;
+                }
+            }
+
+            return count;
+        },
+        totalStepCount: function() {
+            var count = 0;
+            if(this.stepGroup !== null && this.stepGroup.steps !== null) {
+                count = this.stepGroup.steps.length;
+            }
+
+            return count;
         }
     },
     methods: {
@@ -163,6 +203,9 @@ var app = new Vue({
             .catch(function(error) {
                 console.log(error);
             });
+        },
+        isLastVisibleStep: function(step){
+            return step === this.lastVisibleStep;
         }
     }
 });
