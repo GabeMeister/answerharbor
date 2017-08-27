@@ -104,6 +104,9 @@ a:hover {
   width: 300px; }
 
 /**** NEW POST CSS ****/
+.question-title-input {
+  width: 71%; }
+
 .hidden-buffer {
   position: absolute;
   bottom: 0px;
@@ -114,7 +117,9 @@ a:hover {
   min-height: 150px;
   max-height: 500px;
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  margin-left: 0px;
+  margin-right: 0px; }
 
 .input-wrapper {
   flex: 1; }

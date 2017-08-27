@@ -12,15 +12,17 @@ from flask_login import current_user
 
 def get_post_from_request(request):
     """
-    form must include 'question_input', as well as one or more 'step_input_#' keys
+    form must include a 'question_title', 'question_input', as well as one or more 'step_input_#' keys
     """
 
     hw = get_homework_from_request(request)
+    question_title = get_question_title_from_request(request)
     question_text = get_question_from_request(request)
     steps = get_steps_from_request(request)
 
     now = datetime.now()
     return Post(question=question_text,\
+                title=question_title,\
                 creation_date=now,\
                 last_edit_date=now,\
                 user=current_user,\
@@ -65,3 +67,10 @@ def get_question_from_request(request):
         raise 'question_input form index not found'
 
     return question_text
+
+def get_question_title_from_request(request):
+    question_title = request.form['question_title']
+    if question_title is None:
+        raise 'question_title form index not found'
+
+    return question_title

@@ -4,6 +4,7 @@ var app = new Vue({
     el: '#app',
     data: {
         postID: 0,
+        title: '',
         question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
         stepGroup: new StepGroup('step'),
         running: false,
@@ -13,20 +14,19 @@ var app = new Vue({
     },
     methods: {
         init: function() {
-            var vm = this;
-
-            // Database call to get the post
             var postID = $('#post-id').text();
 
+            // Database call to get the post
             axios.get('/post_data/'+postID)
-                .then(function(response) {
-                    vm.question.text = response.data.question;
-                    vm.update(vm.question);
-                    vm.stepGroup.initStepsFromList(response.data.steps);
+                .then(response => {
+                    this.title = response.data.title;
+                    this.question.text = response.data.question;
+                    this.update(this.question);
+                    this.stepGroup.initStepsFromList(response.data.steps);
 
-                    vm.$validator.updateDictionary(Validator.customErrorMessages());
+                    this.$validator.updateDictionary(Validator.customErrorMessages());
 
-                    vm.updateAll();
+                    this.updateAll();
                 })
                 .catch(function(error) {
                     console.log(error);

@@ -149,14 +149,12 @@ def edit_homework_breadcrumb():
 
 
 def post_breadcrumb(selected_post):
-    # TODO: Figure out a better way to represent a question that the user selected
-    # max_length = 40
     # question_text = selected_post.question
     # if len(question_text) > max_length:
     #     question_text = question_text[:max_length] + '...'
 
     return {
-        'text': 'Question',
+        'text': selected_post.title,
         'url': url_for('post', post_id=selected_post.id)
     }
 

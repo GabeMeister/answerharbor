@@ -3,6 +3,7 @@ Vue.use(VeeValidate);
 var app = new Vue({
     el: '#app',
     data: {
+        title: '',
         question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
         stepGroup: new StepGroup('step'),
         running: false,
@@ -12,6 +13,9 @@ var app = new Vue({
     },
     methods: {
         init: function() {
+            var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
+            this.title = 'Question #' + (totalCurrentPosts + 1);
+
             this.stepGroup.addNewStep();
         },
         update: function(step) {

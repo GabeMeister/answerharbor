@@ -10,11 +10,15 @@
             <span id="post-id" style="display: none;">{{post.id}}</span>
             <h1>Edit Question + Answer:</h1>
 
+            <h3>Title:</h3>
+            <div class="question-title-input">
+                <input type="text" name="question_title" v-model="title" class="form-control question-title-input" v-validate="'required'" placeholder="Enter question title"/>
+                <span v-show="errors.has('question_title')" v-text="errors.first('question_title')"></span>
+            </div>
+
             <h3>Question:</h3>
             <div class="question-wrapper">
                 <div class="row">
-                    <!-- HACK: To make the input line up with the solution steps -->
-                    <div class="delete-btn-wrapper"></div>
                     <div class="input-wrapper">
                         <textarea v-validate="'required'" :name="question.inputNameID" class="input-text-area form-control" rows="8" v-model="question.text" @keyup="update(question)"></textarea>
                         <span class="text-muted" v-show="errors.has(question.inputNameID)" v-text="errors.first(question.inputNameID)"></span>

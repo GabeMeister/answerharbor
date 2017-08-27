@@ -88,6 +88,10 @@ def new_post():
     if homework_id is None:
         return redirect('/')
 
+    homework_affected = Homework.query.filter_by(id=homework_id).first()
+    if homework_affected is None:
+        return redirect('/')
+
     if request.method == 'POST':
         try:
             the_post = view_helpers.get_post_from_request(request)
@@ -101,7 +105,7 @@ def new_post():
 
     new_post_breadcrumbs = breadcrumbs.new_post_breadcrumb_path()
 
-    return render_template('newpost.html', homework_id=homework_id, breadcrumbs=new_post_breadcrumbs)
+    return render_template('newpost.html', homework=homework_affected, breadcrumbs=new_post_breadcrumbs)
 
 
 @app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])
@@ -122,6 +126,7 @@ def edit_post(post_id):
 
     if request.method == 'POST':
         # Update post from form
+        post_to_edit.title = view_helpers.get_question_title_from_request(request)
         post_to_edit.question = view_helpers.get_question_from_request(request)
         post_to_edit.steps = view_helpers.get_steps_from_request(request)
         db.session.commit()
@@ -141,6 +146,7 @@ def post_data(post_id):
 
     # Because sqlalchemy objects cannot be jsonified, we build up a temporary
     # data structures to jsonify and send it back to the client
+    question_title = requested_post.title
     question_text = requested_post.question
     steps = []
     for step in requested_post.steps:
@@ -150,6 +156,7 @@ def post_data(post_id):
         })
 
     return jsonify({
+        'title': question_title,
         'question': question_text,
         'steps': steps
     })

@@ -19,7 +19,7 @@
         <h2>Select your Question:</h2>
         {% for post in posts %}
             <div class="post">
-                <span><a href="/post/{{ post.id }}">{{ post.question }}</a></span><br>
+                <span><a href="/post/{{ post.id }}">{{ post.title }}</a></span><br>
             </div>
         {% endfor %}
     {% else %}

@@ -6,15 +6,19 @@
 
 {% block content %}
     <div id="app">
-        <form method="post" action="{{ url_for('new_post', homework_id=homework_id) }}">
-
+        <form method="post" action="{{ url_for('new_post', homework_id=homework.id) }}">
+            <span id="homework-post-count" style="display: none;">{{homework.posts|length}}</span>
             <h1>Create a New Question + Answer:</h1>
+
+            <h3>Title:</h3>
+            <div class="question-title-input">
+                <input type="text" name="question_title" v-model="title" class="form-control question-title-input" v-validate="'required'" placeholder="Enter question title"/>
+                <span v-show="errors.has('question_title')" v-text="errors.first('question_title')"></span>
+            </div>
 
             <h3>Question:</h3>
             <div class="question-wrapper">
                 <div class="row">
-                    <!-- HACK: To make the input line up with the solution steps -->
-                    <div class="delete-btn-wrapper"></div>
                     <div class="input-wrapper">
                         <textarea v-validate="'required'" :name="question.inputNameID" class="input-text-area form-control" rows="8" v-model="question.text" @keyup="update(question)" placeholder="Enter question text"></textarea>
                         <span v-show="errors.has(question.inputNameID)" v-text="errors.first(question.inputNameID)"></span>
