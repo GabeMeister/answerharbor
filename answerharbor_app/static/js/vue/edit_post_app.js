@@ -3,10 +3,10 @@ Vue.use(VeeValidate);
 var app = new Vue({
     el: '#app',
     data: {
-        postID: 0,
         title: '',
         question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
         stepGroup: new StepGroup('step'),
+        finalAnswer: new MathjaxInput('final_answer_input', 'final_answer_buffer', 'final_answer_preview', '', ''),
         running: false,
         pending: false,
         timeoutID: 0,
@@ -18,19 +18,33 @@ var app = new Vue({
 
             // Database call to get the post
             axios.get('/post_data/'+postID)
-                .then(response => {
-                    this.title = response.data.title;
-                    this.question.text = response.data.question;
-                    this.update(this.question);
-                    this.stepGroup.initStepsFromList(response.data.steps);
+            .then(response => {
+                this.title = response.data.title;
+                this.question.text = response.data.question;
+                console.log('updating question', this.question);
+                this.update(this.question);
 
-                    this.$validator.updateDictionary(Validator.customErrorMessages());
+                // TODO: refactor the way /post_data returns the data from the post.
+                // Separate the fake answers from the correct answer so we don't have to
+                // iterate here.
+                for(var i = 0; i < response.data.answers.length; i++) {
+                    if(response.data.answers[i].correct) {
+                        this.finalAnswer.text = response.data.answers[i].text;
+                        console.log('updating finalAnswer', this.finalAnswer);
+                        this.update(this.finalAnswer);
+                        break;
+                    }
+                }
 
-                    this.updateAll();
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
+                this.stepGroup.initStepsFromList(response.data.steps);
+
+                this.$validator.updateDictionary(Validator.customErrorMessages());
+
+                this.updateAll();
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
 
 
         },

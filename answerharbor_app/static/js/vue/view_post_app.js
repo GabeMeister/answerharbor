@@ -10,6 +10,8 @@ var app = new Vue({
         stepGroup: new StepGroup('step'),
         answers: [],
         selectedAnswer: '',
+        feedback: '',
+        answerAttempted: false,
         running: false,
         pending: false,
         timeoutID: 0,
@@ -70,6 +72,18 @@ var app = new Vue({
             }
 
             return count;
+        },
+        correctAnswer: function() {
+            var correctAns = null;
+
+            for(var i = 0; i < this.answers.length; i++) {
+                if(this.answers[i].correct){
+                    correctAns = this.answers[i];
+                    break;
+                }
+            }
+
+            return correctAns;
         }
     },
     methods: {
@@ -213,8 +227,18 @@ var app = new Vue({
                 console.log(error);
             });
         },
-        isLastVisibleStep: function(step){
+        isLastVisibleStep: function(step) {
             return step === this.lastVisibleStep;
+        },
+        checkAnswer: function(text) {
+            if(this.correctAnswer.mathjax.text === text) {
+                this.feedback = 'Correct!';
+            }
+            else {
+                this.feedback = 'Incorrect.';
+            }
+
+            this.answerAttempted = true;
         }
     }
 });

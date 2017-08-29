@@ -131,6 +131,7 @@ def edit_post(post_id):
         post_to_edit.title = view_helpers.get_question_title_from_request(request)
         post_to_edit.question = view_helpers.get_question_from_request(request)
         post_to_edit.steps = view_helpers.get_steps_from_request(request)
+        post_to_edit.answer = view_helpers.get_final_answer_from_request(request)
         db.session.commit()
 
         return redirect(url_for('post', post_id=post_id))
@@ -142,10 +143,11 @@ def edit_post(post_id):
 
 @app.route('/post_data/<int:post_id>')
 def post_data(post_id):
-    print 'here'
     requested_post = Post.query.filter_by(id=post_id).first()
     if requested_post is None:
         return jsonify({})
+
+    # TODO: check if answer is capable of fake answers before generating fake answers
 
     # Generate random answers from final answer
     answers = []

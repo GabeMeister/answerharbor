@@ -43,14 +43,15 @@
                     </div>
                 </div>
 
-                <div v-if="allStepsShowing">
-                    <h2>Select Answer:</h2>
-
+                <div :class="{'hidden-step': !allStepsShowing}">
                     <div v-for="answer in answers">
-                        <input type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
-                        <label :for="answer.mathjax.inputNameID" class="preview" :id="answer.mathjax.previewID" v-html="answer.mathjax.text">One</label>
+                        <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
+                        <label :for="answer.mathjax.inputNameID" class="preview mathjax-radio-label" :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></label>
                     </div>
+                </div>
 
+                <div>
+                    <h1 v-if="answerAttempted" v-text="feedback"></h1>
                 </div>
 
                 <div class="next-btn-wrapper">

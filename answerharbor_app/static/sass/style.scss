@@ -140,10 +140,6 @@ a:hover {
     margin-top: 3px;
 }
 
-.question-title-input {
-    width: 71%;
-}
-
 .hidden-buffer {
     position: absolute;
     bottom: 0px;
@@ -203,6 +199,11 @@ $x-btn-width: 40px;
 }
 
 /**** VIEW POST CSS ****/
+.mathjax-radio-label {
+    margin-top: 15px;
+    font-size: 47px;
+}
+
 .hidden-step {
     display: none;
 }
