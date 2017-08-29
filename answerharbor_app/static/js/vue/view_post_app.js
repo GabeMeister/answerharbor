@@ -8,6 +8,8 @@ var app = new Vue({
         postID: 0,
         question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
         stepGroup: new StepGroup('step'),
+        answers: [],
+        selectedAnswer: '',
         running: false,
         pending: false,
         timeoutID: 0,
@@ -79,6 +81,15 @@ var app = new Vue({
             .then(response => {
                 this.question.text = response.data.question;
                 this.update(this.question);
+
+                for(var i = 0; i < response.data.answers.length; i++) {
+                    this.answers.push({
+                        'mathjax': new MathjaxInput('answer_input'+i, 'answer_buffer'+i, 'answer_preview'+i, response.data.answers[i].text, '', 0),
+                        'correct': response.data.answers[i].correct
+                    });
+                    this.update(this.answers[i].mathjax);
+                }
+
                 this.stepGroup.initStepsFromList(response.data.steps);
 
                 // Steps need to be hidden initially from the user.

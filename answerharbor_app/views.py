@@ -142,9 +142,24 @@ def edit_post(post_id):
 
 @app.route('/post_data/<int:post_id>')
 def post_data(post_id):
+    print 'here'
     requested_post = Post.query.filter_by(id=post_id).first()
     if requested_post is None:
         return jsonify({})
+
+    # Generate random answers from final answer
+    answers = []
+    for _ in range(0, 3):
+        answers.append({
+            'text': fake_ans.generate_fake_answer(requested_post.final_answer),
+            'correct': False
+        })
+
+    # Randomly insert the correct answer somewhere in the answers list
+    answers.insert(random.randint(0, 3), {
+        'text': requested_post.final_answer,
+        'correct': True
+    })
 
     # Because sqlalchemy objects cannot be jsonified, we build up a temporary
     # data structures to jsonify and send it back to the client
@@ -160,7 +175,8 @@ def post_data(post_id):
     return jsonify({
         'title': question_title,
         'question': question_text,
-        'steps': steps
+        'steps': steps,
+        'answers': answers
     })
 
 
@@ -276,25 +292,9 @@ def post(post_id):
         # Redirect to home page if we couldn't find the correct post
         return redirect('/')
 
-    # Generate random answers from final answer
-    answers = []
-    for _ in range(0, 3):
-        answers.append({
-            'text': fake_ans.generate_fake_answer(selected_post.final_answer),
-            'correct': False
-        })
-
-    # Randomly insert the correct answer somewhere in the answers list
-    answers.insert(random.randint(0, 3), {
-        'text': selected_post.final_answer,
-        'correct': True
-    })
-
-    print answers
-
     post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
 
-    return render_template('post.html', post=selected_post, answers=answers, breadcrumbs=post_breadcrumbs)
+    return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
 
 @app.route('/is_admin')
 def is_admin():

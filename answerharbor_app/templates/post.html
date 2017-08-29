@@ -44,16 +44,13 @@
                 </div>
 
                 <div v-if="allStepsShowing">
-                    <!-- TODO: iterate over answers, but have the v-model for all the radio buttons be correctAnswer, check if correctAnswer is in fact correct -->
                     <h2>Select Answer:</h2>
-                    {% for answer in answers %}
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
-                                {{ answer.text }}
-                            </label>
-                        </div>
-                    {% endfor %}
+
+                    <div v-for="answer in answers">
+                        <input type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
+                        <label :for="answer.mathjax.inputNameID" class="preview" :id="answer.mathjax.previewID" v-html="answer.mathjax.text">One</label>
+                    </div>
+
                 </div>
 
                 <div class="next-btn-wrapper">
