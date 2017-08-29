@@ -18,11 +18,14 @@ def get_post_from_request(request):
     hw = get_homework_from_request(request)
     question_title = get_question_title_from_request(request)
     question_text = get_question_from_request(request)
+    final_answer = get_final_answer_from_request(request)
+    print final_answer
     steps = get_steps_from_request(request)
 
     now = datetime.now()
     return Post(question=question_text,\
                 title=question_title,\
+                final_answer=final_answer,\
                 creation_date=now,\
                 last_edit_date=now,\
                 user=current_user,\
@@ -74,3 +77,10 @@ def get_question_title_from_request(request):
         raise 'question_title form index not found'
 
     return question_title
+
+def get_final_answer_from_request(request):
+    final_answer = request.form['final_answer_input']
+    if final_answer is None:
+        raise 'final_answer form index not found'
+
+    return final_answer

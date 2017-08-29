@@ -11,9 +11,14 @@
             <h1>Create a New Question + Answer:</h1>
 
             <h3>Title:</h3>
-            <div class="question-title-input">
-                <input type="text" name="question_title" v-model="title" class="form-control question-title-input" v-validate="'required'" placeholder="Enter question title"/>
-                <span v-show="errors.has('question_title')" v-text="errors.first('question_title')"></span>
+            <div class="row">
+                <div class="input-wrapper">
+                    <input type="text" name="question_title" v-model="title" class="form-control" v-validate="'required'" placeholder="Enter question title"/>
+                    <span v-show="errors.has('question_title')" v-text="errors.first('question_title')"></span>
+                </div>
+                <div class="preview-wrapper">
+                    <h3 v-text="title" class="post-title-preview"></h3>
+                </div>
             </div>
 
             <h3>Question:</h3>
@@ -32,7 +37,7 @@
 
             <div class="answer-separator edit-post-space"></div>
 
-            <h3>Answer:</h3>
+            <h3>Answer Steps:</h3>
             <div class="steps-wrapper">
                 <div class="row step-chunk" v-for="step in stepGroup.steps">
                     <div class="delete-btn-wrapper">
@@ -50,6 +55,21 @@
 
                 <button class="btn btn-default" type="button" @click="addNewStep">New Step</button>
             </div>
+
+            <h3>Final Answer:</h3>
+            <div>
+                <div class="row final-answer-row">
+                    <div class="input-wrapper">
+                        <textarea v-validate="'required'" :name="finalAnswer.inputNameID" class="input-text-area form-control" rows="4" v-model="finalAnswer.text" @keyup="update(finalAnswer)" placeholder="Enter final answer"></textarea>
+                        <span v-show="errors.has(finalAnswer.inputNameID)" v-text="errors.first(finalAnswer.inputNameID)"></span>
+                    </div>
+                    <div class="preview-wrapper">
+                        <p :id="finalAnswer.bufferID" v-text="finalAnswer.text" class="hidden-buffer"></p>
+                        <p class="preview" :id="finalAnswer.previewID" v-html="finalAnswer.html"></p>
+                    </div>
+                </div>
+            </div>
+
             <br/>
             <br/>
             <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Create Question + Answer'/>

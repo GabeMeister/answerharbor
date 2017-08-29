@@ -136,6 +136,10 @@ a:hover {
 }
 
 /**** NEW POST CSS ****/
+.post-title-preview {
+    margin-top: 3px;
+}
+
 .question-title-input {
     width: 71%;
 }
@@ -148,7 +152,7 @@ a:hover {
 }
 
 .row {
-    min-height: 150px;
+    // min-height: 150px;
     max-height: 500px;
     display: flex;
     justify-content: space-between;
@@ -166,11 +170,10 @@ a:hover {
 
 .input-text-area {
     width: 100%;
-    min-width: 500px;
 }
 
 .preview-wrapper {
-    flex: 1;
+    width: 500px;
     margin-left: 15px;
 }
 

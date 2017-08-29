@@ -72,26 +72,24 @@ var app = new Vue({
     },
     methods: {
         init: function() {
-            var vm = this;
-
-            // Database call to get the post
             var postID = $('#post-id').text();
 
+            // Database call to get the post
             axios.get('/post_data/'+postID)
-            .then(function(response) {
-                vm.question.text = response.data.question;
-                vm.update(vm.question);
-                vm.stepGroup.initStepsFromList(response.data.steps);
+            .then(response => {
+                this.question.text = response.data.question;
+                this.update(this.question);
+                this.stepGroup.initStepsFromList(response.data.steps);
 
                 // Steps need to be hidden initially from the user.
                 // Hide all but the first step.
-                vm.stepGroup.steps[0].visible = true;
+                this.stepGroup.steps[0].visible = true;
 
-                for(var i = 1; i < vm.stepGroup.steps.length; i++) {
-                    vm.stepGroup.steps[i].visible = false;
+                for(var i = 1; i < this.stepGroup.steps.length; i++) {
+                    this.stepGroup.steps[i].visible = false;
                 }
 
-                vm.updateAll();
+                this.updateAll();
             })
             .catch(function(error) {
                 console.log(error);

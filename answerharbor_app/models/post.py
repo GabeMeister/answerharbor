@@ -15,6 +15,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     question = db.Column(db.BLOB, nullable=False)
+    final_answer = db.Column('final_answer', db.BLOB, \
+        nullable=False, server_default='This is a fake answer')
     steps = relationship('Step', back_populates='post', cascade='all, delete-orphan')
     creation_date = db.Column(db.DateTime, nullable=False)
     last_edit_date = db.Column(db.DateTime)
@@ -25,14 +27,15 @@ class Post(db.Model):
 
 
     def __str__(self):
-        return """Question {0}
-Step Count: {1}""".format(self.question, len(self.steps))
+        return """Question Title: {0}
+Step Count: {1}""".format(self.title, len(self.steps))
 
 
     def info(self):
         return """Title: {6}
 Question: {0}
 Steps: {1}
+Final Answer: {7}
 Created: {2}
 Last Edited: {3}
 User: {4}
@@ -42,5 +45,5 @@ Homework: {5}""".format(self.question,
                     self.last_edit_date,
                     self.user,
                     self.homework,
-                    self.title)
-
+                    self.title,
+                    self.final_answer)

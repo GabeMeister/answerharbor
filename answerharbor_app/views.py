@@ -2,6 +2,7 @@
 
 # pylint: disable=C0103,C0111,E1101,C0301
 
+import random
 from datetime import datetime
 from flask import render_template, redirect, request, url_for, jsonify
 from flask_login import login_required, login_user, logout_user, current_user
@@ -17,6 +18,7 @@ from answerharbor_app.models.step import Step
 from answerharbor_app.models.homework import Homework
 from answerharbor_app.models.course import Course
 from answerharbor_app.models.school import School
+import answerharbor_app.helpers.fake_answer_generator as fake_ans
 from werkzeug.security import generate_password_hash
 
 
@@ -274,9 +276,25 @@ def post(post_id):
         # Redirect to home page if we couldn't find the correct post
         return redirect('/')
 
+    # Generate random answers from final answer
+    answers = []
+    for _ in range(0, 3):
+        answers.append({
+            'text': fake_ans.generate_fake_answer(selected_post.final_answer),
+            'correct': False
+        })
+
+    # Randomly insert the correct answer somewhere in the answers list
+    answers.insert(random.randint(0, 3), {
+        'text': selected_post.final_answer,
+        'correct': True
+    })
+
+    print answers
+
     post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
 
-    return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
+    return render_template('post.html', post=selected_post, answers=answers, breadcrumbs=post_breadcrumbs)
 
 @app.route('/is_admin')
 def is_admin():

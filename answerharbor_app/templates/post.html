@@ -43,6 +43,19 @@
                     </div>
                 </div>
 
+                <div v-if="allStepsShowing">
+                    <!-- TODO: iterate over answers, but have the v-model for all the radio buttons be correctAnswer, check if correctAnswer is in fact correct -->
+                    <h2>Select Answer:</h2>
+                    {% for answer in answers %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                                {{ answer.text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+
                 <div class="next-btn-wrapper">
                     <button class="btn btn-primary" @click="showNextStep" :disabled="!nextAvailable" v-if="!allStepsShowing">Next <span v-if="!nextAvailable">(<span v-text="secondsLeft"></span>s)</span></button>
                     <a class="btn btn-success" role="button" href="{{ url_for('homework', homework_id=post.homework.id) }}" v-if="allStepsShowing">Back to Homework</a>

@@ -4,6 +4,7 @@
 
 import os
 import csv
+import re
 from datetime import datetime, timedelta
 from flask_script import Manager
 from answerharbor_app import app, db
@@ -12,17 +13,19 @@ from answerharbor_app.models.user import User
 from answerharbor_app.models.course import Course
 from answerharbor_app.models.school import School
 from answerharbor_app.models.homework import Homework
+import answerharbor_app.helpers.fake_answer_generator as fake_ans
+import random
 
 manager = Manager(app)
 
 
 @manager.command
 def sandbox():
-    count = 0
-    while count < 4:
-        count += 1
-        print count
-    print 'done?!'
+    # text = '$\\frac{2*2.2}{2}$'
+    # fake_ans.generate_fake_answer(text)
+    arr = [1, 2, 3]
+    arr.insert(3, 'dog')
+    print arr
 
 
 

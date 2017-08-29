@@ -6,6 +6,7 @@ var app = new Vue({
         title: '',
         question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
         stepGroup: new StepGroup('step'),
+        finalAnswer: new MathjaxInput('final_answer_input', 'final_answer_buffer', 'final_answer_preview', '', ''),
         running: false,
         pending: false,
         timeoutID: 0,
