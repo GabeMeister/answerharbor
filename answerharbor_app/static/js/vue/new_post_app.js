@@ -27,12 +27,6 @@ var app = new Vue({
             this.timeoutID = setTimeout(MathJax.Callback(["createPreview", this, step]), this.delay);
         },
         createPreview: function(input) {
-            // For whatever reason, sometimes step is undefined when you rapidly type keys. Avoid
-            // doing anything if step is undefined
-            if(input === undefined){
-                return;
-            }
-
             this.timeoutID = 0;
             if(this.pending) {
                 return;
@@ -44,7 +38,7 @@ var app = new Vue({
 
             if(this.running){
                 this.pending = true;
-                MathJax.Hub.Queue(["createPreview", this]);
+                MathJax.Hub.Queue(["createPreview", this, input]);
             }
             else {
                 input.recordOldText();
