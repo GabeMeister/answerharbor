@@ -7,21 +7,17 @@
 
     <div class="page-title-wrapper">
         <div class="page-title">
-            <h1>Select your School:</h1>
+            <h1 class="jumbo-title">Welcome to Answer Harbor!</h1>
+            <br/>
+            <h1 class="dark-gray">Browse homework solutions you can <i>actually</i> understand.</h1>
+            <h2 class="dark-gray">Literally right now.</h2>
+            <h3 class="dark-gray">I'm not joking.</h3>
         </div>
     </div>
-    <div class="card-list">
-        {% for school in schools %}
-            <div class="card-wrapper">
-                <a class="card-link" href="/school/{{ school.id }}">
-                    <div class="card">
-                        <h2 class="card-link-text">{{ school.full_name }}</h2>
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
 
+    <div class="call-to-action-wrapper">
+        <a class="btn btn-primary" href="{{ url_for('select_school') }}">Select Your School &raquo;</a>
+    </div>
 
 {% endblock %}
 

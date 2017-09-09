@@ -25,8 +25,13 @@ from werkzeug.security import generate_password_hash
 @app.route('/')
 @app.route('/index')
 def index():
+    return render_template('index.html')
+
+
+@app.route('/select_school')
+def select_school():
     schools = School.query.all()
-    return render_template('index.html', schools=schools)
+    return render_template('select_school.html', schools=schools)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -305,6 +310,7 @@ def post(post_id):
     post_breadcrumbs = breadcrumbs.post_breadcrumb_path()
 
     return render_template('post.html', post=selected_post, breadcrumbs=post_breadcrumbs)
+
 
 @app.route('/is_admin')
 def is_admin():

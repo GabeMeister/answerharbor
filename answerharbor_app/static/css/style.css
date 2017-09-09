@@ -12,12 +12,26 @@ a:hover {
   justify-content: center;
   margin-bottom: 20px; }
 
+.page-title {
+  text-align: center; }
+
 .center-text {
   text-align: center; }
 
 /**** TEXT ****/
 .light-gray {
   color: #B0B0B0; }
+
+.dark-gray {
+  color: #546e7a; }
+
+/**** INDEX PAGE CSS ****/
+.call-to-action-wrapper {
+  display: flex;
+  justify-content: center; }
+
+.jumbo-title {
+  font-size: 50px; }
 
 /**** SIGN UP FORM CSS ****/
 .signup-form-wrapper {
