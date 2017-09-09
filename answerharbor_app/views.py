@@ -147,21 +147,29 @@ def post_data(post_id):
     if requested_post is None:
         return jsonify({})
 
-    # TODO: check if answer is capable of fake answers before generating fake answers
-
-    # Generate random answers from final answer
-    answers = []
-    for _ in range(0, 3):
-        answers.append({
-            'text': fake_ans.generate_fake_answer(requested_post.final_answer),
-            'correct': False
-        })
-
-    # Randomly insert the correct answer somewhere in the answers list
-    answers.insert(random.randint(0, 3), {
+    correct_answer = {
         'text': requested_post.final_answer,
         'correct': True
-    })
+    }
+
+    answers = []
+    if fake_ans.is_fake_answer_possible(requested_post.final_answer):
+        # Generate random answers from final answer
+        ans_count = 0
+        while (ans_count < 3):
+            fake_ans_text = fake_ans.generate_fake_answer(requested_post.final_answer)
+            if not any(fake_ans_text == ans['text'] for ans in answers)\
+                and fake_ans_text != requested_post.final_answer:
+                answers.append({
+                    'text': fake_ans_text,
+                    'correct': False
+                })
+                ans_count = ans_count + 1
+
+        # Randomly insert the correct answer somewhere in the answers list
+        answers.insert(random.randint(0, 3), correct_answer)
+    else:
+        answers.append(correct_answer)
 
     # Because sqlalchemy objects cannot be jsonified, we build up a temporary
     # data structures to jsonify and send it back to the client

@@ -7,6 +7,12 @@ Module for generating fake answers by changing numbers in answer text
 import re
 import random
 
+
+def is_fake_answer_possible(orig_answer_text):
+    return any(c.isdigit() for c in orig_answer_text)\
+        and any(c == '$' for c in orig_answer_text)
+
+
 # Corner case: '$\frac{2*2.2}{2}$'
 def generate_fake_answer(orig_answer):
     fake_answer = orig_answer

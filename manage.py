@@ -21,11 +21,11 @@ manager = Manager(app)
 
 @manager.command
 def sandbox():
-    # text = '$\\frac{2*2.2}{2}$'
-    # fake_ans.generate_fake_answer(text)
-    arr = [1, 2, 3]
-    arr.insert(3, 'dog')
-    print arr
+    text = '$5'
+    print fake_ans.is_fake_answer_possible(text)
+
+
+
 
 
 
