@@ -25,7 +25,15 @@
             {% endfor %}
         </div>
     {% else %}
-        <h2>Hmm, we couldn't find any homeworks for this course.</h2>
+        <div class="page-title-wrapper">
+            <div class="page-title">
+                {% if current_user.is_authenticated and current_user.is_admin %}
+                    <h2>There's no homeworks for this course yet. Homeworks you add to this course will be listed here.</h2>
+                {% else %}
+                    <h2>Hmm, looks like there aren't any homeworks for this course yet. That might change though, so check back soon!</h2>
+                {% endif %}
+            </div>
+        </div>
     {% endif %}
 
     {% if current_user.is_authenticated and current_user.is_admin %}

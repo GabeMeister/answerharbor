@@ -23,7 +23,15 @@
             </div>
         {% endfor %}
     {% else %}
-        <h2>Hmm, looks like this homework doesn't have any answers yet. Check back soon.</h2>
+        <div class="page-title-wrapper">
+            <div class="page-title">
+                {% if current_user.is_authenticated and current_user.is_admin %}
+                    <h2>There's no questions for this homework yet. Questions you add for this homework will be listed here.</h2>
+                {% else %}
+                    <h2>Hmm, looks like there aren't any answers for this homework yet. That might change though, so check back soon!</h2>
+                {% endif %}
+            </div>
+        </div>
     {% endif %}
 
     {% if current_user.is_authenticated and current_user.is_admin %}

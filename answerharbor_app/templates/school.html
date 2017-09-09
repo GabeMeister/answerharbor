@@ -28,7 +28,11 @@
             {% endfor %}
         </div>
     {% else %}
-        <h2>Hmm, we couldn't find any classes for this school.</h2>
+        <div class="page-title-wrapper">
+            <div class="page-title">
+                <h2>Hmm, no classes could be found for this school. That might change though, so check back soon!</h2>
+            </div>
+        </div>
     {% endif %}
 
 {% endblock %}
