@@ -76,7 +76,7 @@ def generate_fake_float(orig_float):
     decimal_count = len(orig_float_str) - str(orig_float_str).index('.') - 1
     # Calculate a random distance away from original float
     modifier_range = fake_float / 30
-    modifier_amt = round(random.uniform(0, modifier_range), decimal_count)
+    modifier_amt = random.uniform(0, modifier_range)
 
     # Randomly decide to add or subtract the modifier amount
     if random.randint(0, 1) == 1:
@@ -84,4 +84,13 @@ def generate_fake_float(orig_float):
     else:
         fake_float = fake_float - modifier_amt
 
-    return fake_float
+    final_float = round(fake_float, decimal_count)
+
+    # Sometimes the fake float after rounding becomes the original float.
+    # If this situation happens, then just round to another decimal point out
+    additional_precision = 1
+    while final_float == orig_float:
+        additional_precision = additional_precision + 1
+        final_float = round(fake_float, decimal_count + additional_precision)
+
+    return final_float

@@ -61,7 +61,7 @@
                 <div class="row final-answer-row">
                     <div class="input-wrapper">
                         <textarea v-validate="'required'" :name="finalAnswer.inputNameID" class="input-text-area form-control" rows="4" v-model="finalAnswer.text" @keyup="update(finalAnswer)" placeholder="Enter final answer"></textarea>
-                        <span v-show="errors.has(finalAnswer.inputNameID)" v-text="errors.first(finalAnswer.inputNameID)"></span>
+                        <span class="text-muted" v-show="errors.has(finalAnswer.inputNameID)" v-text="errors.first(finalAnswer.inputNameID)"></span>
                     </div>
                     <div class="preview-wrapper">
                         <p :id="finalAnswer.bufferID" v-text="finalAnswer.text" class="hidden-buffer"></p>

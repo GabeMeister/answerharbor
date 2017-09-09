@@ -156,9 +156,11 @@ a:hover {
   margin-top: 20px; }
 
 /**** VIEW POST CSS ****/
-.mathjax-radio-label {
-  margin-top: 15px;
-  font-size: 47px; }
+.hidden {
+  display: none; }
+
+.visibility-hidden {
+  visibility: hidden; }
 
 .hidden-step {
   display: none; }
@@ -176,3 +178,9 @@ a:hover {
 .step-count {
   display: flex;
   justify-content: flex-end; }
+
+.incorrect-red {
+  color: #ef0013; }
+
+.correct-green {
+  color: #05a500; }

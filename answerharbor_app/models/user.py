@@ -27,5 +27,5 @@ Admin: {2}
 """.format(self.username, self.email, self.is_admin)
         buf += 'Posts:\n'
         for post in self.posts:
-            buf += post.question + ' ' + post.answer + '\n'
+            buf += post.question + ' ' + post.final_answer + '\n'
         return buf

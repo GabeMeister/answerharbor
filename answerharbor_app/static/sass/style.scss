@@ -7,6 +7,8 @@ $darker-gray: #4A616C;
 $pale-blue: #d1e2ff;
 $gray: #9e9e9e;
 $pale-mint-green: #f4fff2;
+$green: #05a500;
+$red: #ef0013;
 
 /**** GENERAL CSS ****/
 .body-content {
@@ -203,9 +205,12 @@ $x-btn-width: 40px;
 }
 
 /**** VIEW POST CSS ****/
-.mathjax-radio-label {
-    margin-top: 15px;
-    font-size: 47px;
+.hidden {
+    display: none;
+}
+
+.visibility-hidden {
+    visibility: hidden;
 }
 
 .hidden-step {
@@ -228,4 +233,12 @@ $x-btn-width: 40px;
 .step-count {
     display: flex;
     justify-content: flex-end;
+}
+
+.incorrect-red {
+    color: $red;
+}
+
+.correct-green {
+    color: $green;
 }

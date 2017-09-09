@@ -33,7 +33,7 @@
                 <div>
                     <div v-for="step in stepGroup.steps" :key="step.number" class="step-chunk" :class="{'hidden-step': !step.visible}">
                         <div class="step-count">
-                            <span v-if="isLastVisibleStep(step)" class="text-muted">
+                            <span :class="{'visibility-hidden': !isLastVisibleStep(step)}" class="text-muted">
                                 Step <span v-text="visibleStepCount"></span> / <span v-text="totalStepCount"></span>
                             </span>
                         </div>
@@ -46,7 +46,9 @@
                 <div :class="{'hidden-step': !allStepsShowing}">
                     <div v-for="answer in answers" v-if="answers.length > 1">
                         <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
-                        <label :for="answer.mathjax.inputNameID" class="preview mathjax-radio-label" :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></label>
+                        <label :for="answer.mathjax.inputNameID">
+                            <div :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></div>
+                        </label>
                     </div>
 
                     <div v-if="answers.length === 1">
@@ -55,7 +57,7 @@
                 </div>
 
                 <div>
-                    <h1 v-if="answerAttempted" v-text="feedback"></h1>
+                    <h1 v-if="answerAttempted" v-text="feedback" :class="{'incorrect-red': !correctAnswerGuessed, 'correct-green': correctAnswerGuessed}"></h1>
                 </div>
 
                 <div class="next-btn-wrapper">

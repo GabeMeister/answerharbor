@@ -10,7 +10,7 @@ var app = new Vue({
         stepGroup: new StepGroup('step'),
         answers: [],
         selectedAnswer: '',
-        feedback: '',
+        correctAnswerGuessed: false,
         answerAttempted: false,
         running: false,
         pending: false,
@@ -84,6 +84,15 @@ var app = new Vue({
             }
 
             return correctAns;
+        },
+        feedback: function() {
+            var feedbackText = 'Incorrect, try again.';
+
+            if(this.correctAnswerGuessed) {
+                feedbackText = 'Correct!';
+            }
+
+            return feedbackText;
         }
     },
     methods: {
@@ -231,14 +240,14 @@ var app = new Vue({
             return step === this.lastVisibleStep;
         },
         checkAnswer: function(text) {
+            this.answerAttempted = true;
+
             if(this.correctAnswer.mathjax.text === text) {
-                this.feedback = 'Correct!';
+                this.correctAnswerGuessed = true;
             }
             else {
-                this.feedback = 'Incorrect.';
+                this.correctAnswerGuessed = false;
             }
-
-            this.answerAttempted = true;
         }
     }
 });
