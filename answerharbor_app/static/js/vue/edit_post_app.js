@@ -4,6 +4,7 @@ Vue.component('app', {
     template: `
         <div>
             <h1>Edit Question + Answer:</h1>
+
             <h3>Title:</h3>
             <div class="row">
                 <div class="input-wrapper">
@@ -16,23 +17,21 @@ Vue.component('app', {
             </div>
 
             <h3>Question:</h3>
-            <div class="question-wrapper">
-                <div class="row">
-                    <div class="input-wrapper">
-                        <textarea v-validate="'required'" :name="question.inputNameID" class="input-text-area form-control" rows="8" v-model="question.text" @keyup="update(question)"></textarea>
-                        <span class="text-muted" v-show="errors.has(question.inputNameID)" v-text="errors.first(question.inputNameID)"></span>
-                    </div>
-                    <div class="preview-wrapper">
-                        <p :id="question.bufferID" v-text="question.text" class="hidden-buffer"></p>
-                        <p class="preview" :id="question.previewID" v-html="question.html"></p>
-                    </div>
+            <div class="row">
+                <div class="input-wrapper">
+                    <textarea v-validate="'required'" :name="question.inputNameID" class="input-text-area form-control" rows="8" v-model="question.text" @keyup="update(question)" placeholder="Enter question text"></textarea>
+                    <span class="text-muted" v-show="errors.has(question.inputNameID)" v-text="errors.first(question.inputNameID)"></span>
+                </div>
+                <div class="preview-wrapper">
+                    <p :id="question.bufferID" v-text="question.text" class="hidden-buffer"></p>
+                    <p class="preview" :id="question.previewID" v-html="question.html"></p>
                 </div>
             </div>
 
             <div class="answer-separator edit-post-space"></div>
 
             <h3>Answer Steps:</h3>
-            <div class="steps-wrapper">
+            <div>   <!-- Need a div here to utilize :first-child for step-chunk -->
                 <div class="row step-chunk" v-for="step in stepGroup.steps">
                     <div class="delete-btn-wrapper">
                         <img @click="deleteStep(step)" class="x-btn" src="/static/img/x-btn.png"/>
@@ -45,27 +44,28 @@ Vue.component('app', {
                         <p :id="step.bufferID" v-text="step.text" class="hidden-buffer"></p>
                         <p class="preview" :id="step.previewID" v-html="step.html"></p>
                     </div>
-                </div><br/>
-
-                <button class="btn btn-default" type="button" @click="addNewStep">New Step</button>
+                </div>
             </div>
 
+            <br/>
+
+            <button class="btn btn-default" type="button" @click="addNewStep">New Step</button>
+
             <h3>Final Answer:</h3>
-            <div>
-                <div class="row final-answer-row">
-                    <div class="input-wrapper">
-                        <textarea v-validate="'required'" :name="finalAnswer.inputNameID" class="input-text-area form-control" rows="4" v-model="finalAnswer.text" @keyup="update(finalAnswer)" placeholder="Enter final answer"></textarea>
-                        <span class="text-muted" v-show="errors.has(finalAnswer.inputNameID)" v-text="errors.first(finalAnswer.inputNameID)"></span>
-                    </div>
-                    <div class="preview-wrapper">
-                        <p :id="finalAnswer.bufferID" v-text="finalAnswer.text" class="hidden-buffer"></p>
-                        <p class="preview" :id="finalAnswer.previewID" v-html="finalAnswer.html"></p>
-                    </div>
+            <div class="row">
+                <div class="input-wrapper">
+                    <textarea v-validate="'required'" :name="finalAnswer.inputNameID" class="input-text-area form-control" rows="4" v-model="finalAnswer.text" @keyup="update(finalAnswer)" placeholder="Enter final answer"></textarea>
+                    <span class="text-muted" v-show="errors.has(finalAnswer.inputNameID)" v-text="errors.first(finalAnswer.inputNameID)"></span>
+                </div>
+                <div class="preview-wrapper">
+                    <p :id="finalAnswer.bufferID" v-text="finalAnswer.text" class="hidden-buffer"></p>
+                    <p class="preview" :id="finalAnswer.previewID" v-html="finalAnswer.html"></p>
                 </div>
             </div>
 
             <br/>
             <br/>
+
             <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Save Edits'/>
         </div>
     `,
