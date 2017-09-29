@@ -23,8 +23,8 @@ Vue.component('app', {
                     <span class="text-muted" v-show="errors.has(question.inputNameID)" v-text="errors.first(question.inputNameID)"></span>
                 </div>
                 <div class="preview-wrapper">
-                    <p :id="question.bufferID" v-text="question.text" class="hidden-buffer"></p>
-                    <p class="preview" :id="question.previewID" v-html="question.html"></p>
+                    <div :id="question.bufferID" v-text="question.text" class="hidden-buffer"></div>
+                    <div class="preview" :id="question.previewID" v-html="question.html"></div>
                 </div>
             </div>
 
@@ -41,8 +41,8 @@ Vue.component('app', {
                         <span class="text-muted" v-show="errors.has(step.inputNameID)" v-text="errors.first(step.inputNameID)"></span>
                     </div>
                     <div class="preview-wrapper">
-                        <p :id="step.bufferID" v-text="step.text" class="hidden-buffer"></p>
-                        <p class="preview" :id="step.previewID" v-html="step.html"></p>
+                        <div :id="step.bufferID" v-text="step.text" class="hidden-buffer"></div>
+                        <div class="preview" :id="step.previewID" v-html="step.html"></div>
                     </div>
                 </div>
             </div>
@@ -58,8 +58,8 @@ Vue.component('app', {
                     <span class="text-muted" v-show="errors.has(finalAnswer.inputNameID)" v-text="errors.first(finalAnswer.inputNameID)"></span>
                 </div>
                 <div class="preview-wrapper">
-                    <p :id="finalAnswer.bufferID" v-text="finalAnswer.text" class="hidden-buffer"></p>
-                    <p class="preview" :id="finalAnswer.previewID" v-html="finalAnswer.html"></p>
+                    <div :id="finalAnswer.bufferID" v-text="finalAnswer.text" class="hidden-buffer"></div>
+                    <div class="preview" :id="finalAnswer.previewID" v-html="finalAnswer.html"></div>
                 </div>
             </div>
 
