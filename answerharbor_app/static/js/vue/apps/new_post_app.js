@@ -1,67 +1,102 @@
 Vue.use(VeeValidate);
 
-var app = new Vue({
-    el: '#app',
-    data: {
-        title: '',
-        question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
-        stepGroup: new StepGroup('step'),
-        finalAnswer: new MathjaxInput('final_answer_input', 'final_answer_buffer', 'final_answer_preview', '', ''),
-        running: false,
-        pending: false,
-        timeoutID: 0,
-        delay: 150
+Vue.component('app', {
+    template: `
+        <div>
+            <h1>Create a New Question + Answer:</h1>
+
+            <h3>Title:</h3>
+            <string-input
+                id="question_title"
+                :initText="title"
+                @onUpdated="updateTitle"
+                placeholder="Enter question title">
+            </string-input>
+
+            <h3>Question:</h3>
+            <basic-mathjax-input
+                :inputID="question.inputNameID"
+                :bufferID="question.bufferID"
+                :previewID="question.previewID"
+                :placeholder="question.placeholder"
+                :initMathjaxText="question.text"
+                :mathjaxHtml="question.html"
+                v-on:onUpdated="updateQuestion">
+            </basic-mathjax-input>
+
+            <div class="answer-separator edit-post-space"></div>
+
+            <h3>Answer Steps:</h3>
+            <div>
+                <step-mathjax-input
+                    v-for="step in stepGroup.steps"
+                    :key="step.number"
+                    class="row step-chunk"
+                    :inputID="step.inputNameID"
+                    :bufferID="step.bufferID"
+                    :previewID="step.previewID"
+                    :number="step.number"
+                    :placeholder="step.placeholder"
+                    :initMathjaxText="step.text"
+                    :mathjaxHtml="step.html"
+                    v-on:onUpdated="updateStep"
+                    @onDelete="deleteStep">
+                </step-mathjax-input>
+            </div>
+
+            <br/>
+
+            <button class="btn btn-default" type="button" @click="addNewStep">New Step</button>
+
+            <h3>Final Answer:</h3>
+            <basic-mathjax-input
+                :inputID="finalAnswer.inputNameID"
+                :bufferID="finalAnswer.bufferID"
+                :previewID="finalAnswer.previewID"
+                :placeholder="finalAnswer.placeholder"
+                :initMathjaxText="finalAnswer.text"
+                :mathjaxHtml="finalAnswer.html"
+                v-on:onUpdated="updateFinalAnswer">
+            </basic-mathjax-input>
+
+            <br/>
+            <br/>
+
+            <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Save Edits'/>
+        </div>
+    `,
+    data: function() {
+        return {
+            title: '',
+            question: new MathjaxInput('question', '', '', 1, 'Enter question text'),
+            stepGroup: new StepGroup('step'),
+            finalAnswer: new MathjaxInput('final_answer', '', '', 1, 'Enter final answer text')
+        };
+    },
+    created: function() {
+        var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
+        this.title = 'Question #' + (totalCurrentPosts + 1);
+        this.stepGroup.addNewStep();
     },
     methods: {
-        init: function() {
-            var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
-            this.title = 'Question #' + (totalCurrentPosts + 1);
-
-            this.stepGroup.addNewStep();
+        updateTitle: function(text) {
+            this.title = text;
         },
-        update: function(step) {
-            if(this.timeoutID) {
-                clearTimeout(this.timeoutID);
-            }
-
-            this.timeoutID = setTimeout(MathJax.Callback(["createPreview", this, step]), this.delay);
+        updateQuestion: function(text) {
+            this.question.updateText(text);
         },
-        createPreview: function(input) {
-            this.timeoutID = 0;
-            if(this.pending) {
-                return;
-            }
-
-            if(input.oldText === input.text) {
-                return;
-            }
-
-            if(this.running){
-                this.pending = true;
-                MathJax.Hub.Queue(["createPreview", this, input]);
-            }
-            else {
-                input.recordOldText();
-                this.running = true;
-                MathJax.Hub.Queue(
-                    ["Typeset", MathJax.Hub, input.bufferID],
-                    ["displayMathjax", this, input]
-                );
-            }
-
-        },
-        displayMathjax: function(input) {
-            this.running = false;
-            this.pending = false;
-            input.html = $('#'+input.bufferID).html();
+        updateFinalAnswer: function(text) {
+            this.finalAnswer.updateText(text);
         },
         addNewStep: function() {
             this.stepGroup.addNewStep();
         },
-        deleteStep: function(step) {
+        updateStep: function(text, number) {
+            this.stepGroup.editStep(text, number);
+        },
+        deleteStep: function(number) {
             if(this.stepGroup.steps.length > 1 && confirm('Are you sure you want to delete this step?')){
-                var index = _.indexOf(this.stepGroup.steps, step);
-                this.stepGroup.steps.splice(index, 1);
+                this.stepGroup.deleteStep(number);
             }
         },
         validateBeforeSubmit: function(event) {
@@ -72,8 +107,10 @@ var app = new Vue({
                     event.preventDefault();
                 }
             });
-
         }
     }
 });
-app.init();
+
+var app = new Vue({
+    el: '#app'
+});

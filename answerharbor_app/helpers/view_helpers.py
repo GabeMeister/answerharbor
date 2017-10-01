@@ -19,7 +19,6 @@ def get_post_from_request(request):
     question_title = get_question_title_from_request(request)
     question_text = get_question_from_request(request)
     final_answer = get_final_answer_from_request(request)
-    print final_answer
     steps = get_steps_from_request(request)
 
     now = datetime.now()
@@ -50,8 +49,9 @@ def get_steps_from_request(request):
     # Get only keys that are for step inputs
     steps = []
     for key, value in request.form.iteritems():
-        if 'step_input_' in key:
-            steps.append(Step(number=int(key.replace('step_input_', '')), text=value))
+        if 'step_' in key:
+            number = key.replace('step_', '').replace('_input', '')
+            steps.append(Step(number=int(number), text=value))
 
     # Steps may be out of order from dictionary.
     # Sort by the step number

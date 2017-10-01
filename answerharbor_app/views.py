@@ -137,6 +137,8 @@ def edit_post(post_id):
         post_to_edit.question = view_helpers.get_question_from_request(request)
         post_to_edit.steps = view_helpers.get_steps_from_request(request)
         post_to_edit.final_answer = view_helpers.get_final_answer_from_request(request)
+        post_to_edit.last_edit_date = datetime.now()
+
         db.session.commit()
 
         return redirect(url_for('post', post_id=post_id))
