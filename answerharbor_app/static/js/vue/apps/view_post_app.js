@@ -1,29 +1,104 @@
-const NORMAL_USER_SEC_DELAY = 0;
-const ADMIN_USER_SEC_DELAY = 0;
-const ONE_SECOND = 1000;
+Vue.component('app', {
+    template: `
+        <div>
+            <div>
+                <h2 v-text="title"></h2>
+            </div>
 
-var app = new Vue({
-    el: '#app',
-    data: {
-        postID: 0,
-        question: new MathjaxInput('question_input', 'question_buffer', 'question_preview', '', ''),
-        stepGroup: new StepGroup('step'),
-        answers: [],
-        selectedAnswer: '',
-        correctAnswerGuessed: false,
-        answerAttempted: false,
-        running: false,
-        pending: false,
-        timeoutID: 0,
-        delay: 150,
-        nextAvailable: true,
-        userWaitTime: NORMAL_USER_SEC_DELAY,
-        secondsLeft: NORMAL_USER_SEC_DELAY,
-        timerID: 0,
-        isAdmin: false
+            <div>
+                <span v-text="question.text"></span>
+            </div>
+
+            <br/>
+            <div class="answer-separator"></div>
+
+            <div>
+                <div>
+                    <h2>Answer:</h2>
+                </div>
+
+                <div>
+<!--
+                    <step-mathjax-preview
+                        v-for="step in stepGroup.steps"
+                        :key="step.number"
+                        class="step-chunk"
+                        :bufferID="step.bufferID"
+                        :previewID="step.previewID"
+                        :stepVisible="step.visible"
+                        :stepCountVisible="isLastVisibleStep(step)"
+                        :stepCount="visibleStepCount"
+                        :totalStepCount="totalStepCount"
+                        :mathjaxText="step.text"
+                        :mathjaxHtml="step.html">
+                    </step-mathjax-preview>
+-->
+<!--
+                    <div :class="{'hidden-step': !step.visible}">
+                        <div class="step-count">
+                            <span :class="{'visibility-hidden': !isLastVisibleStep(step)}" class="text-muted">
+                                Step <span v-text="visibleStepCount"></span> / <span v-text="totalStepCount"></span>
+                            </span>
+                        </div>
+                        <div>
+                            <div
+                                class="hidden-buffer"
+                                :id="bufferID"
+                                v-text="mathjaxText">
+                            </div>
+                            <div :id="step.bufferID" class="preview" v-html="step.text"></div>
+                            <div :id="step.previewID" class="preview" v-html="step.text"></div>
+                        </div>
+                    </div>
+-->
+
+                </div>
+
+                <div :class="{'hidden-step': !allStepsShowing}">
+                    <div v-for="answer in answerGroup.answers" v-if="answerGroup.answers.length > 1">
+                        <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
+                        <label :for="answer.mathjax.inputNameID">
+                            <div :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></div>
+                        </label>
+                    </div>
+
+                    <div v-if="answerGroup.answers.length === 1">
+                        <h3 :for="answerGroup.answers[0].mathjax.inputNameID" class="preview center-text" :id="answerGroup.answers[0].mathjax.previewID" v-html="answerGroup.answers[0].mathjax.text"></h3>
+                    </div>
+                </div>
+
+                <div>
+                    <h1 v-if="answerAttempted" v-text="feedback" :class="{'incorrect-red': !correctAnswerGuessed, 'correct-green': correctAnswerGuessed}"></h1>
+                </div>
+
+                <div class="next-btn-wrapper">
+                    <button class="btn btn-primary" @click="showNextStep" :disabled="!nextAvailable" v-if="!allStepsShowing">Next</button>
+                    <a class="btn btn-success" role="button" :href="homeworkUrl" v-if="allStepsShowing">Back to Homework</a>
+                </div>
+            </div>
+        </div>
+    `,
+    props: {
+        homeworkUrl: {
+            type: String,
+            required: true
+        }
+    },
+    data() {
+        return {
+            postID: 0,
+            title: '',
+            question: new MathjaxPreview('question', ''),
+            stepGroup: new StepGroup('step'),
+            answerGroup: new AnswerGroup('answers'),
+            selectedAnswer: '',
+            correctAnswerGuessed: false,
+            answerAttempted: false
+        };
     },
     computed: {
         allStepsShowing: function() {
+            // return !_.some(this.stepGroup.steps, x => { return x.visible === false; });
             for(var i = 0; i < this.stepGroup.steps.length; i++) {
                 var step = this.stepGroup.steps[i];
                 if(step.visible == false) {
@@ -66,134 +141,56 @@ var app = new Vue({
             return count;
         },
         totalStepCount: function() {
-            var count = 0;
-            if(this.stepGroup !== null && this.stepGroup.steps !== null) {
-                count = this.stepGroup.steps.length;
-            }
-
-            return count;
+            return (this.stepGroup !== null && this.stepGroup.steps !== null)
+                ? this.stepGroup.steps.length
+                : 0;
         },
         correctAnswer: function() {
-            var correctAns = null;
-
-            for(var i = 0; i < this.answers.length; i++) {
-                if(this.answers[i].correct){
-                    correctAns = this.answers[i];
-                    break;
-                }
-            }
-
-            return correctAns;
+            return this.answerGroup.correctAnswer();
         },
         feedback: function() {
-            var feedbackText = 'Incorrect, try again.';
-
-            if(this.correctAnswerGuessed) {
-                feedbackText = 'Correct!';
-            }
-
-            return feedbackText;
+            return this.correctAnswerGuessed
+                ? 'Correct!'
+                : 'Incorrect, try again.';
         }
     },
-    methods: {
-        init: function() {
-            var postID = $('#post-id').text();
+    created: function() {
+        var postID = $('#post-id').text();
 
-            // Database call to get the post
-            axios.get('/post_data/'+postID)
+        // Database call to get the post
+        axios.get('/post_data/'+postID)
             .then(response => {
-                this.question.text = response.data.question;
-                this.update(this.question);
-
-                for(var i = 0; i < response.data.answers.length; i++) {
-                    this.answers.push({
-                        'mathjax': new MathjaxInput('answer_input'+i, 'answer_buffer'+i, 'answer_preview'+i, response.data.answers[i].text, '', 0),
-                        'correct': response.data.answers[i].correct
-                    });
-                    this.update(this.answers[i].mathjax);
-                }
-
+                this.title = response.data.title;
+                this.question.updateText(response.data.question);
                 this.stepGroup.initStepsFromList(response.data.steps);
+                this.answerGroup.initAnswersFromList(response.data.answers);
 
                 // Steps need to be hidden initially from the user.
                 // Hide all but the first step.
                 this.stepGroup.steps[0].visible = true;
 
-                for(var i = 1; i < this.stepGroup.steps.length; i++) {
-                    this.stepGroup.steps[i].visible = false;
-                }
-
-                this.updateAll();
+                this.renderAll();
             })
             .catch(function(error) {
                 console.log(error);
             });
+    },
+    methods: {
+        renderAll: function() {
+            // Question
+            this.question.createPreview();
 
-            this.setUserWaitTime();
+            // All steps
+            this.stepGroup.steps.forEach(step => {
+                step.createPreview();
+            });
 
-        },
-        update: function(input) {
-            if(this.timeoutID) {
-                clearTimeout(this.timeoutID);
-            }
-
-            this.timeoutID = setTimeout(MathJax.Callback(["createPreview", this, input]), this.delay);
-        },
-        updateAll: function() {
-            this.timeoutID = 0;
-            if(this.pending) {
-                return;
-            }
-
-            if(this.running) {
-                this.pending = true;
-                MathJax.Hub.Queue(["updateAll", this]);
-            }
-            else {
-                this.running = true;
-                MathJax.Hub.Queue(
-                    ["Typeset", MathJax.Hub]
-                );
-
-                for(var i = 0; i < this.stepGroup.steps.length; i++) {
-                    MathJax.Hub.Queue(
-                        ["displayMathjax", this, this.stepGroup.steps[i]]
-                    );
-                }
-            }
-        },
-        createPreview: function(input) {
-            this.timeoutID = 0;
-            if(this.pending) {
-                return;
-            }
-
-            if(input.oldText === input.text) {
-                return;
-            }
-
-            if(this.running){
-                this.pending = true;
-                MathJax.Hub.Queue(["createPreview", this, input]);
-            }
-            else {
-                input.recordOldText();
-                this.running = true;
-                MathJax.Hub.Queue(
-                    ["Typeset", MathJax.Hub, input.bufferID],
-                    ["displayMathjax", this, input]
-                );
-            }
-
-        },
-        displayMathjax: function(input) {
-            this.running = false;
-            this.pending = false;
-            input.html = $('#'+input.bufferID).html();
+            // Final Answer
+            this.answerGroup.answers.forEach(answer => {
+                answer.mathjax.createPreview();
+            });
         },
         showNextStep: function() {
-            this.nextAvailable = false;
-
             // Find the first step that isn't hidden
             for(var i = 1; i < this.stepGroup.steps.length; i++) {
                 var step = this.stepGroup.steps[i];
@@ -203,53 +200,20 @@ var app = new Vue({
                     // Due to a limitation of javascript, in order for Vue to update we
                     // have to call Vue.set()
                     Vue.set(this.stepGroup.steps, i, step);
-
-                    if(this.userWaitTime > 0){
-                        // Disable the button for a certain time to let the user write the step down.
-                        // Only for non-admin users.
-                        this.secondsLeft = this.userWaitTime;
-                        this.timerID = setInterval(() => {
-                            this.secondsLeft = this.secondsLeft - 1;
-                            if(this.secondsLeft <= 0) {
-                                this.nextAvailable = true;
-                                clearInterval(this.timerID);
-                            }
-                        }, ONE_SECOND);
-                    }
-                    else {
-                        this.nextAvailable = true;
-                    }
-
-                    break;
                 }
             }
 
-        },
-        setUserWaitTime: function() {
-            // Check if user is logged in and is an admin user.
-            // If so, there's no delay. Otherwise, there will be a delay between steps.
-            axios.get('/is_admin')
-            .then(response => {
-                this.userWaitTime = response.data.is_admin ? ADMIN_USER_SEC_DELAY : NORMAL_USER_SEC_DELAY;
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
         },
         isLastVisibleStep: function(step) {
             return step === this.lastVisibleStep;
         },
         checkAnswer: function(text) {
             this.answerAttempted = true;
-
-            if(this.correctAnswer.mathjax.text === text) {
-                this.correctAnswerGuessed = true;
-            }
-            else {
-                this.correctAnswerGuessed = false;
-            }
+            this.correctAnswerGuessed = (this.correctAnswer.mathjax.text === text);
         }
     }
 });
 
-app.init();
+var app = new Vue({
+    el: '#app'
+});

@@ -11,61 +11,7 @@
             <a class="btn btn-default confirm-link-click" role="button" href="{{ url_for('delete_post', post_id=post.id, homework_id=post.homework.id) }}">Delete Question</a>
         {% endif %}
 
-        <div>
-            <div>
-                <h2>{{ post.title }}</h2>
-            </div>
-
-            <div>
-                <div>
-                    <span>{{ post.question }}</span>
-                </div>
-                <br/>
-            </div>
-
-            <div class="answer-separator"></div>
-
-            <div>
-                <div>
-                    <h2>Answer:</h2>
-                </div>
-
-                <div>
-                    <div v-for="step in stepGroup.steps" :key="step.number" class="step-chunk" :class="{'hidden-step': !step.visible}">
-                        <div class="step-count">
-                            <span :class="{'visibility-hidden': !isLastVisibleStep(step)}" class="text-muted">
-                                Step <span v-text="visibleStepCount"></span> / <span v-text="totalStepCount"></span>
-                            </span>
-                        </div>
-                        <div>
-                            <p :id="step.previewID" class="preview" v-html="step.text"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div :class="{'hidden-step': !allStepsShowing}">
-                    <div v-for="answer in answers" v-if="answers.length > 1">
-                        <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
-                        <label :for="answer.mathjax.inputNameID">
-                            <div :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></div>
-                        </label>
-                    </div>
-
-                    <div v-if="answers.length === 1">
-                        <h3 :for="answers[0].mathjax.inputNameID" class="preview center-text" :id="answers[0].mathjax.previewID" v-html="answers[0].mathjax.text"></h3>
-                    </div>
-                </div>
-
-                <div>
-                    <h1 v-if="answerAttempted" v-text="feedback" :class="{'incorrect-red': !correctAnswerGuessed, 'correct-green': correctAnswerGuessed}"></h1>
-                </div>
-
-                <div class="next-btn-wrapper">
-                    <button class="btn btn-primary" @click="showNextStep" :disabled="!nextAvailable" v-if="!allStepsShowing">Next <span v-if="!nextAvailable">(<span v-text="secondsLeft"></span>s)</span></button>
-                    <a class="btn btn-success" role="button" href="{{ url_for('homework', homework_id=post.homework.id) }}" v-if="allStepsShowing">Back to Homework</a>
-                </div>
-            </div>
-        </div>
+        <app homework-url="{{ url_for('homework', homework_id=post.homework.id) }}"></app>
     </div>
 
 {% endblock %}

@@ -1,13 +1,10 @@
-function MathjaxInput(id, text, html, number = 1, placeholder='') {
+function MathjaxPreview(id, text) {
     // Input Variables
-    this.inputNameID = id + '_input';
     this.bufferID = id + '_buffer';
     this.previewID = id + '_preview';
     this.text = text;
     this.oldText = '';
-    this.html = html;
-    this.number = number;
-    this.placeholder = placeholder;
+    this.html = '';
 
     // Mathjax State Machine Variables
     this.running = false;
