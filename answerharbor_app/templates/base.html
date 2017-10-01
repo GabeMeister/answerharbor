@@ -82,6 +82,7 @@
         {% endblock %}
     </div>
 
+    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
@@ -93,9 +94,17 @@
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
+    <!-- Vue Files -->
     <script type="text/javascript" src="/static/js/vue/util.js"></script>
     <script type="text/javascript" src="/static/js/vue/validation.js"></script>
-    <script type="text/javascript" src="/static/js/vue/mathjax.js"></script>
+
+    <!-- Vue Components -->
+    <script type="text/javascript" src="/static/js/vue/components/test.js"></script>
+    <script type="text/javascript" src="/static/js/vue/components/BasicMathjaxInput.js"></script>
+    <script type="text/javascript" src="/static/js/vue/components/StepMathjaxInput.js"></script>
+
+    <script type="text/javascript" src="/static/js/mathjax/MathjaxInput.js"></script>
+    <script type="text/javascript" src="/static/js/mathjax/StepGroup.js"></script>
     <script src="/static/js/build.js"></script>
 
     {% block body_scripts %}
