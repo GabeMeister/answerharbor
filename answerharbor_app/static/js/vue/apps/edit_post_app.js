@@ -6,15 +6,12 @@ Vue.component('app', {
             <h1>Edit Question + Answer:</h1>
 
             <h3>Title:</h3>
-            <div class="row">
-                <div class="input-wrapper">
-                    <input type="text" name="question_title" v-model="title" class="form-control" v-validate="'required'" placeholder="Enter question title"/>
-                    <span v-show="errors.has('question_title')" v-text="errors.first('question_title')"></span>
-                </div>
-                <div class="preview-wrapper">
-                    <h3 v-text="title" class="post-title-preview"></h3>
-                </div>
-            </div>
+            <string-input
+                id="question_title"
+                :initText="title"
+                @onUpdated="updateTitle"
+                placeholder="Enter question title">
+            </string-input>
 
             <h3>Question:</h3>
             <basic-mathjax-input
@@ -115,6 +112,9 @@ Vue.component('app', {
 
             // Final Answer
             this.finalAnswer.createPreview();
+        },
+        updateTitle: function(text) {
+            this.title = text;
         },
         updateQuestion: function(text) {
             this.question.updateText(text);

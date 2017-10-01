@@ -41,9 +41,7 @@ function StepGroup(name) {
     }
 
     this.deleteStep = function(number) {
-        console.log('number: ', number);
         var index = _.findIndex(this.steps, x => { return x.number === number; });
-        console.log('index: ', index);
         this.steps.splice(index, 1);
     }
 
