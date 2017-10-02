@@ -13,9 +13,7 @@ Vue.component('app', {
             <div class="answer-separator"></div>
 
             <div>
-                <div>
-                    <h2>Answer:</h2>
-                </div>
+                <h2>Answer:</h2>
 
                 <div>
                     <step-mathjax-preview
@@ -77,15 +75,8 @@ Vue.component('app', {
     },
     computed: {
         allStepsShowing: function() {
-            // return !_.some(this.stepGroup.steps, x => { return x.visible === false; });
-            for(var i = 0; i < this.stepGroup.steps.length; i++) {
-                var step = this.stepGroup.steps[i];
-                if(step.visible === false) {
-                    return false;
-                }
-            }
-
-            return true;
+            // If all steps are showing, it should not have any step that isn't visible.
+            return !_.some(this.stepGroup.steps, x => { return x.visible === false; });
         },
         lastVisibleStep: function() {
             var lastVisibleStep = null;
@@ -106,18 +97,7 @@ Vue.component('app', {
             return lastVisibleStep;
         },
         visibleStepCount: function() {
-            var count = 0;
-            for(var i = 0; i < this.stepGroup.steps.length; i++) {
-                var step = this.stepGroup.steps[i];
-                if(step.visible) {
-                    count++;
-                }
-                else {
-                    break;
-                }
-            }
-
-            return count;
+            return _.filter(this.stepGroup.steps, x => { return x.visible; }).length;
         },
         totalStepCount: function() {
             return (this.stepGroup !== null && this.stepGroup.steps !== null)
