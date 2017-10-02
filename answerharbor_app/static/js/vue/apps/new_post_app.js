@@ -62,7 +62,7 @@ Vue.component('app', {
             <br/>
             <br/>
 
-            <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Save Edits'/>
+            <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Create'/>
         </div>
     `,
     data: function() {
