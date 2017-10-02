@@ -18,7 +18,6 @@ Vue.component('app', {
                 </div>
 
                 <div>
-<!--
                     <step-mathjax-preview
                         v-for="step in stepGroup.steps"
                         :key="step.number"
@@ -32,26 +31,6 @@ Vue.component('app', {
                         :mathjaxText="step.text"
                         :mathjaxHtml="step.html">
                     </step-mathjax-preview>
--->
-<!--
-                    <div :class="{'hidden-step': !step.visible}">
-                        <div class="step-count">
-                            <span :class="{'visibility-hidden': !isLastVisibleStep(step)}" class="text-muted">
-                                Step <span v-text="visibleStepCount"></span> / <span v-text="totalStepCount"></span>
-                            </span>
-                        </div>
-                        <div>
-                            <div
-                                class="hidden-buffer"
-                                :id="bufferID"
-                                v-text="mathjaxText">
-                            </div>
-                            <div :id="step.bufferID" class="preview" v-html="step.text"></div>
-                            <div :id="step.previewID" class="preview" v-html="step.text"></div>
-                        </div>
-                    </div>
--->
-
                 </div>
 
                 <div :class="{'hidden-step': !allStepsShowing}">
@@ -72,7 +51,7 @@ Vue.component('app', {
                 </div>
 
                 <div class="next-btn-wrapper">
-                    <button class="btn btn-primary" @click="showNextStep" :disabled="!nextAvailable" v-if="!allStepsShowing">Next</button>
+                    <button class="btn btn-primary" @click="showNextStep" v-if="!allStepsShowing">Next</button>
                     <a class="btn btn-success" role="button" :href="homeworkUrl" v-if="allStepsShowing">Back to Homework</a>
                 </div>
             </div>
@@ -101,7 +80,7 @@ Vue.component('app', {
             // return !_.some(this.stepGroup.steps, x => { return x.visible === false; });
             for(var i = 0; i < this.stepGroup.steps.length; i++) {
                 var step = this.stepGroup.steps[i];
-                if(step.visible == false) {
+                if(step.visible === false) {
                     return false;
                 }
             }
@@ -166,6 +145,10 @@ Vue.component('app', {
                 this.answerGroup.initAnswersFromList(response.data.answers);
 
                 // Steps need to be hidden initially from the user.
+                this.stepGroup.steps.forEach(step => {
+                    step.visible = false;
+                });
+
                 // Hide all but the first step.
                 this.stepGroup.steps[0].visible = true;
 
@@ -200,6 +183,8 @@ Vue.component('app', {
                     // Due to a limitation of javascript, in order for Vue to update we
                     // have to call Vue.set()
                     Vue.set(this.stepGroup.steps, i, step);
+
+                    break;
                 }
             }
 
