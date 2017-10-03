@@ -1,6 +1,6 @@
 Vue.component('StepMathjaxInput', {
     template: `
-        <div class="row">
+        <div class="row step-chunk">
             <div class="delete-btn-wrapper">
                 <img @click="deleteStep" class="x-btn" src="/static/img/x-btn.png"/>
             </div>
@@ -8,7 +8,7 @@ Vue.component('StepMathjaxInput', {
                 <textarea
                     class="input-text-area form-control"
                     rows="8"
-                    placeholder="Enter step text"
+                    :placeholder="placeholder"
                     :name="inputID"
                     v-validate="'required'"
                     v-model="mathjaxText"
@@ -61,6 +61,10 @@ Vue.component('StepMathjaxInput', {
 
         // Optional Props
         mathjaxHtml: {
+            type: String,
+            default: ''
+        },
+        placeholder: {
             type: String,
             default: ''
         }

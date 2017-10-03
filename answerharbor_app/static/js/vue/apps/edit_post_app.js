@@ -31,7 +31,6 @@ Vue.component('app', {
                 <step-mathjax-input
                     v-for="step in stepGroup.steps"
                     :key="step.number"
-                    class="row step-chunk"
                     :inputID="step.inputNameID"
                     :bufferID="step.bufferID"
                     :previewID="step.previewID"

@@ -173,8 +173,6 @@ a:hover {
 }
 
 .row {
-    // min-height: 150px;
-    max-height: 500px;
     display: flex;
     justify-content: space-between;
     margin-left: 0px;
@@ -242,11 +240,16 @@ $x-btn-width: 40px;
 
 .step-chunk {
     margin-bottom: 10px;
+    overflow: overlay;
 }
 
 .step-chunk:not(:first-child) {
     padding-top: 10px;
     border-top: 1px solid $gray;
+}
+
+.step-chunk img {
+    max-height: 400px;
 }
 
 .step-count {

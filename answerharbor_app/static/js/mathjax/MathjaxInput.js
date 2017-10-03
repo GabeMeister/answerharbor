@@ -45,6 +45,10 @@ function MathjaxInput(id, text, html, number = 1, placeholder='') {
             this.running = true;
 
             this.recordOldText();
+
+            //Escape tags before doing stuff
+            // this.text = this.escape(text);
+
             MathJax.Hub.Queue(
                 ["Typeset", MathJax.Hub, this.bufferID],
                 ["displayMathjax", this]
@@ -56,6 +60,18 @@ function MathjaxInput(id, text, html, number = 1, placeholder='') {
         this.running = false;
         this.pending = false;
 
-        this.html = $('#'+this.bufferID).html();
+        var bufferHtml = $('#'+this.bufferID).html();
+        bufferHtml = marked(bufferHtml);
+
+        this.html = bufferHtml;
+    };
+
+    this.escape = function(html, encode) {
+        return html
+            .replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
     };
 }
