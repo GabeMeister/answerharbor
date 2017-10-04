@@ -6,7 +6,12 @@ Vue.component('app', {
             </div>
 
             <div>
-                <span v-text="question.text"></span>
+                <basic-mathjax-preview
+                    :bufferID="question.bufferID"
+                    :previewID="question.previewID"
+                    :mathjaxText="question.text"
+                    :mathjaxHtml="question.html">
+                </basic-mathjax-preview>
             </div>
 
             <br/>
@@ -35,12 +40,17 @@ Vue.component('app', {
                     <div v-for="answer in answerGroup.answers" v-if="answerGroup.answers.length > 1">
                         <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
                         <label :for="answer.mathjax.inputNameID">
-                            <div :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></div>
+                            <div :id="answer.mathjax.bufferID" class="hidden-buffer" v-text="answer.mathjax.text"></div>
+                            <h2 :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></h2>
                         </label>
                     </div>
 
                     <div v-if="answerGroup.answers.length === 1">
-                        <h3 :for="answerGroup.answers[0].mathjax.inputNameID" class="preview center-text" :id="answerGroup.answers[0].mathjax.previewID" v-html="answerGroup.answers[0].mathjax.text"></h3>
+                        <h3
+                            class="preview center-text"
+                            :id="answerGroup.answers[0].mathjax.previewID"
+                            v-html="answerGroup.answers[0].mathjax.text">
+                        </h3>
                     </div>
                 </div>
 
