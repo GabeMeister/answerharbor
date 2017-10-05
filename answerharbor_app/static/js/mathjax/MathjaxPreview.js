@@ -53,6 +53,11 @@ function MathjaxPreview(id, text) {
         this.running = false;
         this.pending = false;
 
-        this.html = $('#'+this.bufferID).html();
+        var bufferHtml = $('#'+this.bufferID).html();
+
+        // Render markdown
+        bufferHtml = marked(bufferHtml);
+        this.html = bufferHtml;
+
     };
 }

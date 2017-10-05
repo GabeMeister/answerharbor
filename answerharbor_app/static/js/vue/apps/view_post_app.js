@@ -41,15 +41,20 @@ Vue.component('app', {
                         <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
                         <label :for="answer.mathjax.inputNameID">
                             <div :id="answer.mathjax.bufferID" class="hidden-buffer" v-text="answer.mathjax.text"></div>
-                            <h2 :id="answer.mathjax.previewID" v-html="answer.mathjax.text"></h2>
+                            <div class="preview" :id="answer.mathjax.previewID" v-html="answer.mathjax.html"></div>
                         </label>
                     </div>
 
                     <div v-if="answerGroup.answers.length === 1">
                         <h3
+                            class="hidden-buffer"
+                            :id="answerGroup.answers[0].mathjax.bufferID"
+                            v-text="answerGroup.answers[0].mathjax.text">
+                        </h3>
+                        <h3
                             class="preview center-text"
                             :id="answerGroup.answers[0].mathjax.previewID"
-                            v-html="answerGroup.answers[0].mathjax.text">
+                            v-html="answerGroup.answers[0].mathjax.html">
                         </h3>
                     </div>
                 </div>

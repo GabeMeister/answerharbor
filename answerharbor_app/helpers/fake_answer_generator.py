@@ -15,15 +15,16 @@ def is_fake_answer_possible(orig_answer_text):
 
 # Corner case: '$\frac{2*2.2}{2}$'
 def generate_fake_answer(orig_answer):
-    fake_answer = orig_answer
-    nums = find_nums_in_text(orig_answer)
+    # find the mathjax part of the string we can actually replace
+    orig_mathjax = find_mathjax(orig_answer)
+    fake_mathjax = orig_mathjax
+    nums = find_nums_in_text(fake_mathjax)
 
     for index, num in nums.iteritems():
         fake_num = generate_fake_number_str(num)
-        fake_answer = fake_answer[:index] + fake_answer[index:].replace(num, fake_num, 1)
+        fake_mathjax = fake_mathjax[:index] + fake_mathjax[index:].replace(num, fake_num, 1)
 
-    return fake_answer
-
+    return orig_answer.replace(orig_mathjax, fake_mathjax, 1)
 
 
 def find_nums_in_text(text):
@@ -36,6 +37,23 @@ def find_nums_in_text(text):
         nums[m.start()] = m.group()
 
     return nums
+
+
+def find_mathjax(text):
+    text = find_between(text, '$', '$')
+    if text[0] == '$' and text[-1] == '$':
+        text = text[1:-1]
+
+    return text
+
+
+def find_between(s, first, last):
+    try:
+        start = s.index(first) + len(first)
+        end = s.rindex(last, start)
+        return s[start:end]
+    except ValueError:
+        return ""
 
 
 def generate_fake_number_str(num_str):

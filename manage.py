@@ -21,8 +21,9 @@ manager = Manager(app)
 
 @manager.command
 def sandbox():
-    text = '$5'
-    print fake_ans.is_fake_answer_possible(text)
+    text = '![will ferrell](https://i.imgur.com/2CVpF.jpg)$\\frac{2}{4}$'
+    print text
+    print fake_ans.find_nums_in_text(text)
 
 
 
