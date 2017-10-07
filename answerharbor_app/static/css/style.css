@@ -113,6 +113,9 @@ a:hover {
   justify-content: center; }
 
 /**** NEW/EDIT HOMEWORK CSS ****/
+.btn-menu {
+  margin-bottom: 4px; }
+
 .new-homework-form-wrapper {
   display: flex;
   justify-content: center; }

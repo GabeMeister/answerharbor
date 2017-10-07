@@ -1,6 +1,6 @@
 Vue.component('LinkBtn', {
     template: `
-        <button @click="clicked" type="button">Link</button>
+        <button class="btn btn-default" @click="clicked" type="button">Link</button>
     `,
     data() {
         return {

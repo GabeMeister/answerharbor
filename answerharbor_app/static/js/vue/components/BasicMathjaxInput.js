@@ -2,7 +2,7 @@ Vue.component('BasicMathjaxInput', {
     template: `
         <div class="row">
             <div class="input-wrapper">
-                <div>
+                <div class="btn-menu">
                     <link-btn @onClicked="addLink"></link-btn>
                 </div>
                 <textarea
