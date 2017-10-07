@@ -9,6 +9,7 @@ Vue.component('StepMathjaxInput', {
                     class="input-text-area form-control"
                     rows="8"
                     :placeholder="placeholder"
+                    :id="inputID"
                     :name="inputID"
                     v-validate="'required'"
                     v-model="mathjaxText"

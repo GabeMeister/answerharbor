@@ -2,10 +2,14 @@ Vue.component('BasicMathjaxInput', {
     template: `
         <div class="row">
             <div class="input-wrapper">
+                <div>
+                    <link-btn @onClicked="addLink"></link-btn>
+                </div>
                 <textarea
                     class="input-text-area form-control"
                     rows="8"
                     :placeholder="placeholder"
+                    :id="inputID"
                     :name="inputID"
                     v-validate="'required'"
                     v-model="mathjaxText"
@@ -75,6 +79,12 @@ Vue.component('BasicMathjaxInput', {
     },
     methods: {
         update: function() {
+            this.$emit('onUpdated', this.mathjaxText);
+        },
+        addLink: function(callback) {
+            var inputElem = $('#'+this.inputID)[0];
+            // We have to pass the input element to be able to get cursor position
+            this.mathjaxText = callback(inputElem);
             this.$emit('onUpdated', this.mathjaxText);
         }
     }
