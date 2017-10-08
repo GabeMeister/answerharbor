@@ -54,4 +54,16 @@ function StepGroup(name) {
             this.steps.push(newStep);
         });
     };
+
+    this.isValid = function() {
+        var valid = true;
+
+        this.steps.forEach(step => {
+            if(!step.isValid()) {
+                valid = false;
+            }
+        });
+
+        return valid;
+    };
 }

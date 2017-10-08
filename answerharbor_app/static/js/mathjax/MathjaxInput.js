@@ -69,6 +69,10 @@ function MathjaxInput(id, text, html, number = 1, placeholder='') {
         this.html = bufferHtml;
     };
 
+    this.isValid = function() {
+        return this.text !== '';
+    };
+
     this.escape = function(html, encode) {
         return html
             .replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;')

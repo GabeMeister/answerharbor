@@ -100,13 +100,32 @@ Vue.component('app', {
             }
         },
         validateBeforeSubmit: function(event) {
-            // Validate all inputs
-            this.$validator.validateAll().then(result => {
-                if(!result){
-                    // Prevent form from posting if there's stuff wrong with the inputs
-                    event.preventDefault();
-                }
-            });
+            // If all inputs are valid, then we'll proceed to submit form.
+            var valid = true;
+
+            // Validate title
+            if(this.title === '') {
+                event.preventDefault();
+                valid = false;
+            }
+
+            // Validate question
+            if(valid && !this.question.isValid()) {
+                event.preventDefault();
+                valid = false;
+            }
+
+            // Validate all steps
+            if(valid && !this.stepGroup.isValid()) {
+                event.preventDefault();
+                valid = false;
+            }
+
+            // Validate final answer
+            if(valid && !this.finalAnswer.isValid()) {
+                event.preventDefault();
+                valid = false;
+            }
         }
     }
 });
