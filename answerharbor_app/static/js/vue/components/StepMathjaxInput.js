@@ -5,6 +5,15 @@ Vue.component('StepMathjaxInput', {
                 <img @click="deleteStep" class="x-btn" src="/static/img/x-btn.png"/>
             </div>
             <div class="input-wrapper">
+                <div class="btn-menu">
+                    <div>
+                        <link-btn @onClicked="addLink"></link-btn>
+                        <img-btn @onClicked="addImg"></img-btn>
+                    </div>
+                    <div>
+                        <degree-btn @onClicked="addDegree"></degree-btn>
+                    </div>
+                </div>
                 <textarea
                     class="input-text-area form-control"
                     rows="8"
@@ -76,6 +85,11 @@ Vue.component('StepMathjaxInput', {
             this.mathjaxText = val;
         }
     },
+    computed: {
+        textAreaElem: function() {
+            return $('#'+this.inputID)[0];
+        }
+    },
     data() {
         return {
             mathjaxText: this.initMathjaxText
@@ -87,6 +101,18 @@ Vue.component('StepMathjaxInput', {
         },
         deleteStep: function() {
             this.$emit('onDelete', this.number);
+        },
+        addLink: function(callback) {
+            this.mathjaxText = callback(this.textAreaElem);
+            this.update();
+        },
+        addImg: function(callback) {
+            this.mathjaxText = callback(this.textAreaElem);
+            this.update();
+        },
+        addDegree: function(callback) {
+            this.mathjaxText = callback(this.textAreaElem);
+            this.update();
         }
     }
 });
