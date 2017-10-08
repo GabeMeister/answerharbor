@@ -4,6 +4,7 @@ Vue.component('BasicMathjaxInput', {
             <div class="input-wrapper">
                 <div class="btn-menu">
                     <link-btn @onClicked="addLink"></link-btn>
+                    <img-btn @onClicked="addImg"></img-btn>
                 </div>
                 <textarea
                     class="input-text-area form-control"
@@ -72,6 +73,11 @@ Vue.component('BasicMathjaxInput', {
             this.mathjaxText = val;
         }
     },
+    computed: {
+        textAreaElem: function() {
+            return $('#'+this.inputID)[0];
+        }
+    },
     data() {
         return {
             mathjaxText: this.initMathjaxText
@@ -82,7 +88,13 @@ Vue.component('BasicMathjaxInput', {
             this.$emit('onUpdated', this.mathjaxText);
         },
         addLink: function(callback) {
-            var inputElem = $('#'+this.inputID)[0];
+            var inputElem = this.textAreaElem;
+            // We have to pass the input element to be able to get cursor position
+            this.mathjaxText = callback(inputElem);
+            this.$emit('onUpdated', this.mathjaxText);
+        },
+        addImg: function(callback) {
+            var inputElem = this.textAreaElem;
             // We have to pass the input element to be able to get cursor position
             this.mathjaxText = callback(inputElem);
             this.$emit('onUpdated', this.mathjaxText);

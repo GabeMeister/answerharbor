@@ -1,19 +1,19 @@
-Vue.component('LinkBtn', {
+Vue.component('ImgBtn', {
     template: `
-        <button class="btn btn-default" @click="clicked" type="button">Link</button>
+        <button class="btn btn-default" @click="clicked" type="button">Image</button>
     `,
     data() {
         return {
-            linkMarkdown: '[TEXT_HERE](URL_HERE)',
-            beginIndex: 12,
-            endIndex: 20
+            linkMarkdown: '![IMAGE_DESCRIPTION_HERE](IMAGE_URL_HERE)',
+            beginIndex: 26,
+            endIndex: 40
         };
     },
     methods: {
         clicked: function() {
-            this.$emit('onClicked', this.addLink);
+            this.$emit('onClicked', this.addImg);
         },
-        addLink: function(textareaElem) {
+        addImg: function(textareaElem) {
             var cursorPosition = textareaElem.selectionEnd;
             var text = textareaElem.value;
 
