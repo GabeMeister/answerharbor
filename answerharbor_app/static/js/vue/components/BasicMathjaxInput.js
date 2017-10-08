@@ -3,9 +3,13 @@ Vue.component('BasicMathjaxInput', {
         <div class="row">
             <div class="input-wrapper">
                 <div class="btn-menu">
-                    <link-btn @onClicked="addLink"></link-btn>
-                    <img-btn @onClicked="addImg"></img-btn>
-                    <degree-btn @onClicked="addDegree"></degree-btn>
+                    <div>
+                        <link-btn @onClicked="addLink"></link-btn>
+                        <img-btn @onClicked="addImg"></img-btn>
+                    </div>
+                    <div>
+                        <degree-btn @onClicked="addDegree"></degree-btn>
+                    </div>
                 </div>
                 <textarea
                     class="input-text-area form-control"
