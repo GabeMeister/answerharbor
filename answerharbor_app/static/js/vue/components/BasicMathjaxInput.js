@@ -5,6 +5,7 @@ Vue.component('BasicMathjaxInput', {
                 <div class="btn-menu">
                     <link-btn @onClicked="addLink"></link-btn>
                     <img-btn @onClicked="addImg"></img-btn>
+                    <degree-btn @onClicked="addDegree"></degree-btn>
                 </div>
                 <textarea
                     class="input-text-area form-control"
@@ -88,15 +89,15 @@ Vue.component('BasicMathjaxInput', {
             this.$emit('onUpdated', this.mathjaxText);
         },
         addLink: function(callback) {
-            var inputElem = this.textAreaElem;
-            // We have to pass the input element to be able to get cursor position
-            this.mathjaxText = callback(inputElem);
+            this.mathjaxText = callback(this.textAreaElem);
             this.$emit('onUpdated', this.mathjaxText);
         },
         addImg: function(callback) {
-            var inputElem = this.textAreaElem;
-            // We have to pass the input element to be able to get cursor position
-            this.mathjaxText = callback(inputElem);
+            this.mathjaxText = callback(this.textAreaElem);
+            this.$emit('onUpdated', this.mathjaxText);
+        },
+        addDegree: function(callback) {
+            this.mathjaxText = callback(this.textAreaElem);
             this.$emit('onUpdated', this.mathjaxText);
         }
     }
