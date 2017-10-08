@@ -11,7 +11,7 @@ Vue.component('StringInput', {
                         v-validate="'required'"
                         :placeholder="placeholder"
                         @keyup="update"/>
-                    <span v-show="errors.has(id)" v-text="errors.first(id)"></span>
+                    <span class="text-muted" v-show="errors.has(id)" v-text="errors.first(id)"></span>
                 </div>
                 <div class="preview-wrapper">
                     <h3 v-text="text" class="post-title-preview"></h3>
