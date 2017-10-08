@@ -318,3 +318,13 @@ def post(post_id):
 def is_admin():
     is_admin_user = current_user.is_authenticated and current_user.is_admin
     return jsonify({'is_admin': is_admin_user})
+
+
+@app.route('/references')
+@login_required
+def references():
+    # Make sure user is admin
+    if not current_user.is_admin:
+        return redirect('/')
+
+    return render_template('references.html')
