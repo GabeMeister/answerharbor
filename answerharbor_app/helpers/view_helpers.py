@@ -49,7 +49,7 @@ def get_steps_from_request(request):
     # Get only keys that are for step inputs
     steps = []
     for key, value in request.form.iteritems():
-        if 'step_' in key:
+        if key.startswith('step_'):
             number = key.replace('step_', '').replace('_input', '')
             steps.append(Step(number=int(number), text=value))
 

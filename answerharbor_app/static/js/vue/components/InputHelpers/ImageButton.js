@@ -46,13 +46,13 @@ Vue.component('ImgBtn', {
     },
     computed: {
         modalId: function() {
-            return this.parentId + '_img_modal';
+            return 'img_modal_' + this.parentId;
         },
         modalIdHtml: function() {
             return '#'+this.modalId;
         },
         inputId: function() {
-            return this.parentId + '_img_input';
+            return 'img_input_' + this.parentId;
         },
         linkMarkdown: function() {
             return '![IMAGE_DESCRIPTION_HERE](' + this.imgurUrl + ')';
