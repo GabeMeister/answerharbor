@@ -73,6 +73,8 @@ Vue.component('app', {
         };
     },
     created: function() {
+        window.imgurApiClientId = $('#imgur-api-client-id').text();
+
         var postID = $('#post-id').text();
 
         // Database call to get the post

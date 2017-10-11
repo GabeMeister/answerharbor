@@ -5,7 +5,7 @@ Vue.component('BasicMathjaxInput', {
                 <div class="btn-menu">
                     <div>
                         <link-btn @onClicked="addLink"></link-btn>
-                        <img-btn @onClicked="addImg"></img-btn>
+                        <img-btn :parent-id="inputID" @onClicked="addImg"></img-btn>
                     </div>
                     <div>
                         <degree-btn @onClicked="addDegree"></degree-btn>

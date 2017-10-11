@@ -126,6 +126,29 @@ a:hover {
   width: 300px; }
 
 /**** NEW POST CSS ****/
+.popup-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0C0D0E;
+  opacity: 0.3; }
+
+.popup {
+  position: fixed;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100px;
+  width: 100px; }
+
+.loading-spinner {
+  max-height: 100px;
+  margin: auto; }
+
 .post-title-preview {
   margin-top: 3px; }
 
@@ -187,8 +210,7 @@ a:hover {
   border-top: 2px solid #9e9e9e; }
 
 .step-chunk {
-  margin-bottom: 10px;
-  overflow: overlay; }
+  margin-bottom: 10px; }
 
 .step-chunk:not(:first-child) {
   padding-top: 10px;

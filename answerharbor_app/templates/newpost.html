@@ -6,6 +6,7 @@
 {% block content %}
     <div id="app">
         <span id="homework-post-count" style="display: none;">{{homework.posts|length}}</span>
+        <span id="imgur-api-client-id" style="display: none;">{{imgur_api_client_id}}</span>
         <form method="post" action="{{ url_for('new_post', homework_id=homework.id) }}">
             <app></app>
         </form>

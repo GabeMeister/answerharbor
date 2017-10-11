@@ -112,7 +112,10 @@ def new_post():
 
     new_post_breadcrumbs = breadcrumbs.new_post_breadcrumb_path()
 
-    return render_template('newpost.html', homework=homework_affected, breadcrumbs=new_post_breadcrumbs)
+    return render_template('newpost.html',
+        homework=homework_affected,
+        breadcrumbs=new_post_breadcrumbs,
+        imgur_api_client_id=app.config['IMGUR_API_CLIENT_ID'])
 
 
 @app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])
@@ -145,7 +148,11 @@ def edit_post(post_id):
 
     edit_post_breadcrumbs = breadcrumbs.edit_post_breadcrumb_path()
 
-    return render_template('editpost.html', post=post_to_edit, homework_id=homework_id, breadcrumbs=edit_post_breadcrumbs)
+    return render_template('editpost.html',
+        post=post_to_edit,
+        homework_id=homework_id,
+        breadcrumbs=edit_post_breadcrumbs,
+        imgur_api_client_id=app.config['IMGUR_API_CLIENT_ID'])
 
 
 @app.route('/post_data/<int:post_id>')

@@ -74,6 +74,8 @@ Vue.component('app', {
         };
     },
     created: function() {
+        window.imgurApiClientId = $('#imgur-api-client-id').text();
+
         var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
         this.title = 'Question #' + (totalCurrentPosts + 1);
         this.stepGroup.addNewStep();
