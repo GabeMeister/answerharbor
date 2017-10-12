@@ -80,6 +80,11 @@ Vue.component('app', {
         this.title = 'Question #' + (totalCurrentPosts + 1);
         this.stepGroup.addNewStep();
 
+        // Don't let user navigate away accidentally
+        window.onbeforeunload = function() {
+            return true;
+        };
+
         // Auto-save every 10 seconds
         setInterval(this.autoSave, 10000);
     },
@@ -136,6 +141,11 @@ Vue.component('app', {
             if(valid && !this.finalAnswer.isValid()) {
                 event.preventDefault();
                 valid = false;
+            }
+
+            // If user is submitting the form, then allow it without any popup
+            if(valid) {
+                window.onbeforeunload = null;
             }
         }
     }
