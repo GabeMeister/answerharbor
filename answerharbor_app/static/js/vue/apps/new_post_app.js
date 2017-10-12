@@ -108,6 +108,9 @@ Vue.component('app', {
             }
         },
         validateBeforeSubmit: function(event) {
+            // Auto-save post before going anywhere
+            this.autoSave();
+
             // If all inputs are valid, then we'll proceed to submit form.
             var valid = true;
 
