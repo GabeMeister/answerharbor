@@ -96,12 +96,18 @@ Vue.component('app', {
                 this.stepGroup.initStepsFromList(response.data.steps);
 
                 this.renderAll();
+
+                // Auto-save every 10 seconds
+                setInterval(this.autoSave, 10000);
             })
             .catch(function(error) {
                 console.log(error);
             });
     },
     methods: {
+        autoSave: function() {
+            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer);
+        },
         renderAll: function() {
             // Question
             this.question.createPreview();

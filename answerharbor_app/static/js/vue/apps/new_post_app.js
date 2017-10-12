@@ -79,8 +79,14 @@ Vue.component('app', {
         var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
         this.title = 'Question #' + (totalCurrentPosts + 1);
         this.stepGroup.addNewStep();
+
+        // Auto-save every 10 seconds
+        setInterval(this.autoSave, 10000);
     },
     methods: {
+        autoSave: function() {
+            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer);
+        },
         updateTitle: function(text) {
             this.title = text;
         },
