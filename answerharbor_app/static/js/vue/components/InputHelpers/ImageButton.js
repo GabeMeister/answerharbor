@@ -21,6 +21,23 @@ Vue.component('ImgBtn', {
                                 :name="inputId"
                                 v-model="tempImgUrl"
                                 placeholder="Temporary Image Url"/>
+
+                            <div>
+                                <br/>
+                                <h4>- OR -</h4>
+                            </div>
+
+                            <div>
+                                <label for="img-url">
+                                    <h3>Browse for File:</h3>
+                                </label>
+                                <input
+                                    type="file"
+                                    :id="fileInputId"
+                                    :name="fileInputId"
+                                    accept="image/*"
+                                    @change="filesChange($event.target.name, $event.target.files)"/>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button"
@@ -54,6 +71,9 @@ Vue.component('ImgBtn', {
         inputId: function() {
             return 'img_input_' + this.parentId;
         },
+        fileInputId: function() {
+            return 'file_input_' + this.parentId;
+        },
         linkMarkdown: function() {
             return '![IMAGE_DESCRIPTION_HERE](' + this.imgurUrl + ')';
         }
@@ -61,6 +81,7 @@ Vue.component('ImgBtn', {
     data() {
         return {
             tempImgUrl: '',
+            tempFile: null,
             imgurUrl: '',
             uploading: false,
             beginIndex: 2,
@@ -70,12 +91,15 @@ Vue.component('ImgBtn', {
     methods: {
         initModal: function() {
             this.tempImgUrl = '';
+            this.tempFile = null;
         },
         upload: function() {
+            // Get either the image url or the local file
             var clientId = window.imgurApiClientId;
-            this.uploading = true;
 
             if(this.tempImgUrl !== '') {
+                this.uploading = true;
+
                 $.ajax({
                     type: 'POST',
                     url: 'https://api.imgur.com/3/image',
@@ -96,6 +120,41 @@ Vue.component('ImgBtn', {
                     }
                 });
             }
+            else if (this.tempFile !== null) {
+                this.uploading = true;
+
+                // To make the ajax request work with an image we need to use FormData
+                var formData = new FormData();
+                formData.append('image', this.tempFile);
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'https://api.imgur.com/3/image',
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'Authorization': 'Client-ID ' + clientId
+                    },
+                    data: formData,
+                    success: response => {
+                        this.imgurUrl = response.data.link;
+                        this.$emit('onClicked', this.addImg);
+                        this.uploading = false;
+                    },
+                    error: e => {
+                        console.error(e);
+                        this.uploading = false;
+                    }
+                });
+            }
+
+        },
+        uploadUrl: function() {
+            // TODO: refactor above into these functions
+            // TODO: Fix cancel upload and file input still having file text bug
+        },
+        uploadLocalFile: function() {
+
         },
         addImg: function(textareaElem) {
             var cursorPosition = textareaElem.selectionEnd;
@@ -110,6 +169,9 @@ Vue.component('ImgBtn', {
             textareaElem.setSelectionRange(cursorPosition + this.beginIndex, cursorPosition + this.endIndex);
 
             return finalText;
+        },
+        filesChange: function(fieldName, fileList) {
+            this.tempFile = fileList[0];
         }
     }
 });
