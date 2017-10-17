@@ -95,6 +95,14 @@ Vue.component('ImgBtn', {
         initModal: function() {
             this.tempImgUrl = '';
             this.tempFile = null;
+            // Clear any value for the file input
+            $('#'+this.fileInputId).get(0).value = null;
+
+            // Auto-focus the url text input
+            // Need the brief timeout because of the modal window?
+            setTimeout(() => {
+                $('#'+this.inputId).get(0).focus();
+            }, 500);
         },
         upload: function() {
             // Check for either the image url or the local file upload
