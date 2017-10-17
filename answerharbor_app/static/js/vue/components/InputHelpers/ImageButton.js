@@ -76,6 +76,9 @@ Vue.component('ImgBtn', {
         },
         linkMarkdown: function() {
             return '![IMAGE_DESCRIPTION_HERE](' + this.imgurUrl + ')';
+        },
+        imgurClientId: function() {
+            return window.imgurApiClientId;
         }
     },
     data() {
@@ -94,67 +97,63 @@ Vue.component('ImgBtn', {
             this.tempFile = null;
         },
         upload: function() {
-            // Get either the image url or the local file
-            var clientId = window.imgurApiClientId;
-
+            // Check for either the image url or the local file upload
             if(this.tempImgUrl !== '') {
-                this.uploading = true;
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://api.imgur.com/3/image',
-                    headers: {
-                        'Authorization': 'Client-ID ' + clientId
-                    },
-                    data: {
-                        image: this.tempImgUrl
-                    },
-                    success: response => {
-                        this.imgurUrl = response.data.link;
-                        this.$emit('onClicked', this.addImg);
-                        this.uploading = false;
-                    },
-                    error: e => {
-                        console.error(e);
-                        this.uploading = false;
-                    }
-                });
+                this.uploadUrl();
             }
             else if (this.tempFile !== null) {
-                this.uploading = true;
-
-                // To make the ajax request work with an image we need to use FormData
-                var formData = new FormData();
-                formData.append('image', this.tempFile);
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'https://api.imgur.com/3/image',
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        'Authorization': 'Client-ID ' + clientId
-                    },
-                    data: formData,
-                    success: response => {
-                        this.imgurUrl = response.data.link;
-                        this.$emit('onClicked', this.addImg);
-                        this.uploading = false;
-                    },
-                    error: e => {
-                        console.error(e);
-                        this.uploading = false;
-                    }
-                });
+                this.uploadLocalFile();
             }
-
         },
         uploadUrl: function() {
-            // TODO: refactor above into these functions
-            // TODO: Fix cancel upload and file input still having file text bug
+            this.uploading = true;
+
+            $.ajax({
+                type: 'POST',
+                url: 'https://api.imgur.com/3/image',
+                headers: {
+                    'Authorization': 'Client-ID ' + this.imgurClientId
+                },
+                data: {
+                    image: this.tempImgUrl
+                },
+                success: response => {
+                    this.imgurUrl = response.data.link;
+                    this.$emit('onClicked', this.addImg);
+                    this.uploading = false;
+                },
+                error: e => {
+                    console.error(e);
+                    this.uploading = false;
+                }
+            });
         },
         uploadLocalFile: function() {
+            this.uploading = true;
 
+            // To make the ajax request work with an image we need to use FormData
+            var formData = new FormData();
+            formData.append('image', this.tempFile);
+
+            $.ajax({
+                type: 'POST',
+                url: 'https://api.imgur.com/3/image',
+                processData: false,
+                contentType: false,
+                headers: {
+                    'Authorization': 'Client-ID ' + this.imgurClientId
+                },
+                data: formData,
+                success: response => {
+                    this.imgurUrl = response.data.link;
+                    this.$emit('onClicked', this.addImg);
+                    this.uploading = false;
+                },
+                error: e => {
+                    console.error(e);
+                    this.uploading = false;
+                }
+            });
         },
         addImg: function(textareaElem) {
             var cursorPosition = textareaElem.selectionEnd;
