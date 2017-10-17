@@ -281,8 +281,14 @@ $x-btn-width: 40px;
     border-top: 1px solid $gray;
 }
 
-.preview img {
+.preview.admin-preview img {
+    // When an admin is editing/creating a post, the pics don't have to be full width
     max-height: 400px;
+}
+
+.preview img {
+    // When the user is viewing the pictures, allow them to be the full width
+    max-width: 1000px;
 }
 
 .step-count {

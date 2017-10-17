@@ -34,7 +34,7 @@ Vue.component('BasicMathjaxInput', {
                     v-text="mathjaxText">
                 </div>
                 <div
-                    class="preview"
+                    class="preview admin-preview"
                     :id="previewID"
                     v-html="mathjaxHtml">
                 </div>
