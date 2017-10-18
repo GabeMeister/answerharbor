@@ -335,3 +335,9 @@ def references():
         return redirect('/')
 
     return render_template('references.html')
+
+
+@app.route('/recover')
+@login_required
+def recover():
+    return render_template('recover.html')

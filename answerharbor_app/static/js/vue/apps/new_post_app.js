@@ -90,7 +90,7 @@ Vue.component('app', {
     },
     methods: {
         autoSave: function() {
-            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer);
+            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer, 'new');
         },
         updateTitle: function(text) {
             this.title = text;
