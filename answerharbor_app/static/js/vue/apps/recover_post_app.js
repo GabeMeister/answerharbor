@@ -5,7 +5,12 @@ Vue.component('app', {
         <div>
             <h1>Recover Question</h1>
 
-            <p v-for="post in savedPosts" v-text="post"></p>
+            <div v-if="savedPosts.length > 0">
+                <p v-for="post in savedPosts" v-text="post"></p>
+            </div>
+            <div class="page-title" v-if="savedPosts.length === 0">
+                <h2>Looks like there's no posts to recover!</h2>
+            </div>
         </div>
     `,
     data: function() {
@@ -14,12 +19,19 @@ Vue.component('app', {
         };
     },
     created: function() {
-        for(var item in localStorage) {
-            this.savedPosts.push(item);
-        }
+        PostStorage.clearOldPosts();
+        this.initPosts();
     },
     methods: {
-
+        initPosts: function() {
+            for(var key in localStorage) {
+                this.savedPosts.push(this.generateUrl(key));
+            }
+        },
+        generateUrl: function(key) {
+            // TODO: actually generate url
+            return key;
+        }
     }
 });
 

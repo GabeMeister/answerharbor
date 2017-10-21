@@ -5,6 +5,7 @@ function AutoSavedPost() {
     this.finalAnswer = null;
     this.type = '';
     this.creationDate = new Date();
+    this.version = 'v2';
 
     this.setData = function(title, question, stepGroup, finalAnswer, type) {
         this.title = title;
