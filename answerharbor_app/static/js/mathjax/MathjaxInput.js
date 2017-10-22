@@ -35,7 +35,6 @@ function MathjaxInput(id, text, html, number = 1, placeholder='') {
         if(this.oldText === this.text) {
             return;
         }
-
         if(this.running){
             this.pending = true;
 
@@ -45,9 +44,6 @@ function MathjaxInput(id, text, html, number = 1, placeholder='') {
             this.running = true;
 
             this.recordOldText();
-
-            //Escape tags before doing stuff
-            // this.text = this.escape(text);
 
             MathJax.Hub.Queue(
                 ["Typeset", MathJax.Hub, this.bufferID],

@@ -60,6 +60,7 @@ Vue.component('app', {
                     <label for="custom-answers-radio"><h5>Custom Answers</h5></label>
                 </div>
             </div>
+
             <div v-if="answerType === 'auto'">
                 <span class="text-muted"><i>Enter the correct answer, and have fake answers auto-generated for you.</i></span>
 
@@ -153,7 +154,7 @@ Vue.component('app', {
             customAnswer1: new MathjaxInput('custom1', '', '', 1, 'Enter correct answer text'),
             customAnswer2: new MathjaxInput('custom2', '', '', 2, 'Enter fake answer text'),
             customAnswer3: new MathjaxInput('custom3', '', '', 3, 'Enter fake answer text'),
-            customAnswer4: new MathjaxInput('custom4', '', '', 4, 'Enter fake answer text'),
+            customAnswer4: new MathjaxInput('custom4', '', '', 4, 'Enter fake answer text')
         };
     },
     created: function() {
@@ -167,8 +168,6 @@ Vue.component('app', {
             this.question.updateText(savedPost.question.text);
             this.stepGroup.initStepsFromList(savedPost.stepGroup.steps);
             this.finalAnswer.updateText(savedPost.finalAnswer.text);
-
-            this.renderAll();
         }
         else {
             var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
@@ -199,6 +198,12 @@ Vue.component('app', {
 
             // Final Answer
             this.finalAnswer.createPreview();
+
+            // Custom Answers
+            this.customAnswer1.createPreview();
+            this.customAnswer2.createPreview();
+            this.customAnswer3.createPreview();
+            this.customAnswer4.createPreview();
         },
         updateTitle: function(text) {
             this.title = text;
@@ -257,8 +262,8 @@ Vue.component('app', {
                 valid = false;
             }
 
-            // Validate final answer
             if(this.answerType === 'auto') {
+                // Validate final answer
                 if(valid && !this.finalAnswer.isValid()) {
                     event.preventDefault();
                     valid = false;

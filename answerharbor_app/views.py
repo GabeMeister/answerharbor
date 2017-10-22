@@ -145,7 +145,8 @@ def edit_post(post_id):
         post_to_edit.title = view_helpers.get_question_title_from_request(request)
         post_to_edit.question = view_helpers.get_question_from_request(request)
         post_to_edit.steps = view_helpers.get_steps_from_request(request)
-        post_to_edit.final_answer = view_helpers.get_final_answer_from_request(request)
+        post_to_edit.type = view_helpers.get_type_from_request(request)
+        post_to_edit.answers = view_helpers.get_answers_from_request(request)
         post_to_edit.last_edit_date = datetime.now()
 
         db.session.commit()
@@ -211,6 +212,7 @@ def post_data(post_id):
     # data structures to jsonify and send it back to the client
     question_title = requested_post.title
     question_text = requested_post.question
+    answer_type = requested_post.type
     steps = []
     for step in requested_post.steps:
         steps.append({
@@ -222,6 +224,7 @@ def post_data(post_id):
         'title': question_title,
         'question': question_text,
         'steps': steps,
+        'type': answer_type,
         'answers': answers
     })
 

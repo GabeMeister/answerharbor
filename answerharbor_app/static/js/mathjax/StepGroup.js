@@ -55,6 +55,7 @@ function StepGroup(name) {
         stepsList.forEach(step => {
             var newStep = this.createNewStep(step.text, '');
             this.steps.push(newStep);
+            newStep.createPreview();
         });
     };
 

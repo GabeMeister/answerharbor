@@ -48,15 +48,94 @@ Vue.component('app', {
             <button class="btn btn-default" type="button" @click="addNewStep">New Step</button>
 
             <h3>Final Answer:</h3>
-            <basic-mathjax-input
-                :inputID="finalAnswer.inputNameID"
-                :bufferID="finalAnswer.bufferID"
-                :previewID="finalAnswer.previewID"
-                :placeholder="finalAnswer.placeholder"
-                :initMathjaxText="finalAnswer.text"
-                :mathjaxHtml="finalAnswer.html"
-                v-on:onUpdated="updateFinalAnswer">
-            </basic-mathjax-input>
+            <div>
+                <div class="inline-radio-wrapper">
+                    <input type="radio" class="inline-radio" id="auto-answer-type" name="type_input" value="auto" v-model="answerType">
+                    <label for="auto-answer-type"><h5>Auto-Create Fake Answers</h5></label>
+                </div>
+
+                <div class="inline-radio-wrapper">
+                    <input type="radio" class="inline-radio" id="custom-answers-radio" name="type_input" value="custom" v-model="answerType">
+                    <label for="custom-answers-radio"><h5>Custom Answers</h5></label>
+                </div>
+            </div>
+
+            <div v-if="answerType === 'auto'">
+                <span class="text-muted"><i>Enter the correct answer, and have fake answers auto-generated for you.</i></span>
+
+                <br/>
+                <br/>
+
+                <basic-mathjax-input
+                    :inputID="finalAnswer.inputNameID"
+                    :bufferID="finalAnswer.bufferID"
+                    :previewID="finalAnswer.previewID"
+                    :placeholder="finalAnswer.placeholder"
+                    :initMathjaxText="finalAnswer.text"
+                    :mathjaxHtml="finalAnswer.html"
+                    v-on:onUpdated="updateFinalAnswer">
+                </basic-mathjax-input>
+            </div>
+            <div v-if="answerType === 'custom'">
+                <span class="text-muted"><i>Manually enter custom answers yourself. The first answer you enter should be the correct answer.</i></span>
+
+                <br/>
+                <br/>
+
+                <div>
+                    <basic-mathjax-input
+                        class="custom-answer-input"
+                        :key="customAnswer1.id"
+                        :inputID="customAnswer1.inputNameID"
+                        :bufferID="customAnswer1.bufferID"
+                        :previewID="customAnswer1.previewID"
+                        :placeholder="customAnswer1.placeholder"
+                        :initMathjaxText="customAnswer1.text"
+                        :mathjaxHtml="customAnswer1.html"
+                        :rowCount="2"
+                        v-on:onUpdated="updateCustomAnswer1">
+                    </basic-mathjax-input>
+
+                    <basic-mathjax-input
+                        class="custom-answer-input"
+                        :key="customAnswer2.id"
+                        :inputID="customAnswer2.inputNameID"
+                        :bufferID="customAnswer2.bufferID"
+                        :previewID="customAnswer2.previewID"
+                        :placeholder="customAnswer2.placeholder"
+                        :initMathjaxText="customAnswer2.text"
+                        :mathjaxHtml="customAnswer2.html"
+                        :rowCount="2"
+                        v-on:onUpdated="updateCustomAnswer2">
+                    </basic-mathjax-input>
+
+                    <basic-mathjax-input
+                        class="custom-answer-input"
+                        :key="customAnswer3.id"
+                        :inputID="customAnswer3.inputNameID"
+                        :bufferID="customAnswer3.bufferID"
+                        :previewID="customAnswer3.previewID"
+                        :placeholder="customAnswer3.placeholder"
+                        :initMathjaxText="customAnswer3.text"
+                        :mathjaxHtml="customAnswer3.html"
+                        :rowCount="2"
+                        v-on:onUpdated="updateCustomAnswer3">
+                    </basic-mathjax-input>
+
+                    <basic-mathjax-input
+                        class="custom-answer-input"
+                        :key="customAnswer4.id"
+                        :inputID="customAnswer4.inputNameID"
+                        :bufferID="customAnswer4.bufferID"
+                        :previewID="customAnswer4.previewID"
+                        :placeholder="customAnswer4.placeholder"
+                        :initMathjaxText="customAnswer4.text"
+                        :mathjaxHtml="customAnswer4.html"
+                        :rowCount="2"
+                        v-on:onUpdated="updateCustomAnswer4">
+                    </basic-mathjax-input>
+                </div>
+            </div>
 
             <br/>
             <br/>
@@ -69,7 +148,12 @@ Vue.component('app', {
             title: '',
             question: new MathjaxInput('question', '', '', 1, 'Enter question text'),
             stepGroup: new StepGroup('step'),
-            finalAnswer: new MathjaxInput('final_answer', '', '', 1, 'Enter final answer text')
+            answerType: 'auto',
+            finalAnswer: new MathjaxInput('final_answer', '', '', 1, 'Enter final answer text'),
+            customAnswer1: new MathjaxInput('custom1', '', '', 1, 'Enter correct answer text'),
+            customAnswer2: new MathjaxInput('custom2', '', '', 2, 'Enter fake answer text'),
+            customAnswer3: new MathjaxInput('custom3', '', '', 3, 'Enter fake answer text'),
+            customAnswer4: new MathjaxInput('custom4', '', '', 4, 'Enter fake answer text')
         };
     },
     created: function() {
@@ -91,26 +175,39 @@ Vue.component('app', {
             axios.get('/post_data/'+postID)
                 .then(response => {
                     this.title = response.data.title;
-                    this.question.text = response.data.question;
+                    this.question.updateText(response.data.question);
+                    this.stepGroup.initStepsFromList(response.data.steps);
+                    this.answerType = response.data.type;
 
-                    // TODO: refactor the way /post_data returns the data from the post.
-                    // Separate the fake answers from the correct answer so we don't have to
-                    // iterate here.
-                    for(var i = 0; i < response.data.answers.length; i++) {
-                        if(response.data.answers[i].correct) {
-                            this.finalAnswer.text = response.data.answers[i].text;
-                            break;
+                    if(this.answerType === 'auto') {
+                        // Only need to display correct answer
+                        for(var i = 0; i < response.data.answers.length; i++) {
+                            if(response.data.answers[i].correct) {
+                                this.finalAnswer.updateText(response.data.answers[i].text);
+                                break;
+                            }
                         }
                     }
+                    else {
+                        // Handle correct answer
+                        for(var i = 0; i < response.data.answers.length; i++) {
+                            if(response.data.answers[i].correct) {
+                                this.customAnswer1.updateText(response.data.answers[i].text);
+                                break;
+                            }
+                        }
 
-                    this.stepGroup.initStepsFromList(response.data.steps);
+                        // Get only fake answers
+                        var fakeAnswers = response.data.answers.filter(x => { return !x.correct; });
+                        this.customAnswer2.updateText(fakeAnswers[0].text);
+                        this.customAnswer3.updateText(fakeAnswers[1].text);
+                        this.customAnswer4.updateText(fakeAnswers[2].text);
+                    }
                 })
                 .catch(function(error) {
                     console.log(error);
                 });
         }
-
-        this.renderAll();
 
         // Don't let user navigate away accidentally
         window.onbeforeunload = function() {
@@ -135,6 +232,12 @@ Vue.component('app', {
 
             // Final Answer
             this.finalAnswer.createPreview();
+
+            // Custom Answers
+            this.customAnswer1.createPreview();
+            this.customAnswer2.createPreview();
+            this.customAnswer3.createPreview();
+            this.customAnswer4.createPreview();
         },
         updateTitle: function(text) {
             this.title = text;
@@ -144,6 +247,18 @@ Vue.component('app', {
         },
         updateFinalAnswer: function(text) {
             this.finalAnswer.updateText(text);
+        },
+        updateCustomAnswer1: function(text) {
+            this.customAnswer1.updateText(text);
+        },
+        updateCustomAnswer2: function(text) {
+            this.customAnswer2.updateText(text);
+        },
+        updateCustomAnswer3: function(text) {
+            this.customAnswer3.updateText(text);
+        },
+        updateCustomAnswer4: function(text) {
+            this.customAnswer4.updateText(text);
         },
         addNewStep: function() {
             this.stepGroup.addNewStep();
@@ -181,10 +296,34 @@ Vue.component('app', {
                 valid = false;
             }
 
-            // Validate final answer
-            if(valid && !this.finalAnswer.isValid()) {
-                event.preventDefault();
-                valid = false;
+            if(this.answerType === 'auto') {
+                // Validate final answer
+                if(valid && !this.finalAnswer.isValid()) {
+                    event.preventDefault();
+                    valid = false;
+                }
+            }
+            else {
+                // Check custom answers instead of final answer
+                if(valid && !this.customAnswer1.isValid()) {
+                    event.preventDefault();
+                    valid = false;
+                }
+
+                if(valid && !this.customAnswer2.isValid()) {
+                    event.preventDefault();
+                    valid = false;
+                }
+
+                if(valid && !this.customAnswer3.isValid()) {
+                    event.preventDefault();
+                    valid = false;
+                }
+
+                if(valid && !this.customAnswer4.isValid()) {
+                    event.preventDefault();
+                    valid = false;
+                }
             }
 
             // If user is submitting the form, then allow it without any popup

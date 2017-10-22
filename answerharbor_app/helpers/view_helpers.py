@@ -25,16 +25,7 @@ def get_post_from_request(request):
     question_text = get_question_from_request(request)
     steps = get_steps_from_request(request)
     answer_type = get_type_from_request(request)
-
-    answers = []
-    # Post may contain 1 answer or many custom answers
-    if answer_type == 'auto':
-        # Post only contains the correct answer
-        correct_answer_text = get_final_answer_from_request(request)
-        answers.append(Answer(text=correct_answer_text, correct=True))
-    else:
-        # User inputted in custom answers
-        answers = get_custom_answers_from_request(request)
+    answers = get_answers_from_request(request)
 
     now = datetime.now()
     return Post(question=question_text,\
@@ -46,6 +37,20 @@ def get_post_from_request(request):
                 homework=hw,
                 steps=steps,
                 answers=answers)
+
+
+def get_answers_from_request(request):
+    answers = []
+    # Post may contain 1 answer or many custom answers
+    if get_type_from_request(request) == 'auto':
+        # Post only contains the correct answer
+        correct_answer_text = get_final_answer_from_request(request)
+        answers.append(Answer(text=correct_answer_text, correct=True))
+    else:
+        # User inputted in custom answers
+        answers = get_custom_answers_from_request(request)
+
+    return answers
 
 
 def get_homework_from_request(request):
