@@ -25,21 +25,22 @@ Vue.component('app', {
     methods: {
         initPosts: function() {
             for(var key in localStorage) {
-                this.savedPosts.push({
-                    title: key,
-                    url: this.generateUrl(key)
-                });
-            }
-        },
-        generateUrl: function(key) {
-            var url = '#';
+                if(PostStorage.isValidPost(key)) {
+                    var post = AutoSavedPost.loadFromLocalStorage(key);
+                    // Add recover_post_key flag to load from localStorage
+                    post.url = post.url + '&recover_post_key=' + encodeURIComponent(post.title);
 
-            if(PostStorage.isValidPost(key)) {
-                var post = AutoSavedPost.loadFromLocalStorage(key);
-                url = post.url + '&recover_post_key=' + encodeURIComponent(key);
+                    this.savedPosts.push(post);
+                }
             }
 
-            return url;
+            // Most recently created posts first
+            this.savedPosts.sort((postA, postB) => {
+                if(postA.creationDate === postB.creationDate) {
+                    return 0;
+                }
+                return (postA.creationDate > postB.creationDate) ?  -1 : 1;
+            });
         }
     }
 });
