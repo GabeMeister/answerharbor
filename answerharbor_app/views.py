@@ -112,10 +112,16 @@ def new_post():
 
     new_post_breadcrumbs = breadcrumbs.new_post_breadcrumb_path()
 
+    # A flag may have been passed for recovering a new post that was auto-saved from before
+    recover_post_key = ''
+    if 'recover_post_key' in request.args:
+        recover_post_key = request.args['recover_post_key']
+
     return render_template('newpost.html',
         homework=homework_affected,
         breadcrumbs=new_post_breadcrumbs,
-        imgur_api_client_id=app.config['IMGUR_API_CLIENT_ID'])
+        imgur_api_client_id=app.config['IMGUR_API_CLIENT_ID'],
+        recover_post_key=recover_post_key)
 
 
 @app.route('/editpost/<int:post_id>', methods=['GET', 'POST'])

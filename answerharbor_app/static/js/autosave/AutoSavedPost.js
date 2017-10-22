@@ -1,18 +1,20 @@
 function AutoSavedPost() {
-    this.title = '';
-    this.question = null;
-    this.stepGroup = null;
-    this.finalAnswer = null;
+    this.title = '',
+    this.question = new MathjaxInput('question', '', '', 1, 'Enter question text'),
+    this.stepGroup = new StepGroup('step'),
+    this.finalAnswer = new MathjaxInput('final_answer', '', '', 1, 'Enter final answer text')
     this.type = '';
     this.creationDate = new Date();
     this.version = 'v2';
+    this.url = '';
 
-    this.setData = function(title, question, stepGroup, finalAnswer, type) {
+    this.setData = function(title, question, stepGroup, finalAnswer, type, url) {
         this.title = title;
         this.question = question;
         this.stepGroup = stepGroup;
         this.finalAnswer = finalAnswer;
         this.type = type;
+        this.url = url;
     };
 
     this.print = function() {
@@ -47,6 +49,9 @@ function AutoSavedPost() {
     }
 
     this.save = function() {
+        // Remove recover_post_key from url if possible
+        this.url = removeParam('recover_post_key', this.url);
+
         localStorage.setItem(this.title, JSON.stringify(this));
         console.log('Saved');
     };

@@ -4,7 +4,7 @@ function autoSavePost(title, question, stepGroup, finalAnswer, type) {
 
     // Create post with current data
     var currPost = new AutoSavedPost();
-    currPost.setData(title, question, stepGroup, finalAnswer, type);
+    currPost.setData(title, question, stepGroup, finalAnswer, type, window.location.href);
 
     // Compare if any data was changed, and if so, save it
     if(!currPost.isSameAs(prevPost)) {
