@@ -6,6 +6,7 @@
 {% block content %}
     <span id="post-id" style="display: none;">{{post.id}}</span>
     <span id="imgur-api-client-id" style="display: none;">{{imgur_api_client_id}}</span>
+    <span id="recover-post-key" style="display: none;">{{recover_post_key}}</span>
     <div id="app">
         <form method="post" action="{{ url_for('edit_post', post_id=post.id, homework_id=homework_id) }}">
             <app></app>

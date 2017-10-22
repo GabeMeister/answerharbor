@@ -6,7 +6,7 @@ Vue.component('app', {
             <h1>Recover Question</h1>
 
             <div v-if="savedPosts.length > 0">
-                <a v-for="post in savedPosts" :href="post.url"><h1 v-text="post.title"></h1></a>
+                <a v-for="post in savedPosts" :href="post.url"><h2 v-text="post.title"></h2></a>
             </div>
             <div class="page-title" v-if="savedPosts.length === 0">
                 <h2>Looks like there's no posts to recover!</h2>

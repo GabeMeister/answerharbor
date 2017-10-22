@@ -74,40 +74,51 @@ Vue.component('app', {
     },
     created: function() {
         window.imgurApiClientId = $('#imgur-api-client-id').text();
-
+        var recoverPostKey = $('#recover-post-key').text();
         var postID = $('#post-id').text();
 
-        // Database call to get the post
-        axios.get('/post_data/'+postID)
-            .then(response => {
-                this.title = response.data.title;
-                this.question.text = response.data.question;
+        // Check if we are recovering an auto-saved post or just editing a post normally
+        if(recoverPostKey !== '' && PostStorage.isValidPost(recoverPostKey)) {
+            var savedPost = AutoSavedPost.loadFromLocalStorage(recoverPostKey);
 
-                // TODO: refactor the way /post_data returns the data from the post.
-                // Separate the fake answers from the correct answer so we don't have to
-                // iterate here.
-                for(var i = 0; i < response.data.answers.length; i++) {
-                    if(response.data.answers[i].correct) {
-                        this.finalAnswer.text = response.data.answers[i].text;
-                        break;
+            this.title = savedPost.title;
+            this.question.updateText(savedPost.question.text);
+            this.stepGroup.initStepsFromList(savedPost.stepGroup.steps);
+            this.finalAnswer.updateText(savedPost.finalAnswer.text);
+        }
+        else {
+            // Database call to get the post
+            axios.get('/post_data/'+postID)
+                .then(response => {
+                    this.title = response.data.title;
+                    this.question.text = response.data.question;
+
+                    // TODO: refactor the way /post_data returns the data from the post.
+                    // Separate the fake answers from the correct answer so we don't have to
+                    // iterate here.
+                    for(var i = 0; i < response.data.answers.length; i++) {
+                        if(response.data.answers[i].correct) {
+                            this.finalAnswer.text = response.data.answers[i].text;
+                            break;
+                        }
                     }
-                }
 
-                this.stepGroup.initStepsFromList(response.data.steps);
+                    this.stepGroup.initStepsFromList(response.data.steps);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
 
-                this.renderAll();
+        this.renderAll();
 
-                // Don't let user navigate away accidentally
-                window.onbeforeunload = function() {
-                    return true;
-                };
+        // Don't let user navigate away accidentally
+        window.onbeforeunload = function() {
+            return true;
+        };
 
-                // Auto-save every 10 seconds
-                setInterval(this.autoSave, 10000);
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+        // Auto-save every 10 seconds
+        setInterval(this.autoSave, 10000);
     },
     methods: {
         autoSave: function() {

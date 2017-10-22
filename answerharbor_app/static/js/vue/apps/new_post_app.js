@@ -78,8 +78,6 @@ Vue.component('app', {
         var recoverPostKey = $('#recover-post-key').text();
 
         if(recoverPostKey !== '' && PostStorage.isValidPost(recoverPostKey)) {
-            console.log('recover post key found: ', recoverPostKey);
-
             var savedPost = AutoSavedPost.loadFromLocalStorage(recoverPostKey);
 
             this.title = savedPost.title;

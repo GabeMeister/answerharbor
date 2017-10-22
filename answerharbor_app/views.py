@@ -154,11 +154,17 @@ def edit_post(post_id):
 
     edit_post_breadcrumbs = breadcrumbs.edit_post_breadcrumb_path()
 
+    # A flag may have been passed for recovering an edited post that was auto-saved from before
+    recover_post_key = ''
+    if 'recover_post_key' in request.args:
+        recover_post_key = request.args['recover_post_key']
+
     return render_template('editpost.html',
         post=post_to_edit,
         homework_id=homework_id,
         breadcrumbs=edit_post_breadcrumbs,
-        imgur_api_client_id=app.config['IMGUR_API_CLIENT_ID'])
+        imgur_api_client_id=app.config['IMGUR_API_CLIENT_ID'],
+        recover_post_key=recover_post_key)
 
 
 @app.route('/post_data/<int:post_id>')
