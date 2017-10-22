@@ -49,6 +49,15 @@ Vue.component('app', {
             <button class="btn btn-default" type="button" @click="addNewStep">New Step</button>
 
             <h3>Final Answer:</h3>
+            <div>
+                <input type="radio" :id="auto-answer-type" :value="auto" v-model="answerType">
+                <label :for="auto-answer-type">Auto-Create Answer</label>
+
+                <input type="radio" :id="auto-answer-type" :value="auto" v-model="answerType">
+                <label :for="auto-answer-type">Custom Answers</label>
+
+                <h1 v-text="answerType"></h1>
+            </div>
             <basic-mathjax-input
                 :inputID="finalAnswer.inputNameID"
                 :bufferID="finalAnswer.bufferID"
@@ -70,6 +79,7 @@ Vue.component('app', {
             title: '',
             question: new MathjaxInput('question', '', '', 1, 'Enter question text'),
             stepGroup: new StepGroup('step'),
+            answerType: 'auto',
             finalAnswer: new MathjaxInput('final_answer', '', '', 1, 'Enter final answer text')
         };
     },

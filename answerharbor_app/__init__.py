@@ -24,6 +24,7 @@ from answerharbor_app.models.homework import Homework
 from answerharbor_app.models.user import User
 from answerharbor_app.models.post import Post
 from answerharbor_app.models.step import Step
+from answerharbor_app.models.answer import Answer
 
 
 # The login manager
