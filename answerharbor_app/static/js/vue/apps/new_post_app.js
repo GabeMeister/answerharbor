@@ -75,10 +75,23 @@ Vue.component('app', {
     },
     created: function() {
         window.imgurApiClientId = $('#imgur-api-client-id').text();
+        var recoverPostKey = $('#recover-post-key').text();
 
-        var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
-        this.title = 'Question #' + (totalCurrentPosts + 1);
-        this.stepGroup.addNewStep();
+        if(recoverPostKey !== '' && PostStorage.isValidPost(recoverPostKey)) {
+            var savedPost = AutoSavedPost.loadFromLocalStorage(recoverPostKey);
+
+            this.title = savedPost.title;
+            this.question.updateText(savedPost.question.text);
+            this.stepGroup.initStepsFromList(savedPost.stepGroup.steps);
+            this.finalAnswer.updateText(savedPost.finalAnswer.text);
+
+            this.renderAll();
+        }
+        else {
+            var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
+            this.title = 'Question #' + (totalCurrentPosts + 1);
+            this.stepGroup.addNewStep();
+        }
 
         // Don't let user navigate away accidentally
         window.onbeforeunload = function() {
@@ -90,7 +103,19 @@ Vue.component('app', {
     },
     methods: {
         autoSave: function() {
-            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer);
+            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer, 'new');
+        },
+        renderAll: function() {
+            // Question
+            this.question.createPreview();
+
+            // All steps
+            for(var i = 0; i < this.stepGroup.steps.length; i++) {
+                this.stepGroup.steps[i].createPreview();
+            }
+
+            // Final Answer
+            this.finalAnswer.createPreview();
         },
         updateTitle: function(text) {
             this.title = text;
