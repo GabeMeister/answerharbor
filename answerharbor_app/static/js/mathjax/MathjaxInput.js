@@ -63,9 +63,6 @@ function MathjaxInput(id, text, html, number = 1, placeholder='') {
         var bufferHtml = $('#'+this.bufferID).html();
         bufferHtml = marked(bufferHtml);
 
-        // TODO: make links open in new tab
-        // var $preview = $(bufferHtml);
-
         this.html = bufferHtml;
     };
 

@@ -195,11 +195,17 @@ def post_data(post_id):
                     'correct': False
                 })
                 ans_count = ans_count + 1
-
-        # Randomly insert the correct answer somewhere in the answers list
-        answers.insert(random.randint(0, 3), correct_answer_data)
     else:
-        answers.append(correct_answer_data)
+        # Add in custom fake answers
+        fake_answers = filter(lambda x: not x.correct, requested_post.answers)
+        for answer in fake_answers:
+            answers.append({
+                'text': answer.text,
+                'correct': answer.correct
+            })
+
+    # Randomly insert the correct answer somewhere in the answers list
+    answers.insert(random.randint(0, 3), correct_answer_data)
 
     # Because sqlalchemy objects cannot be jsonified, we build up a temporary
     # data structures to jsonify and send it back to the client

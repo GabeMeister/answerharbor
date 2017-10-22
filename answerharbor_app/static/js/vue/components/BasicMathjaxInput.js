@@ -13,7 +13,7 @@ Vue.component('BasicMathjaxInput', {
                 </div>
                 <textarea
                     class="input-text-area form-control"
-                    rows="8"
+                    :rows="rowCount"
                     :placeholder="placeholder"
                     :id="inputID"
                     :name="inputID"
@@ -70,6 +70,10 @@ Vue.component('BasicMathjaxInput', {
         placeholder: {
             type: String,
             default: 'Enter text'
+        },
+        rowCount: {
+            type: Number,
+            default: 8
         }
     },
     watch: {

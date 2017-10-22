@@ -36,6 +36,8 @@ Vue.component('app', {
                     </step-mathjax-preview>
                 </div>
 
+                <br/>
+
                 <div :class="{'hidden-step': !allStepsShowing}">
                     <div v-for="answer in answerGroup.answers" v-if="answerGroup.answers.length > 1">
                         <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">

@@ -8,19 +8,22 @@ function StepGroup(name) {
     this.steps = [];
 
     this.lastStep = function() {
-        return this.steps[this.steps.length - 1];
+        var index = this.steps.length - 1;
+        return (index >= 0)
+            ? this.steps[index]
+            : null;
     };
 
     this.generateID = function(prefix) {
         return prefix + "_" + this.currentID.toString();
-    }
+    };
 
     this.createNewStep = function(text = '', html = '') {
         this.currentID += 1;
-        var id = this.generateID('step');
+        var id = this.generateID(this.name);
 
         return new MathjaxInput(id, text, html, this.currentID, 'Enter step text');
-    }
+    };
 
     this.addNewStep = function() {
         var newText = '';
@@ -38,12 +41,12 @@ function StepGroup(name) {
     this.editStep = function(text, number) {
         var index = _.findIndex(this.steps, x => { return x.number === number; });
         this.steps[index].updateText(text);
-    }
+    };
 
     this.deleteStep = function(number) {
         var index = _.findIndex(this.steps, x => { return x.number === number; });
         this.steps.splice(index, 1);
-    }
+    };
 
     this.initStepsFromList = function(stepsList) {
         this.currentID = 0;

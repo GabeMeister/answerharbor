@@ -7,29 +7,45 @@ Random helpers for views.py
 from datetime import datetime
 from answerharbor_app.models.homework import Homework
 from answerharbor_app.models.step import Step
+from answerharbor_app.models.answer import Answer
 from answerharbor_app.models.post import Post
 from flask_login import current_user
 
 def get_post_from_request(request):
     """
-    form must include a 'question_title', 'question_input', as well as one or more 'step_input_#' keys
+    Form must include:
+    - 'question_title'
+    - 'question_input'
+    - one or more 'step_input_#'
+    - either final_answer_input or custom[1-4]_input
     """
 
     hw = get_homework_from_request(request)
     question_title = get_question_title_from_request(request)
     question_text = get_question_from_request(request)
-    final_answer = get_final_answer_from_request(request)
     steps = get_steps_from_request(request)
+    answer_type = get_type_from_request(request)
+
+    answers = []
+    # Post may contain 1 answer or many custom answers
+    if answer_type == 'auto':
+        # Post only contains the correct answer
+        correct_answer_text = get_final_answer_from_request(request)
+        answers.append(Answer(text=correct_answer_text, correct=True))
+    else:
+        # User inputted in custom answers
+        answers = get_custom_answers_from_request(request)
 
     now = datetime.now()
     return Post(question=question_text,\
                 title=question_title,\
-                final_answer=final_answer,\
+                type=answer_type,\
                 creation_date=now,\
                 last_edit_date=now,\
                 user=current_user,\
                 homework=hw,
-                steps=steps)
+                steps=steps,
+                answers=answers)
 
 
 def get_homework_from_request(request):
@@ -64,12 +80,37 @@ def get_steps_from_request(request):
     return steps
 
 
+def get_custom_answers_from_request(request):
+    custom_answers = []
+
+    # custom1_input is always the correct answer
+    correct_answer_text = request.form['custom1_input']
+    custom_answers.append(Answer(text=correct_answer_text, correct=True))
+
+    # Iterate through the rest of the fake answers
+    for i in range(2, 5):
+        key = 'custom' + str(i) + '_input'
+        custom_answer_text = request.form[key]
+        custom_answers.append(Answer(text=custom_answer_text, correct=False))
+
+    return custom_answers
+
+
 def get_question_from_request(request):
     question_text = request.form['question_input']
     if question_text is None:
         raise 'question_input form index not found'
 
     return question_text
+
+
+def get_type_from_request(request):
+    type_text = request.form['type_input']
+    if type_text is None:
+        raise 'type_input form index not found'
+
+    return type_text
+
 
 def get_question_title_from_request(request):
     question_title = request.form['question_title']
