@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head_scripts %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-title-wrapper">
+        <div class="page-title">
+            <h1 class="jumbo-title">Well, this is awkward.</h1>
+            <br/>
+            <img class="rounded-corners" src="https://media.giphy.com/media/14dXclYKbx2ONW/giphy.gif"/>
+            <h2>Something weird happened on our server.</h2>
+            <h3>Our team has been notified and is working on a fix right now.</h3>
+
+            {% if current_user.is_authenticated and current_user.is_admin %}
+                <h3>You can recover your post by browsing to the <b>Recover Question</b> page:</h3>
+            {% else %}
+                <h3>In the meantime, you can resume browsing the site.</h3>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="call-to-action-wrapper">
+        {% if current_user.is_authenticated and current_user.is_admin %}
+            <a class="btn btn-primary" href="/recover">Recover Question &raquo;</a>
+        {% else %}
+            <a class="btn btn-primary" href="/index">Back to Home &raquo;</a>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block body_scripts %}
+{% endblock %}
