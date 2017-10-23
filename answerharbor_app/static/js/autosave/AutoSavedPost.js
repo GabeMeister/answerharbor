@@ -40,6 +40,7 @@ function AutoSavedPost() {
         this.stepGroup.steps.forEach(step => {
             output += 'STEP ' + step.number + ':\n' + step.text + '\n\n\n';
         });
+        output += 'ANSWER TYPE: ' + this.answerType + '\n\n\n';
         if(this.answerType === 'auto') {
             output += 'FINAL ANSWER: \n' + this.finalAnswer.text;
         }

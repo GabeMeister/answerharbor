@@ -168,11 +168,16 @@ Vue.component('app', {
             this.question.updateText(savedPost.question.text);
             this.stepGroup.initStepsFromList(savedPost.stepGroup.steps);
             this.answerType = savedPost.answerType;
-            this.finalAnswer.updateText(savedPost.finalAnswer.text);
-            this.customAnswer1.updateText(savedPost.customAnswer1.text);
-            this.customAnswer2.updateText(savedPost.customAnswer2.text);
-            this.customAnswer3.updateText(savedPost.customAnswer3.text);
-            this.customAnswer4.updateText(savedPost.customAnswer4.text);
+
+            if(this.answerType === 'auto') {
+                this.finalAnswer.updateText(savedPost.finalAnswer.text);
+            }
+            else {
+                this.customAnswer1.updateText(savedPost.customAnswer1.text);
+                this.customAnswer2.updateText(savedPost.customAnswer2.text);
+                this.customAnswer3.updateText(savedPost.customAnswer3.text);
+                this.customAnswer4.updateText(savedPost.customAnswer4.text);
+            }
         }
         else {
             var totalCurrentPosts = _.toInteger($('#homework-post-count').text());
@@ -185,8 +190,8 @@ Vue.component('app', {
             return true;
         };
 
-        // Auto-save every 10 seconds
-        setInterval(this.autoSave, 10000);
+        // Auto-save every 3 seconds
+        setInterval(this.autoSave, 3000);
     },
     methods: {
         autoSave: function() {

@@ -168,7 +168,17 @@ Vue.component('app', {
             this.title = savedPost.title;
             this.question.updateText(savedPost.question.text);
             this.stepGroup.initStepsFromList(savedPost.stepGroup.steps);
-            this.finalAnswer.updateText(savedPost.finalAnswer.text);
+            this.answerType = savedPost.answerType;
+
+            if(this.answerType === 'auto') {
+                this.finalAnswer.updateText(savedPost.finalAnswer.text);
+            }
+            else {
+                this.customAnswer1.updateText(savedPost.customAnswer1.text);
+                this.customAnswer2.updateText(savedPost.customAnswer2.text);
+                this.customAnswer3.updateText(savedPost.customAnswer3.text);
+                this.customAnswer4.updateText(savedPost.customAnswer4.text);
+            }
         }
         else {
             // Database call to get the post
@@ -214,12 +224,12 @@ Vue.component('app', {
             return true;
         };
 
-        // Auto-save every 10 seconds
-        setInterval(this.autoSave, 10000);
+        // Auto-save every 3 seconds
+        setInterval(this.autoSave, 3000);
     },
     methods: {
         autoSave: function() {
-            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer, this.customAnswer1, this.customAnswer2, this.customAnswer3, this.customAnswer4, 'edit');
+            autoSavePost(this.title, this.question, this.stepGroup, this.answerType, this.finalAnswer, this.customAnswer1, this.customAnswer2, this.customAnswer3, this.customAnswer4, 'edit');
         },
         renderAll: function() {
             // Question
