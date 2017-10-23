@@ -219,7 +219,7 @@ Vue.component('app', {
     },
     methods: {
         autoSave: function() {
-            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer, 'edit');
+            autoSavePost(this.title, this.question, this.stepGroup, this.finalAnswer, this.customAnswer1, this.customAnswer2, this.customAnswer3, this.customAnswer4, 'edit');
         },
         renderAll: function() {
             // Question

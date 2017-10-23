@@ -1,10 +1,10 @@
-function autoSavePost(title, question, stepGroup, finalAnswer, type) {
+function autoSavePost(title, question, stepGroup, answerType, finalAnswer, customAnswer1, customAnswer2, customAnswer3, customAnswer4, submitType) {
     // Get post that was autosaved from before
     var prevPost = AutoSavedPost.loadFromLocalStorage(title);
 
     // Create post with current data
     var currPost = new AutoSavedPost();
-    currPost.setData(title, question, stepGroup, finalAnswer, type, window.location.href);
+    currPost.setData(title, question, stepGroup, answerType, finalAnswer, customAnswer1, customAnswer2, customAnswer3, customAnswer4, submitType, window.location.href);
 
     // Compare if any data was changed, and if so, save it
     if(!currPost.isSameAs(prevPost)) {
