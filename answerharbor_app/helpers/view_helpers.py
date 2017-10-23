@@ -4,12 +4,16 @@ Random helpers for views.py
 
 # pylint: disable=C0103,C0111,C0413,E1101
 
+import string
 from datetime import datetime
 from answerharbor_app.models.homework import Homework
 from answerharbor_app.models.step import Step
 from answerharbor_app.models.answer import Answer
 from answerharbor_app.models.post import Post
 from flask_login import current_user
+
+def filter_bad_chars(unfiltered_str):
+    return filter(lambda x: x in string.printable, unfiltered_str)
 
 def get_post_from_request(request):
     """
@@ -72,7 +76,8 @@ def get_steps_from_request(request):
     for key, value in request.form.iteritems():
         if key.startswith('step_'):
             number = key.replace('step_', '').replace('_input', '')
-            steps.append(Step(number=int(number), text=value))
+            text = filter_bad_chars(value)
+            steps.append(Step(number=int(number), text=text))
 
     # Steps may be out of order from dictionary.
     # Sort by the step number
@@ -89,13 +94,13 @@ def get_custom_answers_from_request(request):
     custom_answers = []
 
     # custom1_input is always the correct answer
-    correct_answer_text = request.form['custom1_input']
+    correct_answer_text = filter_bad_chars(request.form['custom1_input'])
     custom_answers.append(Answer(text=correct_answer_text, correct=True))
 
     # Iterate through the rest of the fake answers
     for i in range(2, 5):
         key = 'custom' + str(i) + '_input'
-        custom_answer_text = request.form[key]
+        custom_answer_text = filter_bad_chars(request.form[key])
         custom_answers.append(Answer(text=custom_answer_text, correct=False))
 
     return custom_answers
@@ -106,7 +111,7 @@ def get_question_from_request(request):
     if question_text is None:
         raise 'question_input form index not found'
 
-    return question_text
+    return filter_bad_chars(question_text)
 
 
 def get_type_from_request(request):
@@ -114,7 +119,7 @@ def get_type_from_request(request):
     if type_text is None:
         raise 'type_input form index not found'
 
-    return type_text
+    return filter_bad_chars(type_text)
 
 
 def get_question_title_from_request(request):
@@ -122,11 +127,11 @@ def get_question_title_from_request(request):
     if question_title is None:
         raise 'question_title form index not found'
 
-    return question_title
+    return filter_bad_chars(question_title)
 
 def get_final_answer_from_request(request):
     final_answer = request.form['final_answer_input']
     if final_answer is None:
         raise 'final_answer form index not found'
 
-    return final_answer
+    return filter_bad_chars(final_answer)
