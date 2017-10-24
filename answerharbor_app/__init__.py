@@ -15,6 +15,11 @@ log_handler = logging.FileHandler('/var/tmp/answerharbor.log')
 logger.addHandler(log_handler)
 
 
+# Sentry
+from raven.contrib.flask import Sentry
+sentry = Sentry(app, dsn=app.config['SENTRY_DSN'])
+
+
 # The database
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)

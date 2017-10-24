@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block head_scripts %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="page-title-wrapper">
+        <div class="page-title">
+            <h1 class="jumbo-title">Click Button.</h1>
+        </div>
+    </div>
+
+    <div class="call-to-action-wrapper">
+        <button class="btn btn-primary btn-start" type="button">Click me</button>
+    </div>
+
+{% endblock %}
+
+{% block body_scripts %}
+    <script>
+        $('.btn-start').click(function() {
+            console.log('Posting data...');
+
+            $.ajax({
+                type: 'POST',
+                url: '/test_error_post',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({
+                    msg: 'TACOS'
+                }),
+                success: response => {
+                    console.log('Successful data post');
+                },
+                error: e => {
+                    console.log('Failed data post');
+                }
+            });
+        });
+    </script>
+{% endblock %}
