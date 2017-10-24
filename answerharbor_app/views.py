@@ -368,6 +368,26 @@ def recover():
     return render_template('recover.html')
 
 
+@app.route('/test_error', methods=['GET', 'POST'])
+def test_error():
+    if not (current_user.is_authenticated and current_user.is_admin):
+        return redirect('/')
+
+    return render_template('test_error.html')
+
+
+@app.route('/test_error_post', methods=['POST'])
+def test_error_post():
+    if not (current_user.is_authenticated and current_user.is_admin):
+        return jsonify({'status': True})
+
+    # Simulate a post exception
+    msg = request.json['msg']
+    msg[0] = 'z'
+
+    return jsonify({'status': True})
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html')
