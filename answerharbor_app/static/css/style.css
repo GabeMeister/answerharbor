@@ -1,8 +1,11 @@
+/**** COLORS ****/
+/**** SIZING ****/
 /**** GENERAL CSS ****/
 .body-content {
+  min-height: 100%;
   width: 1024px;
   margin: auto;
-  padding-bottom: 100px; }
+  padding-bottom: 130px; }
 
 a:hover {
   text-decoration: none; }
@@ -20,6 +23,16 @@ a:hover {
 
 .center-text {
   text-align: center; }
+
+/**** FOOTER ****/
+.site-footer {
+  height: 100px;
+  width: 100%;
+  background-color: #222;
+  box-sizing: border-box;
+  margin-top: -100px;
+  box-sizing: border-box;
+  padding: 40px 20px; }
 
 /**** TEXT ****/
 .light-gray {
