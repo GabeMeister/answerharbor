@@ -5,7 +5,7 @@
   min-height: 100%;
   width: 1024px;
   margin: auto;
-  padding-bottom: 130px; }
+  padding-bottom: 105px; }
 
 a:hover {
   text-decoration: none; }
@@ -30,9 +30,21 @@ a:hover {
   width: 100%;
   background-color: #222;
   box-sizing: border-box;
-  margin-top: -100px;
+  margin-top: -75px;
   box-sizing: border-box;
-  padding: 40px 20px; }
+  padding: 25px 20px; }
+
+.footer-link {
+  color: #B0B0B0; }
+  .footer-link:hover {
+    color: #edf3ff; }
+
+.footer-wrapper {
+  display: flex;
+  justify-content: space-around;
+  color: white;
+  width: 700px;
+  margin: auto; }
 
 /**** TEXT ****/
 .light-gray {

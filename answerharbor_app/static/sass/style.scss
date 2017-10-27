@@ -11,9 +11,10 @@ $gray: #9e9e9e;
 $pale-mint-green: #f4fff2;
 $green: #05a500;
 $red: #ef0013;
+$white: #edf3ff;
 
 /**** SIZING ****/
-$footer-height: 100px;
+$footer-height: 75px;
 
 /**** GENERAL CSS ****/
 .body-content {
@@ -53,7 +54,23 @@ a:hover {
     box-sizing: border-box;
     margin-top: -$footer-height;
     box-sizing: border-box;
-    padding: 40px 20px;
+    padding: 25px 20px;
+}
+
+.footer-link {
+    color: $light-gray;
+
+    &:hover {
+        color: $white;
+    }
+}
+
+.footer-wrapper {
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    width: 700px;
+    margin: auto;
 }
 
 /**** TEXT ****/
