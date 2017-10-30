@@ -398,6 +398,11 @@ def how_it_works():
     return render_template('how_it_works.html')
 
 
+@app.route('/posting_answers')
+def posting_answers():
+    return render_template('posting_answers.html')
+
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
