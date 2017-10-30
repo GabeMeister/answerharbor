@@ -1,3 +1,4 @@
+/**** COLORS ****/
 $grey-border-color: #e8e8e8;
 $pale-yellow: #fffce0;
 $pale-gray: #f2f2f2;
@@ -10,13 +11,18 @@ $gray: #9e9e9e;
 $pale-mint-green: #f4fff2;
 $green: #05a500;
 $red: #ef0013;
+$white: #edf3ff;
 
+/**** SIZING ****/
+$footer-height: 75px;
+$site-width: 1024px;
 
 /**** GENERAL CSS ****/
 .body-content {
-    width: 1024px;
+    min-height: 100%;
+    width: $site-width;
     margin: auto;
-    padding-bottom: 100px;
+    padding-bottom: $footer-height + 100px;
 }
 
 a:hover {
@@ -39,6 +45,64 @@ a:hover {
 
 .center-text {
     text-align: center;
+}
+
+.spacious {
+    margin-top: 100px;
+}
+
+/**** ABOUT PAGE ****/
+.narrative-wrapper {
+    width: $site-width;
+}
+
+.narrative-paragraph {
+    font-size: 30px;
+    text-align: center;
+}
+
+.centered-pic {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+}
+
+.call-to-action-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.small-left-margin {
+    margin-left: 5px;
+}
+
+
+/**** FOOTER ****/
+.site-footer {
+    height: $footer-height;
+    width: 100%;
+    background-color: #222;
+    box-sizing: border-box;
+    margin-top: -$footer-height;
+    box-sizing: border-box;
+    padding: ($footer-height / 3);
+}
+
+.footer-link {
+    color: $light-gray;
+
+    &:hover {
+        color: $white;
+    }
+}
+
+.footer-wrapper {
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    width: 700px;
+    margin: auto;
 }
 
 /**** TEXT ****/
