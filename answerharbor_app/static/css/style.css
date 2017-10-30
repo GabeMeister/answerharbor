@@ -5,7 +5,7 @@
   min-height: 100%;
   width: 1024px;
   margin: auto;
-  padding-bottom: 105px; }
+  padding-bottom: 175px; }
 
 a:hover {
   text-decoration: none; }
@@ -24,15 +24,39 @@ a:hover {
 .center-text {
   text-align: center; }
 
+.spacious {
+  margin-top: 100px; }
+
+/**** ABOUT PAGE ****/
+.narrative-wrapper {
+  width: 1024px; }
+
+.narrative-paragraph {
+  font-size: 30px;
+  text-align: center; }
+
+.centered-pic {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 4px; }
+
+.call-to-action-btn-wrapper {
+  display: flex;
+  justify-content: center; }
+
+.small-left-margin {
+  margin-left: 5px; }
+
 /**** FOOTER ****/
 .site-footer {
-  height: 100px;
+  height: 75px;
   width: 100%;
   background-color: #222;
   box-sizing: border-box;
   margin-top: -75px;
   box-sizing: border-box;
-  padding: 25px 20px; }
+  padding: 25px; }
 
 .footer-link {
   color: #B0B0B0; }

@@ -15,13 +15,14 @@ $white: #edf3ff;
 
 /**** SIZING ****/
 $footer-height: 75px;
+$site-width: 1024px;
 
 /**** GENERAL CSS ****/
 .body-content {
     min-height: 100%;
-    width: 1024px;
+    width: $site-width;
     margin: auto;
-    padding-bottom: $footer-height + 30px;
+    padding-bottom: $footer-height + 100px;
 }
 
 a:hover {
@@ -46,15 +47,46 @@ a:hover {
     text-align: center;
 }
 
+.spacious {
+    margin-top: 100px;
+}
+
+/**** ABOUT PAGE ****/
+.narrative-wrapper {
+    width: $site-width;
+}
+
+.narrative-paragraph {
+    font-size: 30px;
+    text-align: center;
+}
+
+.centered-pic {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+}
+
+.call-to-action-btn-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.small-left-margin {
+    margin-left: 5px;
+}
+
+
 /**** FOOTER ****/
 .site-footer {
-    height: 100px;
+    height: $footer-height;
     width: 100%;
     background-color: #222;
     box-sizing: border-box;
     margin-top: -$footer-height;
     box-sizing: border-box;
-    padding: 25px 20px;
+    padding: ($footer-height / 3);
 }
 
 .footer-link {
