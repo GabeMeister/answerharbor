@@ -41,7 +41,7 @@ Vue.component('ImgBtn', {
                         </div>
                         <div class="modal-footer">
                             <button type="button"
-                                class="btn btn-default"
+                                class="btn btn-primary"
                                 data-dismiss="modal"
                                 @click="upload">Upload to Imgur</button>
                         </div>
