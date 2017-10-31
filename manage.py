@@ -15,15 +15,15 @@ from answerharbor_app.models.school import School
 from answerharbor_app.models.homework import Homework
 import answerharbor_app.helpers.fake_answer_generator as fake_ans
 import random
+import answerharbor_app.helpers.string_helpers as str_helper
 
 manager = Manager(app)
 
 
 @manager.command
 def sandbox():
-    text = '![will ferrell](https://i.imgur.com/2CVpF.jpg)$\\frac{2}{4}$'
-    print text
-    print fake_ans.find_nums_in_text(text)
+    s = str_helper.find_between_str('$56$', '$$')
+    print s
 
 
 

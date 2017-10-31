@@ -9,6 +9,9 @@ import random
 
 
 def is_fake_answer_possible(orig_answer_text):
+    # Fake answers must have two dollar signs and numbers inbetween them.
+    # Search for a number between the '$$' delimiter first
+    # If not found, try searching for '$' delimiter
     return any(c.isdigit() for c in orig_answer_text)\
         and any(c == '$' for c in orig_answer_text)
 
