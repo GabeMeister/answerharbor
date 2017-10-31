@@ -82,6 +82,7 @@ a:hover {
 .site-footer {
     height: $footer-height;
     width: 100%;
+    min-width: $site-width;
     background-color: #222;
     box-sizing: border-box;
     margin-top: -$footer-height;

@@ -20,7 +20,8 @@ Vue.component('ImgBtn', {
                                 :id="inputId"
                                 :name="inputId"
                                 v-model="tempImgUrl"
-                                placeholder="Temporary Image Url"/>
+                                placeholder="Temporary Image Url"
+                                @keyup="submitOnEnter"/>
 
                             <div>
                                 <br/>
@@ -41,9 +42,10 @@ Vue.component('ImgBtn', {
                         </div>
                         <div class="modal-footer">
                             <button type="button"
-                                class="btn btn-default"
+                                class="btn btn-primary"
                                 data-dismiss="modal"
-                                @click="upload">Upload to Imgur</button>
+                                @click="upload"
+                                ref="uploadBtn">Upload to Imgur</button>
                         </div>
                     </div>
 
@@ -103,6 +105,12 @@ Vue.component('ImgBtn', {
             setTimeout(() => {
                 $('#'+this.inputId).get(0).focus();
             }, 500);
+        },
+        submitOnEnter: function(event) {
+            if(event.key === 'Enter') {
+                var uploadBtn = this.$refs.uploadBtn;
+                uploadBtn.click();
+            }
         },
         upload: function() {
             // Check for either the image url or the local file upload
