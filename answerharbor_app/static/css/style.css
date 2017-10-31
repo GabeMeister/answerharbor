@@ -52,6 +52,7 @@ a:hover {
 .site-footer {
   height: 75px;
   width: 100%;
+  min-width: 1024px;
   background-color: #222;
   box-sizing: border-box;
   margin-top: -75px;
