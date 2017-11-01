@@ -24,6 +24,10 @@ Vue.component('app', {
                 v-on:onUpdated="updateQuestion">
             </basic-mathjax-input>
 
+            <br/>
+
+            <button class="btn btn-default" type="button" @click="autofill">Autofill for Later</button>
+
             <div class="answer-separator edit-post-space"></div>
 
             <h3>Answer Steps:</h3>
@@ -194,6 +198,19 @@ Vue.component('app', {
         setInterval(this.autoSave, 3000);
     },
     methods: {
+        autofill: function() {
+            var confirmed = confirm('Are you sure you want to autofill the steps and final answer with default text?');
+
+            if(confirmed) {
+                this.stepGroup.initStepsFromList([{text: `# Hmm, looks like there's no answer to this question yet.\n\n### If you would like to post an answer, and also [make money posting it](https://answerharbor.com/posting_answers), send an email with your name and class to:`}]);
+                this.answerType = 'auto';
+                this.finalAnswer.updateText('# **answerharbor@gmail.com**');
+                this.customAnswer1.updateText('');
+                this.customAnswer2.updateText('');
+                this.customAnswer3.updateText('');
+                this.customAnswer4.updateText('');
+            }
+        },
         autoSave: function() {
             autoSavePost(this.title, this.question, this.stepGroup, this.answerType, this.finalAnswer, this.customAnswer1, this.customAnswer2, this.customAnswer3, this.customAnswer4, 'new');
         },

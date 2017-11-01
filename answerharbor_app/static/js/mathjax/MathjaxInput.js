@@ -60,7 +60,7 @@ function MathjaxInput(id, text, html, number = 1, placeholder='') {
         var $bufferElem = $('#'+this.bufferID);
         // Sometimes, due to rendering speeds, the buffer element will not be rendered at this point in time.
         // Prevent any undefined behavior from happening by making sure we found an element.
-        if($bufferElem) {
+        if($bufferElem && $bufferElem.html() !== undefined) {
             bufferHtml = marked($bufferElem.html());
         }
 
