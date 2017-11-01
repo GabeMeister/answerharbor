@@ -22,8 +22,7 @@ manager = Manager(app)
 
 @manager.command
 def sandbox():
-    s = str_helper.find_between_str('$56$', '$$')
-    print s
+    print fake_ans.is_fake_answer_possible('$0.4N$')
 
 
 
