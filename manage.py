@@ -22,7 +22,7 @@ manager = Manager(app)
 
 @manager.command
 def sandbox():
-    print fake_ans.is_fake_answer_possible('$0.4N$')
+    print fake_ans.is_fake_answer_possible('The answer is $5 N$')
 
 
 

@@ -11,7 +11,7 @@ import string_helpers as str_helper
 
 def is_fake_answer_possible(orig_answer_text):
     # Fake answers must contain two dollar signs and at least 1 number inbetween them.
-    pattern = re.compile("\$.*[0-9]+.*\$")
+    pattern = re.compile(".*\$.*[0-9]+.*\$.*")
     possible = pattern.match(orig_answer_text) is not None
 
     return possible
