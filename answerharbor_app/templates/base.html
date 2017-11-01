@@ -2,14 +2,16 @@
 
 <head>
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106576723-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments)};
-        gtag('js', new Date());
+    {% if not config['DEBUG'] and not current_user.is_admin %}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106576723-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments)};
+            gtag('js', new Date());
 
-        gtag('config', 'UA-106576723-1');
-    </script>
+            gtag('config', 'UA-106576723-1');
+        </script>
+    {% endif %}
 
     <title>Answer Harbor</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
