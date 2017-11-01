@@ -6,11 +6,15 @@ Module for generating fake answers by changing numbers in answer text
 
 import re
 import random
+import string_helpers as str_helper
 
 
 def is_fake_answer_possible(orig_answer_text):
-    return any(c.isdigit() for c in orig_answer_text)\
-        and any(c == '$' for c in orig_answer_text)
+    # Fake answers must contain two dollar signs and at least 1 number inbetween them.
+    pattern = re.compile("\$.*[0-9]+.*\$")
+    possible = pattern.match(orig_answer_text) is not None
+
+    return possible
 
 
 # Corner case: '$\frac{2*2.2}{2}$'
@@ -40,20 +44,11 @@ def find_nums_in_text(text):
 
 
 def find_mathjax(text):
-    text = find_between(text, '$', '$')
+    text = str_helper.find_between(text, '$', '$')
     if text[0] == '$' and text[-1] == '$':
         text = text[1:-1]
 
     return text
-
-
-def find_between(s, first, last):
-    try:
-        start = s.index(first) + len(first)
-        end = s.rindex(last, start)
-        return s[start:end]
-    except ValueError:
-        return ""
 
 
 def generate_fake_number_str(num_str):
