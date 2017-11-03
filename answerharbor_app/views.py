@@ -283,7 +283,7 @@ def homework(homework_id):
 
     homework_breadcrumbs = breadcrumbs.homework_breadcrumb_path()
 
-    return render_template('homework.html', posts=selected_homework.posts, homework=selected_homework, breadcrumbs=homework_breadcrumbs)
+    return render_template('homework.html', posts=sorted(selected_homework.posts, key=lambda x: x.title), homework=selected_homework, breadcrumbs=homework_breadcrumbs)
 
 
 @app.route('/edithomework/<int:homework_id>', methods=['GET', 'POST'])
