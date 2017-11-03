@@ -141,6 +141,10 @@ Vue.component('app', {
             <br/>
 
             <input class="btn btn-primary" @click="validateBeforeSubmit($event)" type='submit' value='Save Edits'/>
+
+            <div v-if="!valid">
+                <h3 class="incorrect-red">Please enter text into all inputs.</h3>
+            </div>
         </div>
     `,
     data: function() {
@@ -153,7 +157,8 @@ Vue.component('app', {
             customAnswer1: new MathjaxInput('custom1', '', '', 1, 'Enter correct answer text'),
             customAnswer2: new MathjaxInput('custom2', '', '', 2, 'Enter fake answer text'),
             customAnswer3: new MathjaxInput('custom3', '', '', 3, 'Enter fake answer text'),
-            customAnswer4: new MathjaxInput('custom4', '', '', 4, 'Enter fake answer text')
+            customAnswer4: new MathjaxInput('custom4', '', '', 4, 'Enter fake answer text'),
+            valid: true
         };
     },
     created: function() {
@@ -281,63 +286,59 @@ Vue.component('app', {
                 this.stepGroup.deleteStep(number);
             }
         },
+        setInvalidState: function() {
+            this.valid = false;
+        },
         validateBeforeSubmit: function(event) {
             // Auto-save post before going anywhere
             this.autoSave();
 
             // If all inputs are valid, then we'll proceed to submit form.
-            var valid = true;
+            this.valid = true;
 
             // Validate title
             if(this.title === '') {
-                event.preventDefault();
-                valid = false;
+                preventFormSubmit(this, event);
             }
 
             // Validate question
-            if(valid && !this.question.isValid()) {
-                event.preventDefault();
-                valid = false;
+            if(this.valid && !this.question.isValid()) {
+                preventFormSubmit(this, event);
             }
 
             // Validate all steps
-            if(valid && !this.stepGroup.isValid()) {
-                event.preventDefault();
-                valid = false;
+            if(this.valid && !this.stepGroup.isValid()) {
+                preventFormSubmit(this, event);
             }
 
             if(this.answerType === 'auto') {
                 // Validate final answer
-                if(valid && !this.finalAnswer.isValid()) {
-                    event.preventDefault();
-                    valid = false;
+                if(this.valid && !this.finalAnswer.isValid()) {
+                    preventFormSubmit(this, event);
                 }
             }
             else {
                 // Check custom answers instead of final answer
-                if(valid && !this.customAnswer1.isValid()) {
-                    event.preventDefault();
-                    valid = false;
+                if(this.valid && !this.customAnswer1.isValid()) {
+                    preventFormSubmit(this, event);
                 }
 
-                if(valid && !this.customAnswer2.isValid()) {
-                    event.preventDefault();
-                    valid = false;
+                if(this.valid && !this.customAnswer2.isValid()) {
+                    preventFormSubmit(this, event);
                 }
 
-                if(valid && !this.customAnswer3.isValid()) {
-                    event.preventDefault();
-                    valid = false;
+                if(this.valid && !this.customAnswer3.isValid()) {
+                    preventFormSubmit(this, event);
                 }
 
-                if(valid && !this.customAnswer4.isValid()) {
-                    event.preventDefault();
-                    valid = false;
+                if(this.valid && !this.customAnswer4.isValid()) {
+                    preventFormSubmit(this, event);
                 }
             }
 
+
             // If user is submitting the form, then allow it without any popup
-            if(valid) {
+            if(this.valid) {
                 window.onbeforeunload = null;
             }
         }
