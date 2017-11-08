@@ -11,10 +11,10 @@ describe('Navigating Website', function() {
     });
 
 
-    it('Can view posts', async function() {
+    it('can view posts', async function() {
         this.timeout(10000);
 
-        await chromeless.goto('https://answerharbor.com')
+        await chromeless.goto('http://localhost:5000')
             .click('a[href="/select_school"]')
             .click('a[href="/school/1657"]')
             .click('a[href="/course/2"]')
@@ -26,13 +26,13 @@ describe('Navigating Website', function() {
     });
 
 
-    it('Can view schools', async function() {
+    it('can view homeworks', async function() {
         this.timeout(10000);
 
-        await chromeless.goto('https://answerharbor.com')
+        await chromeless.goto('http://localhost:5000')
             .click('a[href="/select_school"]')
-            // .click('a[href="/school/1657"]')
-            // .click('a[href="/course/2"]')
+            .click('a[href="/school/1657"]')
+            .click('a[href="/course/2"]')
             .wait(400);
 
         const result = await chromeless.exists('a[href*="/school/"]');
