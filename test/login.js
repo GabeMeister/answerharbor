@@ -2,50 +2,57 @@ import {test} from 'ava';
 import Chromeless from 'chromeless';
 import 'jquery';
 
+
 test('login works', async t => {
     const chromeless = new Chromeless({
         launchChrome: false,
-        // scrollBeforeClick: true,
-        viewport: {
-            width: 1500,
-            height: 900,
-            scale: 1
-        }
+        scrollBeforeClick: true
     });
 
-    // TODO: figure out what is going on with the login button
-    let currentlySignedIn = await chromeless
-        .exists('a[href="/logout"]');
+    await chromeless
+        .goto('http://localhost:5000/')
+        .clearCache();
 
-    if(currentlySignedIn) {
-        t.log('yup, signed in');
+
+    let screen1 = await chromeless
+        .wait(400)
+        .screenshot();
+    t.log(screen1);
+
+
+    let needToLogout = await chromeless
+        .exists('a[href="/logout"]');
+    if(needToLogout) {
+        t.log('about to click logout');
         await chromeless
-            .click();
+            .click('a[href="/logout"]');
     }
-    else {
-        t.log('not signed in!');
-    }
+
+
+    let screen2 = await chromeless
+        .wait(400)
+        .screenshot();
+    t.log(screen2);
+
 
     await chromeless
-        .goto('http://localhost:5000')
         .click('a[href="/login"]')
         .type('fake1', 'input[name="username"')
         .type('12341234', 'input[name="password"]')
         .click('input[name="submit"]')
         .wait(400);
 
-    // Check for the welcome text in the nav bar
-    t.log('yes');
-    const result = await chromeless
-        .evaluate(() => {
-            return $('.navbar-text').text();
-        });
+    // Check for the /logout link to figure out if we're signed in
+    const success = await chromeless
+        .exists('a[href="/logout"]');
 
-    await chromeless
-        .click('a[href="/logout"]')
-        .wait(400);
+    if(success) {
+        await chromeless
+            .click('a[href="/logout"]')
+            .wait(400);
+    }
 
     await chromeless.end();
 
-    t.is(result, 'Welcome, fake1');
+    t.true(success);
 });
