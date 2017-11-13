@@ -20,54 +20,67 @@ Vue.component('app', {
             <div>
                 <h2>Answer:</h2>
 
-                <div>
-                    <step-mathjax-preview
-                        v-for="step in stepGroup.steps"
-                        :key="step.number"
-                        class="step-chunk"
-                        :bufferID="step.bufferID"
-                        :previewID="step.previewID"
-                        :stepVisible="step.visible"
-                        :stepCountVisible="isLastVisibleStep(step)"
-                        :stepCount="visibleStepCount"
-                        :totalStepCount="totalStepCount"
-                        :mathjaxText="step.text"
-                        :mathjaxHtml="step.html">
-                    </step-mathjax-preview>
-                </div>
-
-                <br/>
-
-                <div :class="{'hidden-step': !allStepsShowing}">
-                    <div v-for="answer in answerGroup.answers" v-if="answerGroup.answers.length > 1">
-                        <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
-                        <label :for="answer.mathjax.inputNameID">
-                            <div :id="answer.mathjax.bufferID" class="hidden-buffer" v-text="answer.mathjax.text"></div>
-                            <div class="preview" :id="answer.mathjax.previewID" v-html="answer.mathjax.html"></div>
-                        </label>
+                <div v-if="loggedIn">
+                    <div>
+                        <step-mathjax-preview
+                            v-for="step in stepGroup.steps"
+                            :key="step.number"
+                            class="step-chunk"
+                            :bufferID="step.bufferID"
+                            :previewID="step.previewID"
+                            :stepVisible="step.visible"
+                            :stepCountVisible="isLastVisibleStep(step)"
+                            :stepCount="visibleStepCount"
+                            :totalStepCount="totalStepCount"
+                            :mathjaxText="step.text"
+                            :mathjaxHtml="step.html">
+                        </step-mathjax-preview>
                     </div>
 
-                    <div v-if="answerGroup.answers.length === 1">
-                        <h3
-                            class="hidden-buffer"
-                            :id="answerGroup.answers[0].mathjax.bufferID"
-                            v-text="answerGroup.answers[0].mathjax.text">
-                        </h3>
-                        <h3
-                            class="preview center-text"
-                            :id="answerGroup.answers[0].mathjax.previewID"
-                            v-html="answerGroup.answers[0].mathjax.html">
-                        </h3>
+                    <br/>
+
+                    <div :class="{'hidden-step': !allStepsShowing}">
+                        <div v-for="answer in answerGroup.answers" v-if="answerGroup.answers.length > 1">
+                            <input @click="checkAnswer(answer.mathjax.text)" type="radio" :id="answer.mathjax.inputNameID" :value="answer.mathjax.text" v-model="selectedAnswer">
+                            <label :for="answer.mathjax.inputNameID">
+                                <div :id="answer.mathjax.bufferID" class="hidden-buffer" v-text="answer.mathjax.text"></div>
+                                <div class="preview" :id="answer.mathjax.previewID" v-html="answer.mathjax.html"></div>
+                            </label>
+                        </div>
+
+                        <div v-if="answerGroup.answers.length === 1">
+                            <h3
+                                class="hidden-buffer"
+                                :id="answerGroup.answers[0].mathjax.bufferID"
+                                v-text="answerGroup.answers[0].mathjax.text">
+                            </h3>
+                            <h3
+                                class="preview center-text"
+                                :id="answerGroup.answers[0].mathjax.previewID"
+                                v-html="answerGroup.answers[0].mathjax.html">
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h1 v-if="answerAttempted" v-text="feedback" :class="{'incorrect-red': !correctAnswerGuessed, 'correct-green': correctAnswerGuessed}"></h1>
+                    </div>
+
+                    <div class="next-btn-wrapper">
+                        <button class="btn btn-primary" @click="showNextStep" v-if="!allStepsShowing">Next</button>
+                        <a class="btn btn-success" role="button" :href="homeworkUrl" v-if="allStepsShowing">Back to Homework</a>
                     </div>
                 </div>
 
-                <div>
-                    <h1 v-if="answerAttempted" v-text="feedback" :class="{'incorrect-red': !correctAnswerGuessed, 'correct-green': correctAnswerGuessed}"></h1>
-                </div>
-
-                <div class="next-btn-wrapper">
-                    <button class="btn btn-primary" @click="showNextStep" v-if="!allStepsShowing">Next</button>
-                    <a class="btn btn-success" role="button" :href="homeworkUrl" v-if="allStepsShowing">Back to Homework</a>
+                <div v-if="!loggedIn">
+                    <img class="centered-pic" src="https://i.imgur.com/Vjfbe0t.gif" alt="dj khaled wait">
+                    <div class="page-title-wrapper">
+                        <div class="page-title">
+                            <h1>Hold Up.</h1>
+                            <h2>Be sure to <a href="/login">log in</a> to see this answer.</h2>
+                            <h2>If you haven't created your <b>free</b> account yet, you can <a href="/signup">sign up here</a>.</h2>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,6 +88,10 @@ Vue.component('app', {
     props: {
         homeworkUrl: {
             type: String,
+            required: true
+        },
+        loggedIn: {
+            type: Boolean,
             required: true
         }
     },
