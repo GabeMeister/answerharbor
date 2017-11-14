@@ -1,6 +1,7 @@
 import {test} from 'ava';
 import Chromeless from 'chromeless';
 import 'jquery';
+var ci = require('./helpers/ci');
 
 
 test('login works', async t => {
@@ -13,27 +14,13 @@ test('login works', async t => {
         .goto('http://localhost:5000/')
         .clearCache();
 
-
-    let screen1 = await chromeless
-        .wait(400)
-        .screenshot();
-    t.log(screen1);
-
-
+    // Ensure we are already logged out
     let needToLogout = await chromeless
         .exists('a[href="/logout"]');
     if(needToLogout) {
-        t.log('about to click logout');
         await chromeless
             .click('a[href="/logout"]');
     }
-
-
-    let screen2 = await chromeless
-        .wait(400)
-        .screenshot();
-    t.log(screen2);
-
 
     await chromeless
         .click('a[href="/login"]')
@@ -43,9 +30,8 @@ test('login works', async t => {
         .wait(400);
 
     // Check for the /logout link to figure out if we're signed in
-    const success = await chromeless
+    let success = await chromeless
         .exists('a[href="/logout"]');
-
     if(success) {
         await chromeless
             .click('a[href="/logout"]')
