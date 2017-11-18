@@ -14,6 +14,6 @@ module.exports = {
             if(err) {
                 console.log('failed to open screenshot');
             }
-        })
+        });
     }
 }
