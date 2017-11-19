@@ -1,8 +1,9 @@
 import {test} from 'ava';
 import Chromeless from 'chromeless';
+var ci = require('./helpers/ci');
 
 test('posts exist', async t => {
-    const chromeless = new Chromeless({ launchChrome: false });
+    const chromeless = ci.createChromeless();
     await chromeless
         .goto('http://localhost:5000')
         .click('a[href="/select_school"]')
@@ -19,7 +20,7 @@ test('posts exist', async t => {
 
 
 test('homeworks exist', async t => {
-    const chromeless = new Chromeless({ launchChrome: false });
+    const chromeless = ci.createChromeless();
     await chromeless
         .goto('http://localhost:5000')
         .click('a[href="/select_school"]')
@@ -35,7 +36,7 @@ test('homeworks exist', async t => {
 
 
 test('courses exist', async t => {
-    const chromeless = new Chromeless({ launchChrome: false });
+    const chromeless = ci.createChromeless();
     await chromeless
         .goto('http://localhost:5000')
         .click('a[href="/select_school"]')
@@ -50,7 +51,7 @@ test('courses exist', async t => {
 
 
 test('schools exist', async t => {
-    const chromeless = new Chromeless({ launchChrome: false });
+    const chromeless = ci.createChromeless();
     await chromeless
         .goto('http://localhost:5000')
         .click('a[href="/select_school"]')

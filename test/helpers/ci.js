@@ -1,6 +1,14 @@
 const { exec } = require('child_process');
+const { Chromeless } = require('chromeless');
 
 module.exports = {
+    createChromeless: function() {
+        return new Chromeless({
+            launchChrome: false,
+            scrollBeforeClick: true
+        });
+    },
+
     // Example Usage:
     // var ci = require('./helpers/ci');
     //

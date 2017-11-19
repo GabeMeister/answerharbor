@@ -1,5 +1,4 @@
 import {test} from 'ava';
-import Chromeless from 'chromeless';
 import 'jquery';
 var ci = require('./helpers/ci');
 var sqlite3 = require('sqlite3');
@@ -7,10 +6,7 @@ const { exec } = require('child_process');
 
 
 test.serial('sign up works', async t => {
-    const chromeless = new Chromeless({
-        launchChrome: false,
-        scrollBeforeClick: true
-    });
+    const chromeless = ci.createChromeless();
 
     await chromeless
         .goto('http://localhost:5000/')
@@ -56,10 +52,7 @@ test.serial('sign up works', async t => {
 
 
 test.serial('login works', async t => {
-    const chromeless = new Chromeless({
-        launchChrome: false,
-        scrollBeforeClick: true
-    });
+    const chromeless = ci.createChromeless();
 
     await chromeless
         .goto('http://localhost:5000/')
