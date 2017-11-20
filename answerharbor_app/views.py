@@ -413,6 +413,17 @@ def terms_of_service():
     return render_template('terms_of_service.html')
 
 
+@app.route('/ci_login/<passhash>')
+def ci_login(passhash):
+    if passhash != app.config['CI_LOGIN_PASSHASH']:
+        return redirect('/')
+
+    ci_user = User.query.filter_by(username='ci_user').first()
+    login_user(ci_user)
+
+    return redirect('/')
+
+
 # ERROR HANDLERS
 
 @app.errorhandler(404)

@@ -107,3 +107,4 @@ node_modules/
 # answerharbor specific files
 answerharbor_app/config.py
 answerharbor_app/answerharbor.db
+test/helpers/config.js
