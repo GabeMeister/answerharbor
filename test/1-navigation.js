@@ -1,6 +1,6 @@
-import {test} from 'ava';
-import Chromeless from 'chromeless';
-var ci = require('./helpers/ci');
+const { test } = require('ava');
+const { Chromeless } = require('chromeless');
+const ci = require('./helpers/ci');
 
 test('posts exist', async t => {
     const chromeless = ci.createChromeless();

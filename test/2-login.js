@@ -1,7 +1,7 @@
-import {test} from 'ava';
-import 'jquery';
-var ci = require('./helpers/ci');
-var sqlite3 = require('sqlite3');
+const { test } = require('ava');
+const $ = require('jquery');
+const ci = require('./helpers/ci');
+const sqlite3 = require('sqlite3');
 const { exec } = require('child_process');
 
 
