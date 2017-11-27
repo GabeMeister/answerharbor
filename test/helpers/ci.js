@@ -3,10 +3,14 @@ const { Chromeless } = require('chromeless');
 
 module.exports = {
     createChromeless: function() {
-        return new Chromeless({
-            launchChrome: false,
+        let chromeless = new Chromeless({
+            // launchChrome: false,
             scrollBeforeClick: true
         });
+
+        chromeless.clearCache();
+
+        return chromeless;
     },
 
     // Example Usage:

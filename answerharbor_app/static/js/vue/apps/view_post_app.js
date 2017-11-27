@@ -2,7 +2,7 @@ Vue.component('app', {
     template: `
         <div>
             <div>
-                <h2 v-text="title"></h2>
+                <h2 v-text="title" id="question_title"></h2>
             </div>
 
             <div>

@@ -14,6 +14,9 @@ test.only('create new post', async t => {
         .click('a[href="/course/2"]')
         .click('a[href="/homework/5"]')
         .click('a[href="/newpost?homework_id=5"]')
+        .clearInput('#question_title')
+        .type('Test Title', '#question_title')
+        .press(37)
         .type('Test Question', '#question_input')
         .press(37)
         .type('Test Step', '#step_1_input')
@@ -22,6 +25,11 @@ test.only('create new post', async t => {
         .press(37)
         .click('input[type="submit"]')
         .wait(2000);
+
+    let title = await chromeless.evaluate(() => {
+        return $('#question_title').text().trim();
+    });
+    t.is(title, 'Test Title');
 
     let question = await chromeless.evaluate(() => {
         return $('#question_preview').text().trim();

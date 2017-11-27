@@ -5,6 +5,7 @@ Vue.component('StringInput', {
                 <div class="input-wrapper">
                     <input
                         type="text"
+                        :id="id"
                         class="form-control"
                         :name="id"
                         v-model="text"
