@@ -1,7 +1,7 @@
 const { test } = require('ava');
 const { Chromeless } = require('chromeless');
-const ci = require('./helpers/ci');
-const config = require('./helpers/config');
+const ci = require('../helpers/ci');
+const config = require('../helpers/config');
 const $ = require('jquery');
 
 // TODO: check for title as well

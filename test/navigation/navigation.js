@@ -1,6 +1,6 @@
 const { test } = require('ava');
 const { Chromeless } = require('chromeless');
-const ci = require('./helpers/ci');
+const ci = require('../helpers/ci');
 
 test('posts exist', async t => {
     const chromeless = ci.createChromeless();

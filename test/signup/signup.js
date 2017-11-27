@@ -1,6 +1,6 @@
 const { test } = require('ava');
 const $ = require('jquery');
-const ci = require('./helpers/ci');
+const ci = require('../helpers/ci');
 const sqlite3 = require('sqlite3');
 const { exec } = require('child_process');
 

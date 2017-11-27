@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "ava test/1-*.js && ava test/2-*.js"
+    "test": "ava test/navigation/navigation.js && ava test/content_creation/*.js && ava test/signup/signup.js"
   },
   "keywords": [],
   "author": "",
