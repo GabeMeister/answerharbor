@@ -5,7 +5,7 @@ const config = require('../helpers/config');
 const $ = require('jquery');
 
 // TODO: check for title as well
-test.only('create new post', async t => {
+test('create new post', async t => {
     const chromeless = ci.createChromeless();
     await chromeless
         .goto('http://localhost:5000/ci_login/'+config.CI_LOGIN_PASSHASH)
